@@ -1,7 +1,5 @@
 package country;
 
-import location.Settlement;
-
 public class Map {
 	public Map() {
 		// ???

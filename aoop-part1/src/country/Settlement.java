@@ -1,4 +1,4 @@
-package location;
+package country;
 
 public class Settlement {
 	public Settlement() {
