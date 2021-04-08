@@ -4,7 +4,7 @@ public enum RamzorColor {
 	GREEN(0.4),		// up to
 	YELLOW(0.6),	// up to
 	ORANGE(0.8),	// up to
-	RED(0.8);		// above
+	RED(1.0);		// up to
 	
 	private RamzorColor(double value) {
 		this.value = value;
