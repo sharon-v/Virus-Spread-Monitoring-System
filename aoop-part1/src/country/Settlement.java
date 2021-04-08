@@ -4,7 +4,7 @@ import location.Location;
 import location.Size;
 import population.Person;
 
-public class Settlement {// abstract???
+public abstract class Settlement {
 	public Settlement(String name, Location location, Person[] people) {
 		m_name = name;
 		m_location = location;
@@ -28,8 +28,8 @@ public class Settlement {// abstract???
 //		return m_width == s.m_width && m_height == s.m_height;
 //		}
 
-	protected RamzorColor calculateRamzorGrade() {// calculates new color
-		// abstract??? protected???
+	protected abstract RamzorColor calculateRamzorGrade() {// calculates new color
+		// protected???
 	}
 	/**
 	 * 
