@@ -2,6 +2,7 @@ package country;
 
 import location.Location;
 import location.Size;
+import population.Person;
 
 public class Settlement {// abstract???
 	public Settlement(String name, Location location, Person[] people) {
@@ -10,10 +11,15 @@ public class Settlement {// abstract???
 		m_people = people;
 		m_ramzorColor = RamzorColor.GREEN;	// default
 	}
+	
+	public Settlement(Settlement s) {
+		this()
+	}
 
-//	public String toString() {
-//		return "width: " + m_width + ", height: " + m_height;
-//	}
+	public String toString() {
+		return "settlement name: " + m_name + ", location: " + m_location 
+				+ ", num of people: " + m_people.length + "color grade: " + m_ramzorColor;
+	}
 //	
 //	public boolean equals(Object o) {
 //		if (!(o instanceof Size))
@@ -56,6 +62,7 @@ public class Settlement {// abstract???
 	public boolean transferPerson(Person p, Settlement s) {
 		return true; // for this part of the project
 	}
+	
 	private String m_name;
 	private Location m_location;
 	private Person[] m_people;
