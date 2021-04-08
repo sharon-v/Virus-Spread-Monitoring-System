@@ -12,25 +12,30 @@ public abstract class Settlement {
 		m_ramzorColor = RamzorColor.GREEN;	// default
 	}
 	
-	public Settlement(Settlement s) {
-		this()
-	}
-
+//	public Settlement(Settlement s) {
+//		this()
+//	}
+	
+	@Override
 	public String toString() {
 		return "settlement name: " + m_name + ", location: " + m_location 
 				+ ", num of people: " + m_people.length + "color grade: " + m_ramzorColor;
 	}
-//	
-//	public boolean equals(Object o) {
-//		if (!(o instanceof Size))
-//			return false;
-//		Size s = (Size)o;
-//		return m_width == s.m_width && m_height == s.m_height;
-//		}
+	
+	@Override
+	public boolean equals(Object o) {
+		if (!(o instanceof Settlement))
+			return false;
+		Settlement s = (Settlement)o;
+		return m_name == s.m_name && m_location == s.m_location;
+		}
 
-	protected abstract RamzorColor calculateRamzorGrade() {// calculates new color
-		// protected????
-	}
+	/**
+	 * 
+	 * @return new RamzorColor Grade
+	 */
+	protected abstract RamzorColor calculateRamzorGrade();
+	
 	/**
 	 * 
 	 * @return percentage of sick people in a certain range
@@ -38,6 +43,7 @@ public abstract class Settlement {
 	public double contagiousPercent() {// 0 to 1 max
 		//???
 	}
+	
 	/**
 	 * 
 	 * @return random location in the settlement
@@ -45,6 +51,7 @@ public abstract class Settlement {
 	public Location randomLocation() {
 		//???
 	}
+	
 	/**
 	 * 
 	 * @param p - new person to add
@@ -52,7 +59,9 @@ public abstract class Settlement {
 	 */
 	public boolean addPerson(Person p) {
 		//???
+		// use equals no 2 people the same
 	}
+	
 	/**
 	 * 
 	 * @param p - person to transfer
@@ -63,8 +72,20 @@ public abstract class Settlement {
 		return true; // for this part of the project
 	}
 	
-	private String m_name;
-	private Location m_location;
+	/**
+	 * get method
+	 * @return current RamzorColor
+	 */
+	protected RamzorColor getRamzorColor() {return m_ramzorColor;}
+	
+	/**
+	 * set method
+	 * @param r - new RamzorColor of the settlement
+	 */
+	protected void setRamzorColor(RamzorColor r) {m_ramzorColor = r;}
+	
+	private final String m_name;
+	private final Location m_location;
 	private Person[] m_people;
 	private RamzorColor m_ramzorColor;
 	

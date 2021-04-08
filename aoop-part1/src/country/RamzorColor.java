@@ -13,6 +13,22 @@ public enum RamzorColor {
 	public double getValue() {
         return this.value;
     }
-		
+	
+	/**
+	 * 
+	 * @param d - double input
+	 * @return corresponding RamzorColor for the double input
+	 */
+	public RamzorColor doubleToRamzorColor(double d) {
+		if( d <= GREEN.getValue())
+			return GREEN;
+		if( d <= YELLOW.getValue())
+			return YELLOW;
+		if( d <= ORANGE.getValue())
+			return ORANGE;
+		else
+			return RED;
+	}
+	
 	private final double value;
 }
