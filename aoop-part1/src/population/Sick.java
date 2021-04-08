@@ -11,7 +11,7 @@ public class Sick extends Person {
 	 * @param location - location input
 	 * @param settlement - settlement input
 	 * @param contagiousTime - contagious Time input  
-	 * @param virus
+	 * @param virus - virus type input
 	 */
 	public Sick(int age, Point location, Settlement settlement, long contagiousTime, IVirus virus) {
 		super(age, location, settlement);
@@ -24,19 +24,54 @@ public class Sick extends Person {
 		throw new UnsupportedOperationException("You can't get sick twice man !!");
 	}// where to put catch
 	
+	@Override
 	public double contagionProbability() {
-		return 1;
+		return 1; //??
 	}
 	
+	@Override
 	public String toString() {
-		return "The person got infected at " + m_contagiousTime + " in the " + m_virus + "virus.";
-	}
-	public boolean equals() {
-		//??????????????
+		return super.toString() + "The person got infected at " + m_contagiousTime + " in the " + m_virus + "virus.";
 	}
 	
+	@Override
+	public boolean equals(Object o) {
+		if(!(o instanceof Sick))
+			return false;
+		Sick s = (Sick) o;
+		return super.equals(s) && m_contagiousTime == s.getContagiousTime() && m_virus == s.getVirus();
+	}
+	
+	/**
+	 * 
+	 * @return Convalescent object of the current Person
+	 */
 	public Person recover() {
-		Convalescent convalescentPerson = new Convalescent(this.m_a)
+		return new Convalescent(getAge(), getLocation(), getSettelement(), m_virus);
+	}
+	
+	/**
+	 * 
+	 * @return if the person will die or not
+	 */
+	public boolean tryToDie() {
+		return m_virus.tryToKill(this); //??
+	}
+	
+	/**
+	 * 
+	 * @return Contagious time
+	 */
+	protected long getContagiousTime() {
+		return m_contagiousTime;
+	}
+	
+	/**
+	 * 
+	 * @return Virus type
+	 */
+	protected IVirus getVirus() {
+		return m_virus;
 	}
 	
 	private long m_contagiousTime;

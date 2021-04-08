@@ -37,21 +37,21 @@ public abstract class Person {
 	 * @param virus - type of virus input
 	 * @return Sick object of the current Person
 	 */
-	public Person contagion(IVirus virus) { //??? to complete
-		Sick sickPerson = new Sick(m_age, m_location, m_settlement, Clock.now(), virus);
-		return sickPerson;
+	public Person contagion(IVirus virus) { 
+		return new Sick(m_age, m_location, m_settlement, Clock.now(), virus);
+		
 		
 	}
 	
 	public String toString() {
 		return "This person is " + m_age + " he lives in " + m_settlement + ", location is " + m_location+ ".";
-	} ///????
+	} 
 	
 	public boolean equals(Object o) {
 		if(!(o instanceof Person))
 			return false;
 		Person p = (Person) o;
-		return true; //????
+		return p.getAge() == m_age && m_location.equals(p.getLocation());
 	}
 	
 	/**
@@ -67,7 +67,7 @@ public abstract class Person {
 	 * @return The location of the current Person
 	 */
 	protected Point getLocation() {
-		return new Point(m_location); 
+		return new Point(m_location); //??
 	}
 	
 	/**
@@ -75,7 +75,7 @@ public abstract class Person {
 	 * @return The settlement of the current Person
 	 */
 	protected Settlement getSettelement() {
-		return new Settlement(m_settlement); //???
+		return m_settlement; //???
 	}
 	
 	private int m_age;
