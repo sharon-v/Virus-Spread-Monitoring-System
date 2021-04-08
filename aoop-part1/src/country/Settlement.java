@@ -29,7 +29,7 @@ public abstract class Settlement {
 //		}
 
 	protected abstract RamzorColor calculateRamzorGrade() {// calculates new color
-		// protected???
+		// protected????
 	}
 	/**
 	 * 
