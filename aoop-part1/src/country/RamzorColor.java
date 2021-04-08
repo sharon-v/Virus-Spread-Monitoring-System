@@ -13,6 +13,6 @@ public enum RamzorColor {
 	public double getValue() {
         return this.value;
     }
-	
+		
 	private final double value;
 }
