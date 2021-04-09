@@ -62,7 +62,7 @@ public class Sick extends Person {
 	 * 
 	 * @return Contagious time
 	 */
-	protected long getContagiousTime() {
+	public long getContagiousTime() {
 		return m_contagiousTime;
 	}
 	

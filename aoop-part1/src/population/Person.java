@@ -63,9 +63,18 @@ public abstract class Person {
 	
 	/**
 	 * 
+	 * @param p - Person object
+	 * @return The distance between to persons
+	 */
+	public double distance(Person p) {
+		return Math.sqrt(Math.pow(m_location.getX()-p.m_location.getX(), 2)+Math.pow(m_location.getY()-p.m_location.getY(), 2));
+	}
+	
+	/**
+	 * 
 	 * @return The age of the current Person
 	 */
-	protected int getAge() {
+	public int getAge() {
 		return m_age;
 	}
 	
