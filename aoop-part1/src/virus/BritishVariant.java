@@ -16,8 +16,12 @@ public class BritishVariant implements IVirus {
 	}
 	
 	public boolean tryToContagion(Person p1, Person p2){
-		
-			// d - distance between 2 people
-			return min(1, 0.14 * exp(2 - 0.25 * d));
+		if(p2.healthCondition() != "Sick") {
+			double d = p1.distance(p2);
+			return contagionProbability(p2) * Math.min(1, 0);
+			
+		}
+		// d - distance between 2 people
+					return min(1, 0.14 * exp(2 - 0.25 * d));
 		}
 }

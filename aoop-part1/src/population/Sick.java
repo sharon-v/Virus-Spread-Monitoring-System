@@ -31,7 +31,7 @@ public class Sick extends Person {
 	
 	@Override
 	public String toString() {
-		return super.toString() + "The person got infected at " + m_contagiousTime + " in the " + m_virus + "virus.";
+		return super.toString() + "Status: Sick.\nThe person got infected at " + m_contagiousTime + " in the " + m_virus + "virus.";
 	}
 	
 	@Override
@@ -72,6 +72,11 @@ public class Sick extends Person {
 	 */
 	protected IVirus getVirus() {
 		return m_virus;
+	}
+	
+	@Override
+	public String healthCondition() {
+		return "Sick";
 	}
 	
 	private long m_contagiousTime;

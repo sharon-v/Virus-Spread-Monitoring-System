@@ -6,21 +6,32 @@ import simulation.Clock;
 
 public class Healthy extends Person{
 	
+	/**
+	 * Constractor
+	 * @param age - age input
+	 * @param location - location input
+	 * @param settlement - settlement input
+	 */
 	public Healthy(int age, Point location, Settlement settlement) {
 		super(age, location, settlement);
 	}
 	
+	@Override
 	public double contagionProbability() {
 		return 1; //???
 	}
 	
+	/**
+	 * 
+	 * @return vaccinated object of the current Person
+	 */
 	public Person vaccinate() {
 		return new Vaccinated(getAge(), getLocation(), getSettelement(), Clock.now());
 	}
 	
 	@Override
 	public String toString() {
-		return super.toString() + " This person is healthy."; 
+		return super.toString() + " \nStatus: Healthy."; 
 	}
 	
 	@Override
@@ -29,6 +40,11 @@ public class Healthy extends Person{
 			return false;
 		Healthy h = (Healthy) o;
 		return super.equals(h); //????
+	}
+	
+	@Override
+	public String healthCondition() {
+		return "Healthy";
 	}
 
 }

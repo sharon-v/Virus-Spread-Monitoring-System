@@ -1,5 +1,7 @@
 package location;
 
+import population.Person;
+
 public class Point {
 	/**
 	 * constructor
@@ -30,6 +32,15 @@ public class Point {
 		Point p = (Point)o;
 		return m_x == p.m_x && m_y == p.m_y;
 		}
+	
+	/**
+	 * 
+	 * @param p - Point object
+	 * @return The distance between to points
+	 */
+	public double distance(Point p) {
+		return Math.sqrt(Math.pow(m_x-p.m_x, 2)+Math.pow(m_y-p.m_y, 2));
+	}
 	
 	public int getX() {return m_x;}
 	public int getY() {return m_y;}

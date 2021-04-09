@@ -14,7 +14,13 @@ public class Convalescent extends Person {
 		return 0.2; //????
 	}
 	
+	public  String healthCondition() {
+		return "Convalescent";
+		
+	}
+	
 	public String toString() {
+		return super.toString() + "\nStatus: Convalescent.";
 		
 	}
 	
