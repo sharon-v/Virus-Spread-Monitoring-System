@@ -5,6 +5,12 @@ import location.Point;
 import population.Person;
 
 public abstract class Settlement {
+	/**
+	 * 
+	 * @param name - name of the Settlement
+	 * @param location - Location of the Settlement
+	 * @param people - Person array of residents in Settlement
+	 */
 	public Settlement(String name, Location location, Person[] people) {
 		m_name = name;
 		m_location = location;
@@ -51,20 +57,27 @@ public abstract class Settlement {
 	 */
 	public Point randomLocation() {
 		int xMax, yMax, xMin, yMin;
-		xMax = xMin = m_people[0].getLocation().getX();
-		yMax = yMin = m_people[0].getLocation().getY();
-		for(int i = 1; i < m_people.length; ++i) {
-			int temp = m_people[i].getLocation().getX();
-			if(temp > xMax)
-				xMax = temp;
-			else if(temp < xMin)
-				xMin = temp;
-			temp = m_people[i].getLocation().getY();
-			if(temp > yMax)
-				yMax = temp;
-			else if(temp < yMin)
-				yMin = temp;
-		}
+		xMin = m_location.getPoint().getX();
+		yMax = m_location.getPoint().getY();
+		xMax = xMin + m_location.getSize().getWidth();
+		yMin = yMax - m_location.getSize().getHeith();
+		
+		// DELETE !!!!!!!!!!!
+//		xMax = xMin = m_people[0].getLocation().getX();
+//		yMax = yMin = m_people[0].getLocation().getY();
+//		for(int i = 1; i < m_people.length; ++i) {
+//			int temp = m_people[i].getLocation().getX();
+//			if(temp > xMax)
+//				xMax = temp;
+//			else if(temp < xMin)
+//				xMin = temp;
+//			temp = m_people[i].getLocation().getY();
+//			if(temp > yMax)
+//				yMax = temp;
+//			else if(temp < yMin)
+//				yMin = temp;
+//		}
+		
 		int randX = xMin + (int)(Math.random() * ((xMax - xMin) + 1));
 		int randY = yMin + (int)(Math.random() * ((yMax - yMin) + 1));
 		return new Point(randX, randY);
