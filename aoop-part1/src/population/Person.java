@@ -54,6 +54,8 @@ public abstract class Person {
 		return p.getAge() == m_age && m_location.equals(p.getLocation());
 	}
 	
+	protected abstract String healthCondition();
+	
 	/**
 	 * 
 	 * @return The age of the current Person
@@ -66,7 +68,7 @@ public abstract class Person {
 	 * 
 	 * @return The location of the current Person
 	 */
-	protected Point getLocation() {
+	public Point getLocation() {
 		return new Point(m_location); //??
 	}
 	

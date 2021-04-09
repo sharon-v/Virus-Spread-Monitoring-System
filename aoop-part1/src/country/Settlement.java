@@ -49,7 +49,21 @@ public abstract class Settlement {
 	 * @return random location in the settlement
 	 */
 	public Location randomLocation() {
-		//???
+		int xMax, yMax, xMin, yMin;
+		xMax = xMin = m_people[0].getLocation().getX();
+		yMax = yMin = m_people[0].getLocation().getY();
+		for(int i = 1; i < m_people.length; ++i) {
+			int temp = m_people[i].getLocation().getX();
+			if(temp > xMax)
+				xMax = temp;
+			else if(temp < xMin)
+				xMin = temp;
+			temp = m_people[i].getLocation().getY();
+			if(temp > yMax)
+				yMax = temp;
+			else if(temp < yMin)
+				yMin = temp;
+		}
 	}
 	
 	/**
