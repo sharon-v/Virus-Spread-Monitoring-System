@@ -1,7 +1,7 @@
 package country;
 
 import location.Location;
-import location.Size;
+import location.Point;
 import population.Person;
 
 public abstract class Settlement {
@@ -11,10 +11,6 @@ public abstract class Settlement {
 		m_people = people;
 		m_ramzorColor = RamzorColor.GREEN;	// default
 	}
-	
-//	public Settlement(Settlement s) {
-//		this()
-//	}
 	
 	@Override
 	public String toString() {
@@ -41,14 +37,19 @@ public abstract class Settlement {
 	 * @return percentage of sick people in a certain range
 	 */
 	public double contagiousPercent() {// 0 to 1 max
-		//???
+		int amountSick = 0;
+		for(int i = 0; i < m_people.length; ++i) {
+			if(m_people[i].healthCondition() == "Sick")
+				++amountSick;
+		}
+		return amountSick / m_people.length;
 	}
 	
 	/**
 	 * 
-	 * @return random location in the settlement
+	 * @return random Point in the settlement
 	 */
-	public Location randomLocation() {
+	public Point randomLocation() {
 		int xMax, yMax, xMin, yMin;
 		xMax = xMin = m_people[0].getLocation().getX();
 		yMax = yMin = m_people[0].getLocation().getY();
@@ -64,6 +65,9 @@ public abstract class Settlement {
 			else if(temp < yMin)
 				yMin = temp;
 		}
+		int randX = xMin + (int)(Math.random() * ((xMax - xMin) + 1));
+		int randY = yMin + (int)(Math.random() * ((yMax - yMin) + 1));
+		return new Point(randX, randY);
 	}
 	
 	/**
@@ -72,8 +76,29 @@ public abstract class Settlement {
 	 * @return true if Person added successfully to settlement
 	 */
 	public boolean addPerson(Person p) {
-		//???
 		// use equals no 2 people the same
+		if(findPerson(p))
+			return false;	// person is already in settlement
+		Person[] temp = new Person[m_people.length + 1];
+		for(int i = 0; i < m_people.length; ++i) {
+			temp[i] = m_people[i];
+		}
+		temp[m_people.length] = p;
+		m_people = temp;
+		return true;
+	}
+	
+	/**
+	 * 
+	 * @param p - a Person to search
+	 * @return true if the person already exists in the settlement
+	 */
+	private boolean findPerson(Person p) {
+		for(int i = 0; i < m_people.length; ++i) {
+			if(m_people[i].equals(p))
+				return true;
+		}
+		return false;
 	}
 	
 	/**
