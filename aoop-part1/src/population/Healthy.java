@@ -20,7 +20,7 @@ public class Healthy extends Person{
 	
 	@Override
 	public String toString() {
-		return super.toString() + "The person is healthy."; //???
+		return super.toString() + " This person is healthy."; 
 	}
 	
 	@Override

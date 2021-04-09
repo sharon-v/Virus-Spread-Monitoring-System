@@ -1,6 +1,6 @@
 package simulation;
 
-public static class Clock {
+public class Clock {
 	public static long now() {
 		return m_currentTime;
 	}
