@@ -13,13 +13,18 @@ public class SimulationFile {
 	 * Constractor
 	 */
 	public SimulationFile() {
-		
+		// need to implement
 	}
 	
+	/**
+	 * Read from the file
+	 */
 	public void ReadFromFile() {
+		FileReader fr;
+		BufferedReader br;
 		try {
-			FileReader fr = new FileReader("settlement.txt");
-			BufferedReader br = new BufferedReader(fr);
+			fr = new FileReader("settlement.txt");
+			br = new BufferedReader(fr);
 			String settl = br.readLine();
 			while(br != null) {
 				String[] settlDeteails = settl.split(";");
