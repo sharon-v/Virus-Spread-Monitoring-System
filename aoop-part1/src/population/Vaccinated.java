@@ -25,6 +25,12 @@ public class Vaccinated extends Person {
 			return Math.max(0.05, (1.05/(m_vaccinationTime-14)));
 	}
 	
+
+	@Override
+	public String healthCondition() {
+		return "Vaccinated";
+	}
+	
 	@Override
 	public String toString() {
 		return super.toString() + "\nStatus: Vaccinated.\nThe person got vaccinated at " + m_vaccinationTime + " .";
@@ -46,11 +52,6 @@ public class Vaccinated extends Person {
 		return m_vaccinationTime;
 	}
 	
-	@Override
-	public String healthCondition() {
-		return "Vaccinated";
-	}
-	
+	//attributes
 	private long m_vaccinationTime;
-
 }

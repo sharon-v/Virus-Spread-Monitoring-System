@@ -14,7 +14,7 @@ public abstract class Settlement {
 	public Settlement(String name, Location location, Person[] people) {
 		m_name = name;
 		m_location = location;
-		m_people = people;
+		m_people = people; //?? - deep copy
 		m_ramzorColor = RamzorColor.GREEN;	// default
 	}
 	

@@ -26,7 +26,7 @@ public class Sick extends Person {
 	
 	@Override
 	public double contagionProbability() {
-		return 1; //??
+		return 1; 
 	}
 	
 	@Override
@@ -71,7 +71,7 @@ public class Sick extends Person {
 	 * @return Virus type
 	 */
 	protected IVirus getVirus() {
-		return m_virus;
+		return m_virus; //deep copy ????
 	}
 	
 	@Override
@@ -79,6 +79,7 @@ public class Sick extends Person {
 		return "Sick";
 	}
 	
+	//attributes
 	private long m_contagiousTime;
 	private IVirus m_virus;
 

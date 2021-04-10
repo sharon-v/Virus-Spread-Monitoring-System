@@ -95,6 +95,7 @@ public abstract class Person {
 	}
 	
 	
+	//attributes
 	private int m_age;
 	private Point m_location;
 	private Settlement m_settlement;

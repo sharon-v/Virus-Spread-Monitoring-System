@@ -18,7 +18,7 @@ public class Healthy extends Person{
 	
 	@Override
 	public double contagionProbability() {
-		return 1; //???
+		return 1; 
 	}
 	
 	/**
@@ -46,5 +46,4 @@ public class Healthy extends Person{
 	public String healthCondition() {
 		return "Healthy";
 	}
-
 }

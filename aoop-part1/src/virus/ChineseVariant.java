@@ -5,6 +5,8 @@ import population.Sick;
 import simulation.Clock;
 
 public class ChineseVariant implements IVirus {
+	
+	//attributes
 	public static final double deathProbTo18 = 0.0001;
 	public static final double deathProb18To55	 = 0.05;
 	public static final double deathProb55Above = 0.1;
@@ -28,7 +30,7 @@ public class ChineseVariant implements IVirus {
 	public boolean tryToContagion(Person p1, Person p2){
 		if(p2.healthCondition() != "Sick") {
 			double d = p1.distance(p2); // distance between 2 people
-			if(contagionProbability(p2) * Math.min(1, 0.14 * Math.exp(2 - 0.25 * d)) != 1)
+			if(contagionProbability(p2) * Math.min(1, 0.14 * Math.exp(2 - 0.25 * d)) < 1)
 				return false; //??
 			else 
 				return true;
