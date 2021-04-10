@@ -19,7 +19,7 @@ public class SimulationFile {
 	/**
 	 * Read from the file
 	 */
-	public void ReadFromFile() {
+	public void readFromFile() {
 		FileReader fr;
 		BufferedReader br;
 		try {
@@ -36,7 +36,7 @@ public class SimulationFile {
 				int settlementPopulationAmount = Integer.parseInt(settlDeteails[6]);
 				Person [] population = new Person[settlementPopulationAmount]; // create the population array
 				for(int i=0;i<settlementPopulationAmount;++i) 
-					population[0] = new Healthy(RandomAge(), settlementLocation,??? ); //??
+					population[0] = new Healthy(randomAge(), settlementLocation,??? ); //??
 				Map newMap = new Map();
 				if(settlementType == "City")
 					newMap.addSettlement(new City(settlemntName, settlementLocation, population));
@@ -63,7 +63,7 @@ public class SimulationFile {
 	 * 
 	 * @return A random age of person
 	 */
-	public int RandomAge() {
+	public int randomAge() {
 		 int standardDeviation = 6;
 		 int Mean = 9; //Average
 		 Random ran = new Random();
@@ -74,5 +74,6 @@ public class SimulationFile {
 		 int y = (int) Math.random()*(yMax - yMin +1) + yMin; // random number for y
 		 return (5*x + y);
 		
-	}
-}
+	} // Class NormalDistribution
+}	  // NormalDistribution(double mean, double sd)
+
