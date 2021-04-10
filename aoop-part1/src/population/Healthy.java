@@ -7,7 +7,7 @@ import simulation.Clock;
 public class Healthy extends Person{
 	
 	/**
-	 * Constractor
+	 * Constructor
 	 * @param age - age input
 	 * @param location - location input
 	 * @param settlement - settlement input
