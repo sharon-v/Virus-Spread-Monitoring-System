@@ -15,11 +15,11 @@ public class SimulationFile {
 	public SimulationFile() {
 		// need to implement
 	}
-	
+
 	/**
 	 * Read from the file
 	 */
-	public void readFromFile() {
+	public void readFromFile(Map map) {
 		FileReader fr;
 		BufferedReader br;
 		String filePath;
@@ -35,46 +35,47 @@ public class SimulationFile {
 				Size settlementSize = new Size(Integer.parseInt(settlDeteails[4]), Integer.parseInt(settlDeteails[5]));
 				Location settlementLocation = new Location(settlementPoint, settlementSize); //??
 				int settlementPopulationAmount = Integer.parseInt(settlDeteails[6]);
+
 				Person [] population = new Person[settlementPopulationAmount]; // create the population array
-				for(int i=0;i<settlementPopulationAmount;++i) 
-					population[0] = new Healthy(randomAge(), settlementLocation,??? ); //??
-				Map newMap = new Map();
+				for(int i = 0; i < settlementPopulationAmount; ++i) 
+					population[0] = new Healthy(randomAge(), settlementLocation, ??? ); // reference to settlement
+				//	Map newMap = new Map();
 				if(settlementType == "City")
-					newMap.addSettlement(new City(settlemntName, settlementLocation, population));
+					map.addSettlement(new City(settlemntName, settlementLocation, population));
 				else if(settlementType == "Moshav")
-					newMap.addSettlement(new Moshav(settlemntName, settlementLocation, population));
+					map.addSettlement(new Moshav(settlemntName, settlementLocation, population));
 				else if(settlementType == "Kibbutz")
-					newMap.addSettlement(new Kibbutz(settlemntName, settlementLocation, population));
+					map.addSettlement(new Kibbutz(settlemntName, settlementLocation, population));
 				settl = br.readLine();
 			}
 		}
 		catch (FileNotFoundException e) {
-			throw e; //???? 
+			throw e; 
 		}
 		catch (IOException e) {
-			System.err.println(e.getMessage()); //????? 
+			System.err.println(e.getMessage()); 
+			throw e;
 		}
 		finally {
 			br.close();
 			fr.close();
 		}
 	}
-	
+
 	/**
 	 * 
 	 * @return A random age of person
 	 */
 	public int randomAge() {
-		 int standardDeviation = 6;
-		 int Mean = 9; //Average
-		 Random ran = new Random();
-		 // generating integer
-		 int x = (int)ran.nextGaussian() * standardDeviation + Mean; // random number for x by normal distribution
-		 int yMin = 0; //???
-		 int yMax = 4 ; //???
-		 int y = (int)Math.random() * (yMax - yMin + 1) + yMin; // random number for y
-		 return (5 * x + y);
-		
-	} // Class NormalDistribution
-}	  // NormalDistribution(double mean, double sd)
+		int standardDeviation = 6;
+		int Mean = 9; // Average
+		Random ran = new Random();
+		// generating integer
+		int x = (int) ran.nextGaussian() * standardDeviation + Mean; // random number for x by normal distribution
+		int yMin = 0; // ???
+		int yMax = 4; // ???
+		int y = (int) Math.random() * (yMax - yMin + 1) + yMin; // random number for y
+		return (5 * x + y);
 
+	} // Class NormalDistribution
+} // NormalDistribution(double mean, double sd)
