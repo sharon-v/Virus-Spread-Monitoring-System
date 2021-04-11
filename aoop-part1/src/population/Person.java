@@ -95,6 +95,13 @@ public abstract class Person {
 		return m_settlement; //???
 	}
 	
+	/**
+	 * 
+	 * @param s - new Settlement
+	 */
+	public void setSettlement(Settlement s) {
+		m_settlement = s;
+	}
 	
 	//attributes
 	private int m_age;
