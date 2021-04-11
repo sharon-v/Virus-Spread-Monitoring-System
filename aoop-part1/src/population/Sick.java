@@ -58,7 +58,7 @@ public class Sick extends Person {
 	 * @return if the person will die or not
 	 */
 	public boolean tryToDie() {
-		return m_virus.tryToKill(this); //??
+		return m_virus.tryToKill(this); 
 	}
 	
 	/**
@@ -74,7 +74,7 @@ public class Sick extends Person {
 	 * @return Virus type
 	 */
 	public IVirus getVirus() {
-		return m_virus; //deep copy ????
+		return m_virus; 
 	}
 	
 	@Override

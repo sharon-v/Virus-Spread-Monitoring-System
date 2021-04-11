@@ -44,13 +44,13 @@ public abstract class Person {
 	 * @return Sick object of the current Person
 	 */
 	public Person contagion(IVirus virus) { 
-		return new Sick(m_age, m_location, m_settlement, Clock.now(), virus);	
+		return new Sick(m_age, m_location, m_settlement, virus);	
 	}
 	
 	
 	@Override
 	public String toString() {
-		return "This person is " + m_age + " he lives in " + m_settlement + ", location is " + m_location;
+		return "This person is " + m_age + " he lives in " + m_settlement + ", location is " + m_location; 
 	} 
 	
 	@Override
