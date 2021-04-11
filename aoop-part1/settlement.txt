@@ -1,8 +1,3 @@
-שם ישוב - string
-מיקום - location ------> מיקום = point---> x, y ; גודל- size ---> width, height
-אנשים - list<person>
-צבע רמזור - ramzorColor
-
 City;Ashdod;0;0;90;50;1000
 city;Beer-Sheva;30;0;80;80;1200
 Moshav;Gevim;15;15;10;20;100
