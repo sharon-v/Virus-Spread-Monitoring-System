@@ -20,8 +20,8 @@ public abstract class Settlement {
 	
 	@Override
 	public String toString() {
-		return "settlement name: " + m_name + ", location: " + m_location 
-				+ ", num of people: " + m_people.length + "color grade: " + m_ramzorColor;
+		return "settlement name: " + m_name + "\nlocation: " + m_location + "\ncolor grade: " + m_ramzorColor
+				+ "\nnum of people: " + m_people.length + toStringPeople();
 	}
 	
 	@Override
@@ -100,6 +100,17 @@ public abstract class Settlement {
 	
 	/**
 	 * 
+	 * @return toString of all the residents in the Settlement
+	 */
+	private String toStringPeople() {
+		String str = "residents: \n";
+		for (int i = 0; i < m_people.length; ++i)
+			str += m_people[i].toString() + "\n";
+		return str;
+	}
+
+	/**
+	 * 
 	 * @param p - person to transfer
 	 * @param s - new settlement to transfer Person into
 	 * @return true if successfully transferred
@@ -116,6 +127,14 @@ public abstract class Settlement {
 	
 	public Person[] getPeople() {
 		return m_people;
+	}
+
+	/**
+	 * 
+	 * @return Settlement name
+	 */
+	public String getSettlementName() {
+		return m_name;
 	}
 
 	/**
