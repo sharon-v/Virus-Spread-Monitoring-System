@@ -35,7 +35,8 @@ public class ChineseVariant implements IVirus {
 			else 
 				return true;
 		}
-		return false;
+		throw new UnsupportedOperationException("You can't get sick twice man !!");
+//		return false;
 	}
 	
 	@Override
