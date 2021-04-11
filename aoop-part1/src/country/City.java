@@ -1,7 +1,6 @@
 package country;
 
 import location.Location;
-import population.Person;
 
 public class City extends Settlement {
 	/**
@@ -10,8 +9,8 @@ public class City extends Settlement {
 	 * @param location - location input
 	 * @param people - Person array for the settlement
 	 */
-	public City(String name, Location location, Person[] people) {
-		super(name, location, people);
+	public City(String name, Location location) {
+		super(name, location);
 	}
 	
 	@Override

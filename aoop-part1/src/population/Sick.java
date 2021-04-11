@@ -2,6 +2,7 @@ package population;
 
 import country.Settlement;
 import location.Point;
+import simulation.Clock;
 import virus.IVirus;
 
 public class Sick extends Person {
@@ -13,9 +14,9 @@ public class Sick extends Person {
 	 * @param contagiousTime - contagious Time input  
 	 * @param virus - virus type input
 	 */
-	public Sick(int age, Point location, Settlement settlement, long contagiousTime, IVirus virus) {
+	public Sick(int age, Point location, Settlement settlement, IVirus virus) {
 		super(age, location, settlement);
-		m_contagiousTime = contagiousTime;
+		m_contagiousTime = Clock.now();
 		m_virus = virus;
 		}
 	

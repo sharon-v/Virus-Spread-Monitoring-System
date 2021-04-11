@@ -11,10 +11,10 @@ public abstract class Settlement {
 	 * @param location - Location of the Settlement
 	 * @param people - Person array of residents in Settlement
 	 */
-	public Settlement(String name, Location location, Person[] people) {
+	public Settlement(String name, Location location) {
 		m_name = name;
 		m_location = location;
-		m_people = people; //?? - deep copy
+		m_people = null;
 		m_ramzorColor = RamzorColor.GREEN;	// default
 	}
 	
@@ -114,13 +114,17 @@ public abstract class Settlement {
 	 */
 	protected RamzorColor getRamzorColor() {return m_ramzorColor;}
 	
+	public Person[] getPeople() {
+		return m_people;
+	}
+
 	/**
 	 * set method
 	 * @param r - new RamzorColor of the settlement
 	 */
 	protected void setRamzorColor(RamzorColor r) {m_ramzorColor = r;}
 	
-	public Person[] getPeople() {return m_people;}
+	// set people???
 	
 	
 	private final String m_name;
