@@ -22,8 +22,9 @@ public class SimulationFile {
 	public void readFromFile() {
 		FileReader fr;
 		BufferedReader br;
+		String filePath;
 		try {
-			fr = new FileReader("settlement.txt");
+			fr = new FileReader(filePath);// need to receive path
 			br = new BufferedReader(fr);
 			String settl = br.readLine();
 			while(br != null) {
