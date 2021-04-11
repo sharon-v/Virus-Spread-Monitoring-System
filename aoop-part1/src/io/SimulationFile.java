@@ -12,17 +12,16 @@ public class SimulationFile {
 	/**
 	 * Constractor
 	 */
-	public SimulationFile() {
+	public SimulationFile(Map map, String filePath) {
 		// need to implement
 	}
 
 	/**
 	 * Read from the file
 	 */
-	public void readFromFile(Map map) {
+	public void readFromFile(Map map, String filePath) {
 		FileReader fr;
 		BufferedReader br;
-		String filePath;
 		try {
 			fr = new FileReader(filePath);// need to receive path
 			br = new BufferedReader(fr);

@@ -72,7 +72,7 @@ public class Sick extends Person {
 	 * 
 	 * @return Virus type
 	 */
-	protected IVirus getVirus() {
+	public IVirus getVirus() {
 		return m_virus; //deep copy ????
 	}
 	

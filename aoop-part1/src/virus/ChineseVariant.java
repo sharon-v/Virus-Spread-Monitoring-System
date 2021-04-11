@@ -28,7 +28,7 @@ public class ChineseVariant implements IVirus {
 	
 	@Override
 	public boolean tryToContagion(Person p1, Person p2){
-		double randonNumber = Math.random();
+		double randonNumber = Math.random()*2;
 		if(p2.healthCondition() != "Sick") {
 			double d = p1.distance(p2); // distance between 2 people
 			if(contagionProbability(p2) * Math.min(1, 0.14 * Math.exp(2 - 0.25 * d)) > randonNumber)
@@ -36,13 +36,13 @@ public class ChineseVariant implements IVirus {
 			else 
 				return false;
 		}
-		throw new UnsupportedOperationException("You can't get sick twice man !!"); //where to catch this
-//		return false;
+//		throw new UnsupportedOperationException("You can't get sick twice man !!"); //where to catch this
+		return false;
 	}
 	
 	@Override
 	public boolean tryToKill(Sick s) {
-		double randonNumber = Math.random();
+		double randonNumber = Math.random()*2;
 		double p ; //the probability to die according to age
 		if(s.getAge() <= 18)
 			p = deathProbTo18;

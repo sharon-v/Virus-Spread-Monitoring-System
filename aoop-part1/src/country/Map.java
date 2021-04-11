@@ -26,5 +26,9 @@ public class Map {
 		temp[m_settlement.length - 1] = s;
 	}
 	
+	public Settlement[] getSettlementArr() {
+		return m_settlement;
+	}
+	
 	private Settlement m_settlement[];
 }

@@ -120,6 +120,9 @@ public abstract class Settlement {
 	 */
 	protected void setRamzorColor(RamzorColor r) {m_ramzorColor = r;}
 	
+	public Person[] getPeople() {return m_people;}
+	
+	
 	private final String m_name;
 	private final Location m_location;
 	private Person[] m_people;
