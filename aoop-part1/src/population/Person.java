@@ -7,7 +7,7 @@ import virus.IVirus;
 public abstract class Person {
 	
 	/**
-	 * Constractor
+	 * Constructor
 	 * @param age - age input 
 	 * @param location - location input
 	 * @param settlement - input settlement
@@ -19,7 +19,7 @@ public abstract class Person {
 	}
 	
 	/**
-	 * Copy constractor
+	 * Copy constructor
 	 * @param p - Person input
 	 */
 	public Person(Person p) {
@@ -67,7 +67,8 @@ public abstract class Person {
 	 * @return The distance between to persons
 	 */
 	public double distance(Person p) {
-		return Math.sqrt(Math.pow(m_location.getX()-p.m_location.getX(), 2)+Math.pow(m_location.getY()-p.m_location.getY(), 2));
+		return Math.sqrt(Math.pow(m_location.getX() - p.m_location.getX(), 2) 
+				+ Math.pow(m_location.getY() - p.m_location.getY(), 2));
 	}
 	
 	/**

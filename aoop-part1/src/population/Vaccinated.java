@@ -6,7 +6,7 @@ import location.Point;
 public class Vaccinated extends Person {
 	
 	/**
-	 * Constractor
+	 * Constructor
 	 * @param age - age input 
 	 * @param location - location input
 	 * @param settlement - settlement input
@@ -20,9 +20,9 @@ public class Vaccinated extends Person {
 	@Override
 	public double contagionProbability() {
 		if(m_vaccinationTime < 21)
-			return Math.min(1, (0.56+0.15*Math.sqrt(21-m_vaccinationTime)));
+			return Math.min(1, (0.56 + 0.15 * Math.sqrt(21 - m_vaccinationTime)));
 		else
-			return Math.max(0.05, (1.05/(m_vaccinationTime-14)));
+			return Math.max(0.05, (1.05 / (m_vaccinationTime - 14)));
 	}
 	
 

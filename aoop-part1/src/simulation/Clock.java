@@ -3,7 +3,7 @@ package simulation;
 public class Clock {
 	
 	/**
-	 * Constractor
+	 * Constructor
 	 */
 	public Clock() {
 		m_currentTime = 0;
@@ -25,5 +25,5 @@ public class Clock {
 	}
 	
 	//attributes
-	private static long  m_currentTime;
+	private static long m_currentTime;
 }

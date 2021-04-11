@@ -6,7 +6,7 @@ import virus.IVirus;
 
 public class Sick extends Person {
 	/**
-	 * Constractor
+	 * Constructor
 	 * @param age - age input
 	 * @param location - location input
 	 * @param settlement - settlement input
@@ -31,7 +31,8 @@ public class Sick extends Person {
 	
 	@Override
 	public String toString() {
-		return super.toString() + "Status: Sick.\nThe person got infected at " + m_contagiousTime + " in the " + m_virus + "virus.";
+		return super.toString() + "Status: Sick.\nThe person got infected at " + m_contagiousTime 
+				+ " with the " + m_virus + "virus.";
 	}
 	
 	@Override
@@ -39,7 +40,8 @@ public class Sick extends Person {
 		if(!(o instanceof Sick))
 			return false;
 		Sick s = (Sick) o;
-		return super.equals(s) && m_contagiousTime == s.getContagiousTime() && m_virus == s.getVirus();
+		return super.equals(s) && m_contagiousTime == s.getContagiousTime() 
+				&& m_virus == s.getVirus();
 	}
 	
 	/**

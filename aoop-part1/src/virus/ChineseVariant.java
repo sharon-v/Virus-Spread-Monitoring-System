@@ -48,7 +48,7 @@ public class ChineseVariant implements IVirus {
 		else 
 			p = deathProb55Above; 
 		long t = Clock.now() - s.getContagiousTime(); //the time that passed since contagion 
-		if(Math.max(0, p-0.01*p*Math.pow(t-15, 2)) != 1)
+		if(Math.max(0, p - 0.01 * p * Math.pow(t  -15, 2)) != 1)
 			return false; //???
 		return true;
 	}
