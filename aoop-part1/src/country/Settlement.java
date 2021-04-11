@@ -79,6 +79,7 @@ public abstract class Settlement {
 		for(int i = 0; i < m_people.length; ++i) {
 			temp[i] = m_people[i];
 		}
+		p.setSettlement() = this;
 		temp[m_people.length] = p;
 		m_people = temp;
 		return true;
