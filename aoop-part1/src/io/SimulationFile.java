@@ -29,39 +29,42 @@ public class SimulationFile {
 	public void readFromFile(Map map, String filePath) {
 		FileReader fr;
 		BufferedReader br;
-		try {
-			fr = new FileReader(filePath);// need to receive path
-			br = new BufferedReader(fr);
-			String settl = br.readLine();
-			while (br != null) {
-				String[] settlDeteails = settl.split(";");
-				String settlementType = settlDeteails[0];
-				String settlemntName = settlDeteails[1];
-				Point settlementPoint = new Point(Integer.parseInt(settlDeteails[2]),
-						Integer.parseInt(settlDeteails[3]));// convert from string to integer
-				Size settlementSize = new Size(Integer.parseInt(settlDeteails[4]), Integer.parseInt(settlDeteails[5]));
-				Location settlementLocation = new Location(settlementPoint, settlementSize); // ??
-				int settlementPopulationAmount = Integer.parseInt(settlDeteails[6]);
+		fr = new FileReader(filePath);// need to receive path
+		br = new BufferedReader(fr);
+		String settl = br.readLine();
+		while (br != null) {
+			String[] settlDeteails = settl.split(";");
+			String settlementType = settlDeteails[0];
+			String settlemntName = settlDeteails[1];
+			Point settlementPoint = new Point(Integer.parseInt(settlDeteails[2]), Integer.parseInt(settlDeteails[3]));// convert
+																														// from
+																														// string
+																														// to
+																														// integer
+			Size settlementSize = new Size(Integer.parseInt(settlDeteails[4]), Integer.parseInt(settlDeteails[5]));
+			Location settlementLocation = new Location(settlementPoint, settlementSize); // ??
+			int settlementPopulationAmount = Integer.parseInt(settlDeteails[6]);
 
-				Settlement mySettlement;
-				if (settlementType == "City")
-					mySettlement = new City(settlemntName, settlementLocation);
-				else if (settlementType == "Moshav")
-					mySettlement = new Moshav(settlemntName, settlementLocation);
-				else // "Kibbutz"
-					mySettlement = new Kibbutz(settlemntName, settlementLocation);
-				map.addSettlement(mySettlement);
+			Settlement mySettlement;
+			if (settlementType == "City")
+				mySettlement = new City(settlemntName, settlementLocation);
+			else if (settlementType == "Moshav")
+				mySettlement = new Moshav(settlemntName, settlementLocation);
+			else // "Kibbutz"
+				mySettlement = new Kibbutz(settlemntName, settlementLocation);
+			map.addSettlement(mySettlement);
 
-				Person[] population = new Person[settlementPopulationAmount]; // create the population array
-				for (int i = 0; i < settlementPopulationAmount; ++i)
-					population[0] = new Healthy(randomAge(), mySettlement.randomLocation(), mySettlement); // reference
-				// to
-				// settlement
-				settl = br.readLine();
-			} 
-//				br.close();
-//				fr.close();
-	}
+			Person[] population = new Person[settlementPopulationAmount]; // create the population array
+			for (int i = 0; i < settlementPopulationAmount; ++i)
+				population[0] = new Healthy(randomAge(), mySettlement.randomLocation(), mySettlement); // reference
+			// to
+			// settlement
+			settl = br.readLine();
+		} // end while
+		br.close();
+		fr.close();
+	}// EXCEPTION!!!!!!
+
 
 	/**
 	 * 
