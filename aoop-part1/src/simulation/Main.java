@@ -12,6 +12,7 @@ public class Main {
 		try {
 			myMap.executeSimulation(); // third stage
 		} catch (Exception e) {
+			System.out.println(e);
 			System.out.println("an unexpected ERROR has occurred :(");
 		}
 	}

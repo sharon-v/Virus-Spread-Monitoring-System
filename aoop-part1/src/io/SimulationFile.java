@@ -28,7 +28,7 @@ public class SimulationFile {
 			fr = new FileReader(filePath);// need to receive path
 			br = new BufferedReader(fr);
 			String settl = br.readLine();
-			while (br != null) {
+			while (settl != null) {
 				String[] settlDeteails = settl.split(";");
 				String settlementType = settlDeteails[0];
 				String settlemntName = settlDeteails[1];
@@ -43,8 +43,10 @@ public class SimulationFile {
 					mySettlement = new City(settlemntName, settlementLocation);
 				else if (settlementType.equals("Moshav"))
 					mySettlement = new Moshav(settlemntName, settlementLocation);
-				else // "Kibbutz"
+				else if (settlementType.equals("Kibbutz")) 
 					mySettlement = new Kibbutz(settlemntName, settlementLocation);
+				else
+					throw new Exception("No such settlement !");
 				map.addSettlement(mySettlement);
 
 				for (int i = 0; i < settlementPopulationAmount; ++i)
@@ -53,8 +55,7 @@ public class SimulationFile {
 				settl = br.readLine();
 			} // end while
 		} catch (Exception e) {
-			System.out.println("readFromfile...simoulation");
-
+			System.out.println(e);
 		} finally {
 			br.close();
 			fr.close();
