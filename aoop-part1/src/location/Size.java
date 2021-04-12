@@ -18,8 +18,6 @@ public class Size {
 	 */
 	public Size(Size s) {
 		this(s.getWidth(), s.getHeith());
-//		this.m_width = s.getWidth();
-//		this.m_height = s.getHeith();
 	}
 	
 	public String toString() {

@@ -58,7 +58,7 @@ public class Sick extends Person {
 			return false;
 		Sick s = (Sick) o;
 		return super.equals(s) && m_contagiousTime == s.getContagiousTime() 
-				&& m_virus == s.getVirus();
+				&& m_virus.equals(s.getVirus());
 	}
 	
 	/**

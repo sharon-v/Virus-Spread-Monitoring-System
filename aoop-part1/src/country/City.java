@@ -17,7 +17,6 @@ public class City extends Settlement {
 	protected RamzorColor calculateRamzorGrade() {
 		double p = contagiousPercent();
 		double res = 0.2 * Math.pow(4, 1.25 * p);
-		// setRamzorColor(getRamzorColor().doubleToRamzorColor(res));
 		return getRamzorColor().doubleToRamzorColor(res); // ???
 	}
 

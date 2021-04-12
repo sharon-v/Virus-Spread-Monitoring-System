@@ -44,7 +44,7 @@ public class Convalescent extends Person {
 		if(!(o instanceof Convalescent))
 			return false;
 		Convalescent s = (Convalescent) o;
-		return super.equals(s) && m_virus == s.getVirus();
+		return super.equals(s) && m_virus.equals(s.getVirus());
 	}
 	
 	protected IVirus getVirus() {

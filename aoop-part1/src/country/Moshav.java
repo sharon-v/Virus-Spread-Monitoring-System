@@ -10,7 +10,7 @@ public class Moshav extends Settlement {
 	 * @param people - Person array for the settlement
 	 */
 	public Moshav(String name, Location location) {
-		super(name, location);
+		super(name, new Location(location));
 	}
 	
 	@Override

@@ -74,7 +74,7 @@ public class Map {
 		{
 			people = m_settlement[i].getPeople();
 			for (int j = 0; j < people.length; ++j) {// run over the population of each settlement
-				if (people[j].healthCondition() == "Sick")
+				if (people[j].healthCondition().equals("Sick"))
 					randomContagion(people, people[j]);
 
 			}

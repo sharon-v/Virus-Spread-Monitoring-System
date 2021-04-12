@@ -39,9 +39,9 @@ public class SimulationFile {
 				int settlementPopulationAmount = Integer.parseInt(settlDeteails[6]);
 
 				Settlement mySettlement;
-				if (settlementType == "City")
+				if (settlementType.equals("City"))
 					mySettlement = new City(settlemntName, settlementLocation);
-				else if (settlementType == "Moshav")
+				else if (settlementType.equals("Moshav"))
 					mySettlement = new Moshav(settlemntName, settlementLocation);
 				else // "Kibbutz"
 					mySettlement = new Kibbutz(settlemntName, settlementLocation);

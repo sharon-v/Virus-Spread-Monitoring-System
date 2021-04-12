@@ -11,6 +11,14 @@ public class Location {
 		m_size = new Size(s);
 	}
 	
+	/**
+	 * 
+	 * @param location
+	 */
+	public Location(Location location) {
+		this(new Point(location.getPoint()), new Size(location.getSize()));
+	}
+
 	public String toString() {
 		return "point: " + m_point + ", size: " + m_size;
 	}

@@ -33,7 +33,7 @@ public abstract class Settlement {
 		if (!(o instanceof Settlement))
 			return false;
 		Settlement s = (Settlement)o;
-		return m_name == s.m_name && m_location == s.m_location;
+		return m_name.equals(s.m_name) && m_location.equals(s.m_location);
 		}
 
 	/**
@@ -49,7 +49,7 @@ public abstract class Settlement {
 	public double contagiousPercent() {// 0 to 1 max
 		int amountSick = 0;
 		for(int i = 0; i < m_people.length; ++i) {
-			if(m_people[i].healthCondition() == "Sick")
+			if (m_people[i].healthCondition().equals("Sick"))
 				++amountSick;
 		}
 		return amountSick / m_people.length;
