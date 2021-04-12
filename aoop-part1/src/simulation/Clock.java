@@ -14,7 +14,7 @@ public class Clock {
 	 * @return The current time
 	 */
 	public static long now() {
-		nextTick();// ????
+		nextTick();
 		return m_currentTime;
 	}
 	

@@ -2,15 +2,15 @@ package population;
 
 import country.Settlement;
 import location.Point;
-import simulation.Clock;
 import virus.IVirus;
 
 public class Healthy extends Person{
 	
 	/**
 	 * Constructor
-	 * @param age - age input
-	 * @param location - location input
+	 * 
+	 * @param age        - age input
+	 * @param location   - Point input
 	 * @param settlement - settlement input
 	 */
 	public Healthy(int age, Point location, Settlement settlement) {
@@ -27,7 +27,7 @@ public class Healthy extends Person{
 	 * @return vaccinated object of the current Person
 	 */
 	public Person vaccinate() {
-		return new Vaccinated(getAge(), getLocation(), getSettelement(), Clock.now());
+		return new Vaccinated(getAge(), getLocation(), getSettelement());
 	}
 	
 	@Override

@@ -1,9 +1,7 @@
 package io;
 
 import java.io.BufferedReader;
-import java.io.FileNotFoundException;
 import java.io.FileReader;
-import java.io.IOException;
 import java.util.Random;
 
 import country.City;
@@ -29,7 +27,7 @@ public class SimulationFile {
 			br = new BufferedReader(fr);
 			String settl = br.readLine();
 			while (settl != null) {
-				String[] settlDeteails = settl.split(";");
+				String[] settlDeteails = settl.replaceAll("\\s+", "").split(";");
 				String settlementType = settlDeteails[0];
 				String settlemntName = settlDeteails[1];
 				Point settlementPoint = new Point(Integer.parseInt(settlDeteails[2]),

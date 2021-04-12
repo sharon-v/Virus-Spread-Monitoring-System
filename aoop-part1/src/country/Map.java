@@ -4,6 +4,7 @@ import java.util.Scanner;
 
 import io.SimulationFile;
 import population.Person;
+import simulation.Clock;
 
 public class Map {
 	public Map() {
@@ -50,7 +51,6 @@ public class Map {
 			loadMap.readFromFile(this, filePath);
 		} catch (Exception e) {
 			System.out.println(e);	
-			System.out.println("loadInfo...Map");
 		} finally {
 			sc.close();
 		}
@@ -60,7 +60,7 @@ public class Map {
 	 * 
 	 */
 	public void executeSimulation() throws Exception {
-		for (int i = 0; i < 1; ++i) {
+		for (int i = 0; i < 5; ++i) {
 			System.out.println("\n		=== simulation num. " + (i + 1) + " ===");
 			simulation();
 		}
@@ -78,10 +78,11 @@ public class Map {
 			System.out.println("\n	*****settlement" + (i+1));
 			people = m_settlement[i].getPeople();
 			for (int j = 0; j < people.length; ++j) {// run over the population of each settlement
+				Clock.nextTick();
 				if (people[j].healthCondition().equals("Sick")) {
 					if(!(searchIndex(tempIndex, j))) {
 						System.out.println("\n	sick number " + (j+1));
-						randomContagion(people, people[j], tempIndex);
+						tempIndex = randomContagion(people, people[j], tempIndex);
 					}
 				}
 			}
@@ -128,7 +129,7 @@ public class Map {
 	 * @param tempIndex
 	 * @throws Exception
 	 */
-	private void randomContagion(Person[] people, Person sickPerson, int[] tempIndex) throws Exception {
+	private int[] randomContagion(Person[] people, Person sickPerson, int[] tempIndex) throws Exception {
 		for (int i = 0; i < 6; ++i) {
 			int randomIndex = (int)(Math.random() * (people.length));
 			if (sickPerson.getVirusFromPerson() == null)
@@ -145,6 +146,7 @@ public class Map {
 				}
 			}
 		}
+		return tempIndex;
 	}
 
 	private Settlement m_settlement[];

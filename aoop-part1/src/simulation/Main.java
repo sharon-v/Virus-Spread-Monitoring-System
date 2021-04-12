@@ -9,6 +9,7 @@ public class Main {
 		Map myMap = new Map();
 		myMap.loadInfo(); // first stage
 		myMap.intialization();// second stage
+
 		try {
 			myMap.executeSimulation(); // third stage
 		} catch (Exception e) {

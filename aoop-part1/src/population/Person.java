@@ -1,6 +1,7 @@
 package population;
 import country.Settlement;
 import location.Point;
+import simulation.Clock;
 import virus.IVirus;
 
 public abstract class Person {
@@ -16,6 +17,7 @@ public abstract class Person {
 		m_age = Math.abs(age);
 		m_location = location;
 		m_settlement = settlement;
+		Clock.nextTick();
 	}
 	
 	/**

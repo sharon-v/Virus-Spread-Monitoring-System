@@ -2,6 +2,7 @@ package population;
 
 import country.Settlement;
 import location.Point;
+import simulation.Clock;
 import virus.IVirus;
 
 public class Vaccinated extends Person {
@@ -13,9 +14,9 @@ public class Vaccinated extends Person {
 	 * @param settlement - settlement input
 	 * @param vaccinationTime - vaccination time input
 	 */
-	public Vaccinated(int age, Point location, Settlement settlement, long vaccinationTime) {
-		super(age, location, settlement);
-		m_vaccinationTime = vaccinationTime;
+	public Vaccinated(int age, Point location, Settlement settlement) {
+		super(age, new Point(location), settlement);
+		m_vaccinationTime = Clock.now();
 	}
 	
 	@Override
