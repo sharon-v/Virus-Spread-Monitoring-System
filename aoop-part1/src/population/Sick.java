@@ -18,8 +18,19 @@ public class Sick extends Person {
 		super(age, location, settlement);
 		m_contagiousTime = Clock.now();
 		m_virus = virus;
-		}
+	}
 	
+//	/**
+//	 * copy constructor
+//	 * 
+//	 * @param s - Sick person
+//	 */
+//	public Sick(Sick s) {
+//		super(s.getAge(), s.getLocation(), s.getSettelement());
+//		m_contagiousTime = s.getContagiousTime();
+//		m_virus = s.getVirus();
+//	}
+
 	@Override
 	public Person contagion(IVirus virus) {
 		throw new UnsupportedOperationException("You can't get sick twice man !!");
@@ -30,6 +41,11 @@ public class Sick extends Person {
 		return 1; 
 	}
 	
+	@Override
+	public IVirus getVirusFromPerson() {
+		return m_virus;
+	}
+
 	@Override
 	public String toString() {
 		return super.toString() + "Status: Sick.\nThe person got infected at " + m_contagiousTime 

@@ -1,16 +1,16 @@
 package population;
 import country.Settlement;
 import location.Point;
-import simulation.Clock;
 import virus.IVirus;
 
 public abstract class Person {
 	
 	/**
 	 * Constructor
-	 * @param age - age input 
-	 * @param location - location input
-	 * @param settlement - input settlement
+	 * 
+	 * @param age        - age input
+	 * @param location   - location input
+	 * @param settlement - settlement input
 	 */
 	public Person(int age, Point location, Settlement settlement) {
 		m_age = age;
@@ -40,6 +40,12 @@ public abstract class Person {
 	
 	/**
 	 * 
+	 * @return the IVirus of the Person
+	 */
+	public abstract IVirus getVirusFromPerson();
+
+	/**
+	 * 
 	 * @param virus - type of virus input
 	 * @return Sick object of the current Person
 	 */
@@ -50,7 +56,8 @@ public abstract class Person {
 	
 	@Override
 	public String toString() {
-		return "This person is " + m_age + " he lives in " + m_settlement + ", location is " + m_location; 
+		return "This person is " + m_age + " he lives in " + m_settlement.getSettlementName() + ", location is "
+				+ m_location;
 	} 
 	
 	@Override

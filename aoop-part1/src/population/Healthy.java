@@ -3,6 +3,7 @@ package population;
 import country.Settlement;
 import location.Point;
 import simulation.Clock;
+import virus.IVirus;
 
 public class Healthy extends Person{
 	
@@ -29,6 +30,11 @@ public class Healthy extends Person{
 		return new Vaccinated(getAge(), getLocation(), getSettelement(), Clock.now());
 	}
 	
+	@Override
+	public IVirus getVirusFromPerson() {
+		return null;
+	}
+
 	@Override
 	public String toString() {
 		return super.toString() + " \nStatus: Healthy."; 

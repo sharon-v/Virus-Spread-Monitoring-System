@@ -30,6 +30,11 @@ public class Convalescent extends Person {
 	}
 	
 	@Override
+	public IVirus getVirusFromPerson() {
+		return m_virus;
+	}
+
+	@Override
 	public String toString() {
 		return super.toString() + "\nStatus: Convalescent."; 
 	}

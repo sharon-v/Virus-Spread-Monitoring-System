@@ -3,6 +3,10 @@ package country;
 import location.Location;
 import location.Point;
 import population.Person;
+import virus.BritishVariant;
+import virus.ChineseVariant;
+import virus.IVirus;
+import virus.SouthAfricanVariant;
 
 public abstract class Settlement {
 	/**
@@ -86,6 +90,26 @@ public abstract class Settlement {
 	}
 	
 	/**
+	 * removes a dead Person from Settlement
+	 * 
+	 * @param p - Person to delete
+	 * @return true if Person deleted successfully
+	 */
+	public boolean removePerson(Person p) {
+		if (findPerson(p))
+			return false; // person is in settlement
+		Person[] temp = new Person[m_people.length - 1]; // decrease 1 in size
+		for (int i = 0; i < m_people.length; ++i) {
+			if (m_people[i].equals(p))
+				temp[i] = m_people[++i];
+			else
+				temp[i] = m_people[i];
+		}
+		m_people = temp;
+		return true;
+	}
+
+	/**
 	 * 
 	 * @param p - a Person to search
 	 * @return true if the person already exists in the settlement
@@ -119,6 +143,24 @@ public abstract class Settlement {
 		return true; // for this part of the project
 	}
 	
+	public void infectOnePercent() {
+		// calculate 1%
+		double amount = m_people.length * 0.01;
+		int randomIndex;
+		IVirus virus;
+		for(int i = 0; i < amount; ++i) {
+			randomIndex = (int)Math.random() * (m_people.length);
+			if(randomIndex % 3 == 0)
+				virus = new ChineseVariant();
+			else if(randomIndex % 3 == 1)
+				virus = new BritishVariant();
+			else 
+				virus = new SouthAfricanVariant();
+
+			m_people[randomIndex] = m_people[randomIndex].contagion(virus);
+		}
+	}
+
 	/**
 	 * get method
 	 * @return current RamzorColor

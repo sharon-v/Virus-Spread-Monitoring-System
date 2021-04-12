@@ -1,5 +1,10 @@
 package country;
 
+import java.util.Scanner;
+
+import io.SimulationFile;
+import population.Person;
+
 public class Map {
 	public Map() {
 		m_settlement = null;
@@ -36,9 +41,65 @@ public class Map {
 		return str;
 	}
 
-	public Settlement[] getSettlementArr() {
-		return m_settlement;
+	public void loadInfo() {
+		Scanner sc = new Scanner(System.in);
+		System.out.println("Please enter the file path: ");
+		String filePath = sc.nextLine();
+		try {
+			SimulationFile loadMap = new SimulationFile();
+			loadMap.readFromFile(this, filePath);
+		} catch (Exception e) {
+			System.out.println(e);
+		} finally {
+			sc.close();
+		}
 	}
-	
+
+	/**
+	 * 
+	 */
+	public void executeSimulation() throws Exception {
+		for (int i = 0; i < 5; ++i) {
+			System.out.println("=== simulation num. " + i + " ===");
+			simulation();
+		}
+	}
+
+	/**
+	 * 
+	 */
+	private void simulation() throws Exception {
+		Person[] people;
+		for (int i = 0; i < m_settlement.length; ++i) // run over settlements
+		{
+			people = m_settlement[i].getPeople();
+			for (int j = 0; j < people.length; ++j) {// run over the population of each settlement
+				if (people[j].healthCondition() == "Sick")
+					randomContagion(people, people[j]);
+
+			}
+		}
+	}
+
+	public void intialization() { // 1%
+		for (int i = 0; i < m_settlement.length; ++i) {
+			m_settlement[i].infectOnePercent();
+		}
+	}
+
+	private void randomContagion(Person[] people, Person sickPerson) throws Exception {
+		for (int i = 0; i < 6; ++i) {
+			int randomIndex = (int) Math.random() * (people.length);
+			if (sickPerson.getVirusFromPerson() == null)
+				throw new Exception("this person isn't sick...");
+			if (!(sickPerson.getVirusFromPerson().tryToContagion(sickPerson, people[randomIndex])))
+				System.out.println("Contagion failed !! :)");
+			else {
+				System.out.println("Contagion succeeded !! :(");
+				people[randomIndex] = people[randomIndex].contagion(sickPerson.getVirusFromPerson());
+			}
+		}
+	}
+
 	private Settlement m_settlement[];
 }

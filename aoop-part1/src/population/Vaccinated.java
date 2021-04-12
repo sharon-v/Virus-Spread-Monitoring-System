@@ -2,6 +2,7 @@ package population;
 
 import country.Settlement;
 import location.Point;
+import virus.IVirus;
 
 public class Vaccinated extends Person {
 	
@@ -31,6 +32,11 @@ public class Vaccinated extends Person {
 		return "Vaccinated";
 	}
 	
+	@Override
+	public IVirus getVirusFromPerson() {
+		return null;
+	}
+
 	@Override
 	public String toString() {
 		return super.toString() + "\nStatus: Vaccinated.\nThe person got vaccinated at " + m_vaccinationTime + " .";

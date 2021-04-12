@@ -14,6 +14,7 @@ public class Clock {
 	 * @return The current time
 	 */
 	public static long now() {
+		nextTick();// ????
 		return m_currentTime;
 	}
 	
@@ -25,5 +26,5 @@ public class Clock {
 	}
 	
 	//attributes
-	private static long m_currentTime;
+	private static long m_currentTime; // when to advance
 }
