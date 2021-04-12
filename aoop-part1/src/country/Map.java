@@ -26,7 +26,7 @@ public class Map {
 		for(int i = 0; i < m_settlement.length; ++i) {
 			temp[i] = m_settlement[i];
 		}
-		temp[m_settlement.length - 1] = s;
+		temp[temp.length - 1] = s;
 		m_settlement = temp;
 	}
 	
@@ -89,13 +89,13 @@ public class Map {
 
 	private void randomContagion(Person[] people, Person sickPerson) throws Exception {
 		for (int i = 0; i < 6; ++i) {
-			int randomIndex = (int) Math.random() * (people.length);
+			int randomIndex = (int)(Math.random() * (people.length));
 			if (sickPerson.getVirusFromPerson() == null)
 				throw new Exception("this person isn't sick...");
 			if (!(sickPerson.getVirusFromPerson().tryToContagion(sickPerson, people[randomIndex])))
-				System.out.println("Contagion failed !! :)");
+				System.out.println("Low contagion probability --> Contagion failed !! :)");
 			else {
-				System.out.println("Contagion succeeded !! :(");
+				System.out.println("High contagion probability --> Contagion succeeded !! :(");
 				people[randomIndex] = people[randomIndex].contagion(sickPerson.getVirusFromPerson());
 			}
 		}

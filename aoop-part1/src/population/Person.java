@@ -13,7 +13,7 @@ public abstract class Person {
 	 * @param settlement - settlement input
 	 */
 	public Person(int age, Point location, Settlement settlement) {
-		m_age = age;
+		m_age = Math.abs(age);
 		m_location = location;
 		m_settlement = settlement;
 	}

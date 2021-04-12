@@ -18,7 +18,7 @@ public abstract class Settlement {
 	public Settlement(String name, Location location) {
 		m_name = name;
 		m_location = location;
-		m_people = null;
+		m_people = new Person[0];
 		m_ramzorColor = RamzorColor.GREEN;	// default
 	}
 	
@@ -149,15 +149,20 @@ public abstract class Settlement {
 		int randomIndex;
 		IVirus virus;
 		for(int i = 0; i < amount; ++i) {
-			randomIndex = (int)Math.random() * (m_people.length);
+			randomIndex = (int)(Math.random() * (m_people.length));
 			if(randomIndex % 3 == 0)
 				virus = new ChineseVariant();
 			else if(randomIndex % 3 == 1)
 				virus = new BritishVariant();
 			else 
 				virus = new SouthAfricanVariant();
-
-			m_people[randomIndex] = m_people[randomIndex].contagion(virus);
+			try {
+				m_people[randomIndex] = m_people[randomIndex].contagion(virus);
+			}
+			catch(Exception e){
+				System.out.println(e);
+				--i;
+			}
 		}
 	}
 

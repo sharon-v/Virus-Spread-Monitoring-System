@@ -48,7 +48,8 @@ public class SimulationFile {
 				map.addSettlement(mySettlement);
 
 				for (int i = 0; i < settlementPopulationAmount; ++i)
-					mySettlement.addPerson(new Healthy(randomAge(), mySettlement.randomLocation(), mySettlement)); // reference
+					if(!mySettlement.addPerson(new Healthy(randomAge(), mySettlement.randomLocation(), mySettlement)))
+							--i;
 				settl = br.readLine();
 			} // end while
 		} catch (FileNotFoundException e) {
@@ -71,7 +72,7 @@ public class SimulationFile {
 		int Mean = 9; // Average
 		Random ran = new Random();
 		// generating integer
-		int x = (int) ran.nextGaussian() * standardDeviation + Mean; // random number for x by normal distribution
+		int x = (int)(ran.nextGaussian() * standardDeviation + Mean); // random number for x by normal distribution
 		int yMin = 0; // ???
 		int yMax = 4; // ???
 		int y = (int) Math.random() * (yMax - yMin + 1) + yMin; // random number for y
