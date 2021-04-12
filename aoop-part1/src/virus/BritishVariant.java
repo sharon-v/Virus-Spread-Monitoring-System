@@ -29,8 +29,7 @@ public class BritishVariant implements IVirus {
 			else 
 				return false;
 		}
-		throw new UnsupportedOperationException("You can't get sick twice man !!"); //where to catch this
-//		return false;
+		return false;
 	}
 	
 	@Override

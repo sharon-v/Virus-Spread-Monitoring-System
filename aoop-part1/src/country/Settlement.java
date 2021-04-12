@@ -145,7 +145,7 @@ public abstract class Settlement {
 	
 	public void infectOnePercent() {
 		// calculate 1%
-		double amount = m_people.length * 0.01;
+		int amount = (int)(m_people.length * 0.01);
 		int randomIndex;
 		IVirus virus;
 		for(int i = 0; i < amount; ++i) {
