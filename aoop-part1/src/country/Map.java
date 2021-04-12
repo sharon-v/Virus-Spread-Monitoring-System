@@ -26,7 +26,7 @@ public class Map {
 		for(int i = 0; i < m_settlement.length; ++i) {
 			temp[i] = m_settlement[i];
 		}
-		temp[temp.length - 1] = s;
+		temp[m_settlement.length] = s;
 		m_settlement = temp;
 	}
 	
@@ -49,7 +49,8 @@ public class Map {
 			SimulationFile loadMap = new SimulationFile();
 			loadMap.readFromFile(this, filePath);
 		} catch (Exception e) {
-			System.out.println(e);
+			System.out.println(e);	
+			System.out.println("loadInfo...Map");
 		} finally {
 			sc.close();
 		}

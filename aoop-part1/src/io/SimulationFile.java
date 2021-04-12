@@ -52,9 +52,8 @@ public class SimulationFile {
 							--i;
 				settl = br.readLine();
 			} // end while
-		} catch (FileNotFoundException e) {
-
-		} catch (IOException e) {
+		} catch (Exception e) {
+			System.out.println("readFromfile...simoulation");
 
 		} finally {
 			br.close();

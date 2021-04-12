@@ -161,7 +161,7 @@ public abstract class Settlement {
 			}
 			catch(Exception e){
 				System.out.println(e);
-				--i;
+				System.out.println("infactoneprecent...settlement");
 			}
 		}
 	}

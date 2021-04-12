@@ -6,7 +6,7 @@ kibbutz;Erez;6;11;20;30;150
 kibbutz;Bari;20;4;10;10;170
 City;Eilat;15;20;30;15;1300
 City;Tel-Aviv;20;0;40;40;2000
-Moshav;Bitzaron;45;0;14;15; 90
+Moshav;Bitzaron;45;0;14;15;90
 Moshav;Hagor;20;10;30;20;200
 kibbutz;Bet-Kama;70;80;21;29;210
 kibbutz;Zikim;37;41;34;31;109
