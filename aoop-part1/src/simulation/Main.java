@@ -8,11 +8,11 @@ public class Main {
 		// TODO Auto-generated method stub
 		Map myMap = new Map();
 		myMap.loadInfo(); // first stage
-//		myMap.intialization();// second stage
-//		try {
-//			myMap.executeSimulation(); // third stage
-//		} catch (Exception e) {
-//			System.out.println("an unexpected ERROR has occurred :(");
-//		}
+		myMap.intialization();// second stage
+		try {
+			myMap.executeSimulation(); // third stage
+		} catch (Exception e) {
+			System.out.println("an unexpected ERROR has occurred :(");
+		}
 	}
 }

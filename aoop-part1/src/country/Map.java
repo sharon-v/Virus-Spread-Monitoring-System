@@ -7,7 +7,7 @@ import population.Person;
 
 public class Map {
 	public Map() {
-		m_settlement = null;
+		m_settlement = new Settlement[0];
 	}
 	
 	public String toString() {
