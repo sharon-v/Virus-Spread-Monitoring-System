@@ -15,13 +15,26 @@ public class BritishVariant implements IVirus {
 	public static final double contagionProb = 0.7;
 
 	@Override
+	public String toString() {
+		return "British Variant";
+	}
+
+	@Override
+	public boolean equals(Object o) {
+		if (!(o instanceof BritishVariant))
+			return false;
+		BritishVariant b = (BritishVariant) o;
+		return toString().equals(b.toString());
+	}
+
+	@Override
 	public double contagionProbability(Person p) {
 		return contagionProb * p.contagionProbability();
 	}
 	
 	@Override
 	public boolean tryToContagion(Person p1, Person p2){
-		double randonNumber = Math.min(1, Math.random() * (1.0001));
+		double randonNumber = Math.random();
 		if(p2.healthCondition() != "Sick") {
 			double d = p1.distance(p2); // distance between 2 people
 			if(contagionProbability(p2) * Math.min(1, 0.14 * Math.exp(2 - 0.25 * d)) > randonNumber)
@@ -34,7 +47,7 @@ public class BritishVariant implements IVirus {
 	
 	@Override
 	public boolean tryToKill(Sick s) {
-		double randonNumber = Math.min(1, Math.random() * (1.0001));
+		double randonNumber = Math.random(); // [0, 1)
 		double p ; //the probability to die according to age
 		if(s.getAge() <= 18)
 			p = deathProbTo18;

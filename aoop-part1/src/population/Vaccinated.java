@@ -40,7 +40,7 @@ public class Vaccinated extends Person {
 
 	@Override
 	public String toString() {
-		return super.toString() + "\nStatus: Vaccinated.\nThe person got vaccinated at " + m_vaccinationTime + " .";
+		return super.toString() + ",\tstatus: Vaccinated,\tvaccination time: " + m_vaccinationTime;
 	}
 	
 	@Override

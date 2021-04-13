@@ -14,7 +14,7 @@ public abstract class Person {
 	 * @param settlement - settlement input
 	 */
 	public Person(int age, Point location, Settlement settlement) {
-		m_age = Math.abs(age);
+		m_age = age; // abs???
 		m_location = location;
 		m_settlement = settlement;
 		Clock.nextTick();
@@ -58,8 +58,7 @@ public abstract class Person {
 	
 	@Override
 	public String toString() {
-		return "This person is " + m_age + " he lives in " + m_settlement.getSettlementName() + ", location is "
-				+ m_location;
+		return "age: " + m_age + ",\tsettlement: " + m_settlement.getSettlementName() + ",\tlocation: " + m_location;
 	} 
 	
 	@Override

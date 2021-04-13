@@ -36,7 +36,7 @@ public class Convalescent extends Person {
 
 	@Override
 	public String toString() {
-		return super.toString() + "\nStatus: Convalescent."; 
+		return super.toString() + ",\tstatus: Convalescent, \tvirus: " + m_virus;
 	}
 	
 	@Override

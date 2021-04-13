@@ -48,8 +48,7 @@ public class Sick extends Person {
 
 	@Override
 	public String toString() {
-		return super.toString() + "Status: Sick.\nThe person got infected at " + m_contagiousTime 
-				+ " with the " + m_virus + "virus.";
+		return super.toString() + ",\tstatus: Sick,\tcontagious time: " + m_contagiousTime + ",\tvirus: " + m_virus;
 	}
 	
 	@Override

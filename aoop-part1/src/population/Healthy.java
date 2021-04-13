@@ -37,7 +37,7 @@ public class Healthy extends Person{
 
 	@Override
 	public String toString() {
-		return super.toString() + " \nStatus: Healthy."; 
+		return super.toString() + ",\tstatus: Healthy";
 	}
 	
 	@Override

@@ -36,7 +36,7 @@ public class Map {
 	 * @return toString of all the Settlement in the Map
 	 */
 	private String toStringSettlements() {
-		String str = "settlements: \n";
+		String str = "=== settlements ===\n";
 		for (int i = 0; i < m_settlement.length; ++i)
 			str += m_settlement[i].toString() + "\n";
 		return str;
@@ -75,7 +75,7 @@ public class Map {
 		int[] tempIndex = new int[0];
 		for (int i = 0; i < m_settlement.length; ++i) // run over settlements
 		{
-			System.out.println("\n	*****settlement" + (i+1));
+			System.out.println("\n\t-- settlement " + (i + 1) + "--");
 			people = m_settlement[i].getPeople();
 			for (int j = 0; j < people.length; ++j) {// run over the population of each settlement
 				Clock.nextTick();
