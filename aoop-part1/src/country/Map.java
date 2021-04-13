@@ -3,8 +3,6 @@ package country;
 import java.util.Scanner;
 
 import io.SimulationFile;
-import population.Person;
-import simulation.Clock;
 
 public class Map {
 	/**
@@ -13,6 +11,16 @@ public class Map {
 	public Map() {
 		m_settlement = new Settlement[0];
 	}
+	
+//	public void test() {
+//		System.out.println(m_settlement[5]);
+//		System.out.println(m_settlement[5].removePerson(m_settlement[5].getP()[5]));
+//		System.out.println("try" + m_settlement[5].getP()[5]+"end");
+//		
+//		System.out.println(m_settlement[5]);
+//		System.out.println(m_settlement[2].getP()[2].equals(m_settlement[2].getP()[2]));
+//		System.out.println(m_settlement[2].getP()[2].equals(m_settlement[2].getP()[1]));
+//	}
 	
 	@Override
 	public String toString() {
@@ -69,61 +77,19 @@ public class Map {
 	public void executeSimulation() throws Exception {
 		for (int i = 0; i < 5; ++i) {
 			System.out.println("\n		=== simulation num. " + (i + 1) + " ===");
-			simulation();
+			for (int j = 0; j < m_settlement.length; ++j) // run over settlements
+			{
+				System.out.println("\n\t-- settlement " + (j + 1) + "--");
+				m_settlement[j].simulation();
+				System.out.println(m_settlement[j]);
+				
+			}
 		}
 		System.out.println("			THE END !! ");
 	}
 
-	/**
-	 * one simulation operation
-	 */
-	private void simulation() throws Exception {
-		Person[] people;
-		int[] tempIndex = new int[0];
-		for (int i = 0; i < m_settlement.length; ++i) // run over settlements
-		{
-			System.out.println("\n\t-- settlement " + (i + 1) + "--");
-			people = m_settlement[i].getPeople();
-			for (int j = 0; j < people.length; ++j) {// run over the population of each settlement
-				Clock.nextTick();
-				if (people[j].healthCondition().equals("Sick")) {
-					if(!(searchIndex(tempIndex, j))) {
-						System.out.println("\n	sick number " + (j+1));
-						tempIndex = randomContagion(people, people[j], tempIndex);
-					}
-				}
-			}
-		}
-	}
 
-	/**
-	 * updates array of new sick Persons indexes
-	 * 
-	 * @param tempIndex
-	 * @param index
-	 */
-	private int[] addTempIndex(int[] tempIndex, int index) {
-		int[] temp = new int[tempIndex.length + 1];
-		for(int i = 0; i < tempIndex.length; ++i)
-			temp[i] = tempIndex[i];
-		temp[tempIndex.length] = index;
-		return temp;
-		
-	}
-	
-	/**
-	 * searches for a certain index in array
-	 * 
-	 * @param tempIndex
-	 * @param index
-	 * @return
-	 */
-	private boolean searchIndex(int[] tempIndex, int index) {
-		for(int i = 0; i < tempIndex.length; ++i)
-			if(tempIndex[i] == index)
-				return true;
-		return false;
-	}
+
 	
 	/**
 	 * initializes the Settlements with sick people
@@ -132,35 +98,6 @@ public class Map {
 		for (int i = 0; i < m_settlement.length; ++i) {
 			m_settlement[i].infectOnePercent();
 		}
-	}
-
-	/**
-	 * chooses randomly six people to try to infect for each sick Person currently
-	 * in the Settlement
-	 * 
-	 * @param people     - array of Persons
-	 * @param sickPerson - reference to a Sick Person
-	 * @param tempIndex  - index of a new Sick Person
-	 * @throws Exception - thrown if we try to infect a Sick Person
-	 */
-	private int[] randomContagion(Person[] people, Person sickPerson, int[] tempIndex) throws Exception {
-		for (int i = 0; i < 6; ++i) {
-			int randomIndex = (int)(Math.random() * (people.length));
-			if (sickPerson.getVirusFromPerson() == null)
-				throw new Exception("this person isn't sick...");
-			if (!(sickPerson.getVirusFromPerson().tryToContagion(sickPerson, people[randomIndex])))
-				System.out.println("Low contagion probability --> Contagion failed !! :)");
-			else {
-				System.out.println("High contagion probability --> Contagion succeeded !! :(");
-				try {
-					people[randomIndex] = people[randomIndex].contagion(sickPerson.getVirusFromPerson());
-					tempIndex = addTempIndex(tempIndex, randomIndex);
-				}catch(Exception e) {
-					System.out.println(e);
-				}
-			}
-		}
-		return tempIndex;
 	}
 
 	private Settlement m_settlement[];// array of Settlements

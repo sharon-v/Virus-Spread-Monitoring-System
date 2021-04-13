@@ -15,7 +15,7 @@ public abstract class Person {
 	 */
 	public Person(int age, Point location, Settlement settlement) {
 		m_age = age; // abs???
-		m_location = location;
+		m_location = new Point(location);
 		m_settlement = settlement;
 		Clock.nextTick();
 	}
