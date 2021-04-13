@@ -17,7 +17,7 @@ import population.Healthy;
 public class SimulationFile {
 
 	/**
-	 * Read from file
+	 * reads from file
 	 */
 	public void readFromFile(Map map, String filePath) throws Exception {
 		FileReader fr = null;
@@ -62,6 +62,7 @@ public class SimulationFile {
 
 
 	/**
+	 * chooses a random age
 	 * 
 	 * @return A random age of person
 	 */
@@ -70,11 +71,10 @@ public class SimulationFile {
 		int Mean = 9; // Average
 		Random ran = new Random();
 		// generating integer
-		int x = (int)(ran.nextGaussian() * standardDeviation + Mean); // random number for x by normal distribution
+		double x = (ran.nextGaussian() * standardDeviation + Mean); // random number for x by normal distribution
 		int yMin = 0;
 		int yMax = 4;
-		int y = (int) Math.random() * (yMax - yMin + 1) + yMin; // random number for y
-		return (5 * x + y);
-
+		double y = Math.random() * (yMax - yMin + 1) + yMin; // random number for y
+		return (int) (5 * x + y);
 	}
 }

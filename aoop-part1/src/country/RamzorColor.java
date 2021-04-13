@@ -6,15 +6,26 @@ public enum RamzorColor {
 	ORANGE(0.8),	// up to
 	RED(1.0);		// up to
 	
+	/**
+	 * constructor
+	 * 
+	 * @param value - double type input
+	 */
 	private RamzorColor(double value) {
 		this.value = value;
 	}
 	
+	/**
+	 * get method
+	 * 
+	 * @return value of the RamzorColor parameter in type double
+	 */
 	public double getValue() {
         return this.value;
     }
 	
 	/**
+	 * converts double to RamzorColor
 	 * 
 	 * @param d - double input
 	 * @return corresponding RamzorColor for the double input
@@ -30,5 +41,5 @@ public enum RamzorColor {
 			return RED;
 	}
 	
-	private final double value;
+	private final double value; // value of the parameters
 }

@@ -37,13 +37,13 @@ public abstract class Settlement {
 		}
 
 	/**
-	 * 
+	 * calculates the Settlements RamzorColor grade
 	 * @return new RamzorColor Grade
 	 */
 	protected abstract RamzorColor calculateRamzorGrade();
 	
 	/**
-	 * 
+	 * calculates percent of Sick Persons in Settlement
 	 * @return percentage of sick people in a certain range
 	 */
 	public double contagiousPercent() {// 0 to 1 max
@@ -56,7 +56,7 @@ public abstract class Settlement {
 	}
 	
 	/**
-	 * 
+	 * chooses randomly a Point in Settlement
 	 * @return random Point in the settlement
 	 */
 	public Point randomLocation() {
@@ -71,7 +71,7 @@ public abstract class Settlement {
 	}
 	
 	/**
-	 * 
+	 * adds a new Person to Settlement
 	 * @param p - new person to add
 	 * @return true if Person added successfully to settlement
 	 */
@@ -110,7 +110,7 @@ public abstract class Settlement {
 	}
 
 	/**
-	 * 
+	 * checks if a certain Person is in Settlement
 	 * @param p - a Person to search
 	 * @return true if the person already exists in the settlement
 	 */
@@ -123,18 +123,18 @@ public abstract class Settlement {
 	}
 	
 	/**
-	 * 
+	 * calls toSting method for all Persons in Settlement
 	 * @return toString of all the residents in the Settlement
 	 */
 	private String toStringPeople() {
-		String str = "residents: \n";
+		String str = "\n-- residents -- \n";
 		for (int i = 0; i < m_people.length; ++i)
 			str += m_people[i].toString() + "\n";
 		return str;
 	}
 
 	/**
-	 * 
+	 * move a Person from one Settlement to another
 	 * @param p - person to transfer
 	 * @param s - new settlement to transfer Person into
 	 * @return true if successfully transferred
@@ -143,6 +143,9 @@ public abstract class Settlement {
 		return true; // for this part of the project
 	}
 	
+	/**
+	 * infects 1 percent of the population in each of the Settlements
+	 */
 	public void infectOnePercent() {
 		// calculate 1%
 		int amount = (int)(m_people.length * 0.01);
@@ -172,11 +175,17 @@ public abstract class Settlement {
 	 */
 	protected RamzorColor getRamzorColor() {return m_ramzorColor;}
 	
+	/**
+	 * get method
+	 * 
+	 * @return reference to Persons array
+	 */
 	public Person[] getPeople() {
 		return m_people;
 	}
 
 	/**
+	 * get method
 	 * 
 	 * @return Settlement name
 	 */
@@ -193,9 +202,9 @@ public abstract class Settlement {
 	// set people???
 	
 	
-	private final String m_name;
-	private final Location m_location;
-	private Person[] m_people;
-	private RamzorColor m_ramzorColor;
+	private final String m_name;// Settlement's name
+	private final Location m_location;// Settlement's Location
+	private Person[] m_people;// Settlement's residents
+	private RamzorColor m_ramzorColor;// Settlement's RamzorColor grade
 	
 }

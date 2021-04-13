@@ -40,7 +40,7 @@ public class Vaccinated extends Person {
 
 	@Override
 	public String toString() {
-		return super.toString() + ",\tstatus: Vaccinated,\tvaccination time: " + m_vaccinationTime;
+		return super.toString() + "\tstatus: Vaccinated\tvaccination time: " + m_vaccinationTime;
 	}
 	
 	@Override
@@ -52,6 +52,7 @@ public class Vaccinated extends Person {
 	}
 	
 	/**
+	 * get method
 	 * 
 	 * @return vaccination time
 	 */
@@ -60,5 +61,5 @@ public class Vaccinated extends Person {
 	}
 	
 	//attributes
-	private long m_vaccinationTime;
+	private long m_vaccinationTime;// vaccination time
 }

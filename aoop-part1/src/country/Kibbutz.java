@@ -4,10 +4,11 @@ import location.Location;
 
 public class Kibbutz extends Settlement {
 	/**
+	 * constructor
 	 * 
-	 * @param name - name input
+	 * @param name     - name input
 	 * @param location - location input
-	 * @param people - Person array for the settlement
+	 * @param people   - Person array for the settlement
 	 */
 	public Kibbutz(String name, Location location) {
 		super(name, new Location(location));

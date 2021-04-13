@@ -10,9 +10,9 @@ import simulation.Clock;
 public class BritishVariant implements IVirus {
 	
 	//attributes
-	public static final double deathProbTo18 = 0.01;
-	public static final double deathProb18Above = 0.1;
-	public static final double contagionProb = 0.7;
+	public static final double deathProbTo18 = 0.01;// death probability up to 18
+	public static final double deathProb18Above = 0.1;// death probability above 18
+	public static final double contagionProb = 0.7;// contagion probability all ages
 
 	@Override
 	public String toString() {

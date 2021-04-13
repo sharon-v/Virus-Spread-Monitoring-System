@@ -10,8 +10,9 @@ public class Clock {
 	}
 	
 	/**
+	 * get method
 	 * 
-	 * @return The current time
+	 * @return current time
 	 */
 	public static long now() {
 		nextTick();
@@ -19,12 +20,12 @@ public class Clock {
 	}
 	
 	/**
-	 * Increase the time in 1
+	 * increase current time in 1
 	 */
 	public static void nextTick() {
 		++m_currentTime;
 	}
 	
 	//attributes
-	private static long m_currentTime; // when to advance
+	private static long m_currentTime; // current time
 }

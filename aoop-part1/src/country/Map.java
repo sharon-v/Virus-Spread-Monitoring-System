@@ -7,10 +7,14 @@ import population.Person;
 import simulation.Clock;
 
 public class Map {
+	/**
+	 * constructor
+	 */
 	public Map() {
 		m_settlement = new Settlement[0];
 	}
 	
+	@Override
 	public String toString() {
 		return "amount of settlements: " + m_settlement.length + "\n" + toStringSettlements();
 	}
@@ -42,6 +46,9 @@ public class Map {
 		return str;
 	}
 
+	/**
+	 * manages input of data from file
+	 */
 	public void loadInfo() {
 		Scanner sc = new Scanner(System.in);
 		System.out.println("Please enter the file path: ");
@@ -57,7 +64,7 @@ public class Map {
 	}
 
 	/**
-	 * 
+	 * manages simulation sequence
 	 */
 	public void executeSimulation() throws Exception {
 		for (int i = 0; i < 5; ++i) {
@@ -68,7 +75,7 @@ public class Map {
 	}
 
 	/**
-	 * 
+	 * one simulation operation
 	 */
 	private void simulation() throws Exception {
 		Person[] people;
@@ -90,6 +97,7 @@ public class Map {
 	}
 
 	/**
+	 * updates array of new sick Persons indexes
 	 * 
 	 * @param tempIndex
 	 * @param index
@@ -104,6 +112,7 @@ public class Map {
 	}
 	
 	/**
+	 * searches for a certain index in array
 	 * 
 	 * @param tempIndex
 	 * @param index
@@ -116,6 +125,9 @@ public class Map {
 		return false;
 	}
 	
+	/**
+	 * initializes the Settlements with sick people
+	 */
 	public void intialization() { // 1%
 		for (int i = 0; i < m_settlement.length; ++i) {
 			m_settlement[i].infectOnePercent();
@@ -123,11 +135,13 @@ public class Map {
 	}
 
 	/**
+	 * chooses randomly six people to try to infect for each sick Person currently
+	 * in the Settlement
 	 * 
-	 * @param people
-	 * @param sickPerson
-	 * @param tempIndex
-	 * @throws Exception
+	 * @param people     - array of Persons
+	 * @param sickPerson - reference to a Sick Person
+	 * @param tempIndex  - index of a new Sick Person
+	 * @throws Exception - thrown if we try to infect a Sick Person
 	 */
 	private int[] randomContagion(Person[] people, Person sickPerson, int[] tempIndex) throws Exception {
 		for (int i = 0; i < 6; ++i) {
@@ -149,5 +163,5 @@ public class Map {
 		return tempIndex;
 	}
 
-	private Settlement m_settlement[];
+	private Settlement m_settlement[];// array of Settlements
 }

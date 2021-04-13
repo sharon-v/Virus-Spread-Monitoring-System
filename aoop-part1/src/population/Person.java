@@ -29,24 +29,28 @@ public abstract class Person {
 	}
 	
 	/**
+	 * the probability of a certain Person to get infected
 	 * 
 	 * @return probability of infection
 	 */
 	public abstract double contagionProbability(); // ?? need to return 1 as default
 	
 	/**
+	 * current status of Person
 	 * 
 	 * @return the health condition of the person
 	 */
 	public abstract String healthCondition();
 	
 	/**
+	 * get method
 	 * 
-	 * @return the IVirus of the Person
+	 * @return the IVirus object of the Person
 	 */
 	public abstract IVirus getVirusFromPerson();
 
 	/**
+	 * infects the Person
 	 * 
 	 * @param virus - type of virus input
 	 * @return Sick object of the current Person
@@ -55,10 +59,9 @@ public abstract class Person {
 		return new Sick(m_age, m_location, m_settlement, virus);	
 	}
 	
-	
 	@Override
 	public String toString() {
-		return "age: " + m_age + ",\tsettlement: " + m_settlement.getSettlementName() + ",\tlocation: " + m_location;
+		return "age: " + m_age + "  \tsettlement: " + m_settlement.getSettlementName() + "\tlocation: " + m_location;
 	} 
 	
 	@Override
@@ -70,6 +73,7 @@ public abstract class Person {
 	}
 	
 	/**
+	 * calculates distance
 	 * 
 	 * @param p - Person object
 	 * @return The distance between to persons
@@ -80,6 +84,7 @@ public abstract class Person {
 	}
 	
 	/**
+	 * get method
 	 * 
 	 * @return The age of the current Person
 	 */
@@ -88,22 +93,25 @@ public abstract class Person {
 	}
 	
 	/**
+	 * get method
 	 * 
-	 * @return The location of the current Person
+	 * @return a copy of the current Person's location (Point type)
 	 */
 	public Point getLocation() {
-		return new Point(m_location); //??
+		return new Point(m_location);
 	}
 	
 	/**
+	 * get method
 	 * 
-	 * @return The settlement of the current Person
+	 * @return a copy of the current Person's Settlement
 	 */
 	protected Settlement getSettelement() {
-		return m_settlement; //???
+		return m_settlement; // ???
 	}
 	
 	/**
+	 * set method
 	 * 
 	 * @param s - new Settlement
 	 */
@@ -112,7 +120,7 @@ public abstract class Person {
 	}
 	
 	//attributes
-	private int m_age;
-	private Point m_location;
-	private Settlement m_settlement;
+	private int m_age;// Person's age
+	private Point m_location;// Person's location
+	private Settlement m_settlement;// Person's settlement
 }

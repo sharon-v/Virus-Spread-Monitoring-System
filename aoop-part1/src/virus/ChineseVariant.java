@@ -7,12 +7,12 @@ import simulation.Clock;
 public class ChineseVariant implements IVirus {
 	
 	//attributes
-	public static final double deathProbTo18 = 0.0001;
-	public static final double deathProb18To55	 = 0.05;
-	public static final double deathProb55Above = 0.1;
-	public static final double contagionProbTo18 = 0.2;
-	public static final double contagionProb18To55 = 0.5;
-	public static final double contagionProb55Above = 0.7;
+	public static final double deathProbTo18 = 0.0001;// death probability up to 18
+	public static final double deathProb18To55 = 0.05;// death probability 18 to 55
+	public static final double deathProb55Above = 0.1;// death probability above 55
+	public static final double contagionProbTo18 = 0.2;// contagion probability up to 18
+	public static final double contagionProb18To55 = 0.5;// contagion probability 18 to 55
+	public static final double contagionProb55Above = 0.7;// contagion probability above 55
 
 	@Override
 	public String toString() {

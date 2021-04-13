@@ -7,11 +7,12 @@ import virus.IVirus;
 public class Convalescent extends Person {
 	
 	/**
-	 * Constractor
-	 * @param age - age input
-	 * @param location - location input
+	 * Constructor
+	 * 
+	 * @param age        - age input
+	 * @param location   - location input
 	 * @param settlement - settlement input
-	 * @param virus - virus input
+	 * @param virus      - virus input
 	 */
 	public Convalescent(int age, Point location, Settlement settlement, IVirus virus) {
 		super(age, location, settlement);
@@ -36,7 +37,7 @@ public class Convalescent extends Person {
 
 	@Override
 	public String toString() {
-		return super.toString() + ",\tstatus: Convalescent, \tvirus: " + m_virus;
+		return super.toString() + "\tstatus: Convalescent\tvirus: " + m_virus;
 	}
 	
 	@Override
@@ -47,10 +48,15 @@ public class Convalescent extends Person {
 		return super.equals(s) && m_virus.equals(s.getVirus());
 	}
 	
+	/**
+	 * get method
+	 * 
+	 * @return IVirus object of this Person
+	 */
 	protected IVirus getVirus() {
 		return m_virus;
 	}
 	
 	//Attributes
-	private IVirus m_virus;
+	private IVirus m_virus;// IVirus object of this Person
 }

@@ -20,21 +20,10 @@ public class Sick extends Person {
 		m_virus = virus;
 	}
 	
-//	/**
-//	 * copy constructor
-//	 * 
-//	 * @param s - Sick person
-//	 */
-//	public Sick(Sick s) {
-//		super(s.getAge(), s.getLocation(), s.getSettelement());
-//		m_contagiousTime = s.getContagiousTime();
-//		m_virus = s.getVirus();
-//	}
-
 	@Override
 	public Person contagion(IVirus virus) {
-		throw new UnsupportedOperationException("You can't get sick twice man !!");
-	}// where to put catch
+		throw new UnsupportedOperationException("You can't get sick twice !!");
+	}
 	
 	@Override
 	public double contagionProbability() {
@@ -48,7 +37,7 @@ public class Sick extends Person {
 
 	@Override
 	public String toString() {
-		return super.toString() + ",\tstatus: Sick,\tcontagious time: " + m_contagiousTime + ",\tvirus: " + m_virus;
+		return super.toString() + "\tstatus: Sick\t\tcontagious time: " + m_contagiousTime + "\tvirus: " + m_virus;
 	}
 	
 	@Override
@@ -59,8 +48,14 @@ public class Sick extends Person {
 		return super.equals(s) && m_contagiousTime == s.getContagiousTime() 
 				&& m_virus.equals(s.getVirus());
 	}
-	
+
+	@Override
+	public String healthCondition() {
+		return "Sick";
+	}
+
 	/**
+	 * creates a copy of the Person as a Convalescent object
 	 * 
 	 * @return Convalescent object of the current Person
 	 */
@@ -69,14 +64,16 @@ public class Sick extends Person {
 	}
 	
 	/**
+	 * tries to kill a Person
 	 * 
-	 * @return if the person will die or not
+	 * @return true if the person will die
 	 */
 	public boolean tryToDie() {
 		return m_virus.tryToKill(this); 
 	}
 	
 	/**
+	 * get method
 	 * 
 	 * @return Contagious time
 	 */
@@ -85,20 +82,17 @@ public class Sick extends Person {
 	}
 	
 	/**
+	 * get method
 	 * 
-	 * @return Virus type
+	 * @return reference to the Person's IVirus object
 	 */
 	public IVirus getVirus() {
 		return m_virus; 
 	}
 	
-	@Override
-	public String healthCondition() {
-		return "Sick";
-	}
 	
 	//attributes
-	private long m_contagiousTime;
-	private IVirus m_virus;
+	private long m_contagiousTime;// time of infection
+	private IVirus m_virus;// IVirus object of this Person
 
 }

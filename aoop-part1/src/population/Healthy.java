@@ -22,13 +22,6 @@ public class Healthy extends Person{
 		return 1; 
 	}
 	
-	/**
-	 * 
-	 * @return vaccinated object of the current Person
-	 */
-	public Person vaccinate() {
-		return new Vaccinated(getAge(), getLocation(), getSettelement());
-	}
 	
 	@Override
 	public IVirus getVirusFromPerson() {
@@ -37,7 +30,7 @@ public class Healthy extends Person{
 
 	@Override
 	public String toString() {
-		return super.toString() + ",\tstatus: Healthy";
+		return super.toString() + "\tstatus: Healthy";
 	}
 	
 	@Override
@@ -51,5 +44,14 @@ public class Healthy extends Person{
 	@Override
 	public String healthCondition() {
 		return "Healthy";
+	}
+
+	/**
+	 * creates a copy of the Person as a Vaccinated object
+	 * 
+	 * @return vaccinated object of the current Person
+	 */
+	public Person vaccinate() {
+		return new Vaccinated(getAge(), getLocation(), getSettelement());
 	}
 }

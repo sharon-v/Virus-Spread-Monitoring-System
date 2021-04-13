@@ -17,14 +17,14 @@ public class Point {
 	 */
 	public Point(Point p) {
 		this(p.getX(), p.getY());
-//		this.m_x = p.getX();
-//		this.m_y = p.getY();
 	}
 
+	@Override
 	public String toString() {
 		return "(" + m_x + ", " + m_y + ")";
 	}
 	
+	@Override
 	public boolean equals(Object o) {
 		if (!(o instanceof Point))
 			return false;
@@ -32,10 +32,21 @@ public class Point {
 		return m_x == p.m_x && m_y == p.m_y;
 		}
 	
+		/**
+		 * get method
+		 * 
+		 * @return x value of Point
+		 */
 	public int getX() {return m_x;}
+
+		/**
+		 * get method
+		 * 
+		 * @return y value of Point
+		 */
 	public int getY() {return m_y;}
 	
-	private int m_x;
-	private int m_y;
+		private int m_x;// x value of Point
+		private int m_y;// y value of Point
 	
 }

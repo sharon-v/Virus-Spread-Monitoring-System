@@ -7,10 +7,10 @@ import simulation.Clock;
 public class SouthAfricanVariant implements IVirus {
 	
 	//attributes
-	public static final double deathProbTo18 = 0.05;
-	public static final double deathProb18Above = 0.08;
-	public static final double contagionProbTo18 = 0.6;
-	public static final double contagionProb18Above = 0.5;
+	public static final double deathProbTo18 = 0.05;// death probability up to 18
+	public static final double deathProb18Above = 0.08;// death probability above 18
+	public static final double contagionProbTo18 = 0.6;// contagion probability up to 18
+	public static final double contagionProb18Above = 0.5;// contagion probability above 18
 
 	@Override
 	public String toString() {
@@ -58,7 +58,7 @@ public class SouthAfricanVariant implements IVirus {
 			p= deathProb18Above;
 		long t = Clock.now() - s.getContagiousTime(); //the time that passed since contagion 
 		if(Math.max(0, p - 0.01 * p * Math.pow(t - 15, 2)) > randonNumber)
-			return true; //???
+			return true;
 		return false;
 	}
 }

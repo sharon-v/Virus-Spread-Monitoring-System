@@ -16,6 +16,5 @@ public class Main {
 			System.out.println(e);
 			System.out.println("an unexpected ERROR has occurred :(");
 		}
-		System.out.println(myMap);
 	}
 }
