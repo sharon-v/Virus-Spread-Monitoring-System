@@ -99,18 +99,14 @@ public abstract class Settlement {
 	public boolean removePerson(Person p) {
 		if (!findPerson(p))
 			return false; // person is not in settlement
-//		int j = 0;
+		int j = 0;
 		Person[] temp = new Person[m_people.length - 1]; // decrease 1 in size
 		for (int i = 0; i < m_people.length; ++i) {
-			if (m_people[i].equals(p))
-				temp[i] = m_people[++i];
-//				++i;
-			else {
-				temp[i] = m_people[i]; //need to change to j
-//				++j;
+			if (!(m_people[i].equals(p))) {
+				temp[j] = m_people[i]; //need to change to j
+				++j;
 			}
 		}
-		System.out.println("yay");
 		m_people = temp;
 		return true;
 	}
@@ -154,13 +150,12 @@ public abstract class Settlement {
 	 */
 	public void infectOnePercent() {
 		// calculate 1%
-		int amount = (int)(m_people.length * 0.01);
-		int[] sickIndex = new int[0];
+		int amount = (int)(m_people.length * 0.1);
 		int randomIndex;
 		IVirus virus;
 		for(int i = 0; i < amount; ++i) {
 			randomIndex = (int)(Math.random() * (m_people.length));
-			if(!(searchIndex(sickIndex, randomIndex))) {
+			if(!(m_people[randomIndex].healthCondition().equals("Sick"))) {
 				if(randomIndex % 3 == 0)
 					virus = new ChineseVariant();
 				else if(randomIndex % 3 == 1)
@@ -169,11 +164,9 @@ public abstract class Settlement {
 					virus = new SouthAfricanVariant();
 				try {
 					m_people[randomIndex] = m_people[randomIndex].contagion(virus);
-					sickIndex = addTempIndex(sickIndex, i);
 				}
 				catch(Exception e){
 					System.out.println(e);
-					System.out.println("infactoneprecent...settlement");
 				}
 			}
 			else

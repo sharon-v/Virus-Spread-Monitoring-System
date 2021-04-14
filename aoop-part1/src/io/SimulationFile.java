@@ -71,7 +71,10 @@ public class SimulationFile {
 		int Mean = 9; // Average
 		Random ran = new Random();
 		// generating integer
-		double x = (ran.nextGaussian() * standardDeviation + Mean); // random number for x by normal distribution
+		double x;
+		do {
+			x = (ran.nextGaussian() * standardDeviation + Mean); // random number for x by normal distribution
+		}while(x < 0);
 		int yMin = 0;
 		int yMax = 4;
 		double y = Math.random() * (yMax - yMin + 1) + yMin; // random number for y
