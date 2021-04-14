@@ -150,7 +150,7 @@ public abstract class Settlement {
 	 */
 	public void infectOnePercent() {
 		// calculate 1%
-		int amount = (int)(m_people.length * 0.1);
+		int amount = (int) (m_people.length * 0.01);
 		int randomIndex;
 		IVirus virus;
 		for(int i = 0; i < amount; ++i) {
@@ -270,7 +270,14 @@ public abstract class Settlement {
 //	public Person[] getP() {
 //		return m_people;
 //	}
-	
+	// test
+//	public void vac() {
+//		for(int i = 0; i < m_people.length; ++i) {
+//			if(m_people[i].healthCondition().equals("Healthy"))
+//				m_people[i].tryToVac()
+//		}
+//	}
+	// delete after
 	
 	private final String m_name;// Settlement's name
 	private final Location m_location;// Settlement's Location

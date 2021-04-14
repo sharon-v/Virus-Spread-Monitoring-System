@@ -13,6 +13,8 @@ public class Map {
 	}
 	
 //	public void test() {
+//		System.out.println(m_settlement[5].);
+
 //		System.out.println(m_settlement[5]);
 //		System.out.println(m_settlement[5].removePerson(m_settlement[5].getP()[5]));
 		
@@ -21,7 +23,7 @@ public class Map {
 //      System.out.println(m_settlement[3].calculateRamzorGrade());
 //		System.out.println(m_settlement[2].getP()[2].equals(m_settlement[2].getP()[1]));
 
-//	}
+	}
 	
 	@Override
 	public String toString() {
