@@ -3,7 +3,6 @@ package population;
 import country.Settlement;
 import location.Point;
 import simulation.Clock;
-import virus.IVirus;
 
 public class Vaccinated extends Person {
 	
@@ -19,6 +18,11 @@ public class Vaccinated extends Person {
 		m_vaccinationTime = Clock.now();
 	}
 	
+	public Vaccinated(Vaccinated v) {
+		super(v);
+		m_vaccinationTime = v.getvaccinationTime();
+	}
+
 	@Override
 	public double contagionProbability() {
 		if(m_vaccinationTime < 21)
@@ -33,10 +37,6 @@ public class Vaccinated extends Person {
 		return "Vaccinated";
 	}
 	
-	@Override
-	public IVirus getVirusFromPerson() {
-		return null;
-	}
 
 	@Override
 	public String toString() {

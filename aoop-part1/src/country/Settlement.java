@@ -269,20 +269,6 @@ public abstract class Settlement {
 	 */
 	protected void setRamzorColor(RamzorColor r) {m_ramzorColor = r;}
 	
-	// set people???
-//	public Person[] getP() {
-//		return m_people;
-//	}
-	// test
-//	public void vac() {
-//		for(int i = 0; i < m_people.length; ++i) {
-//			if (m_people[i].healthCondition().equals("Healthy")) {
-//				Healthy h = (Healthy)m_people[i];
-//				m_people[i] = h.vaccinate();
-//			}
-//		}
-//	}
-	// delete after
 	
 	private final String m_name;// Settlement's name
 	private final Location m_location;// Settlement's Location

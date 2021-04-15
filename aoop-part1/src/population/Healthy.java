@@ -2,7 +2,6 @@ package population;
 
 import country.Settlement;
 import location.Point;
-import virus.IVirus;
 
 public class Healthy extends Person{
 	
@@ -23,11 +22,6 @@ public class Healthy extends Person{
 	}
 	
 	
-	@Override
-	public IVirus getVirusFromPerson() {
-		return null;
-	}
-
 	@Override
 	public String toString() {
 		return super.toString() + "\tstatus: Healthy";

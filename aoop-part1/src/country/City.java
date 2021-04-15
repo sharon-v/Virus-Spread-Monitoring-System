@@ -13,7 +13,9 @@ public class City extends Settlement {
 	public City(String name, Location location) {
 		super(name, new Location(location));
 	}
-	
+
+	// toString-optional
+
 	@Override
 	protected RamzorColor calculateRamzorGrade() {
 		double p = contagiousPercent();

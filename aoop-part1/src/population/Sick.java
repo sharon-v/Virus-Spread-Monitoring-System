@@ -20,6 +20,12 @@ public class Sick extends Person {
 		m_virus = virus;
 	}
 	
+	public Sick(Sick s) {
+		super(s);
+		m_contagiousTime = s.m_contagiousTime;
+		m_virus = s.m_virus;
+	}
+
 	@Override
 	public Person contagion(IVirus virus) {
 		throw new UnsupportedOperationException("You can't get sick twice !!");

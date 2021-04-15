@@ -19,6 +19,11 @@ public class Convalescent extends Person {
 		m_virus = virus;
 	}
 	
+	public Convalescent(Convalescent c) {
+		super(c);
+		m_virus = c.m_virus;
+	}
+
 	@Override
 	public double contagionProbability(){
 		return 0.2; 

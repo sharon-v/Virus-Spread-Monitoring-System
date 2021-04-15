@@ -47,7 +47,9 @@ public abstract class Person {
 	 * 
 	 * @return the IVirus object of the Person
 	 */
-	public abstract IVirus getVirusFromPerson();
+	public IVirus getVirusFromPerson() {
+		return null;
+	}
 
 	/**
 	 * infects the Person
