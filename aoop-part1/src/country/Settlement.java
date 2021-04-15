@@ -142,6 +142,7 @@ public abstract class Settlement {
 	 * @return true if successfully transferred
 	 */
 	public boolean transferPerson(Person p, Settlement s) {
+		for (int i = 0; i < p.getSettlement().length;)
 		return true; // for this part of the project
 	}
 	
@@ -273,8 +274,10 @@ public abstract class Settlement {
 	// test
 //	public void vac() {
 //		for(int i = 0; i < m_people.length; ++i) {
-//			if(m_people[i].healthCondition().equals("Healthy"))
-//				m_people[i].tryToVac()
+//			if (m_people[i].healthCondition().equals("Healthy")) {
+//				Healthy h = (Healthy)m_people[i];
+//				m_people[i] = h.vaccinate();
+//			}
 //		}
 //	}
 	// delete after

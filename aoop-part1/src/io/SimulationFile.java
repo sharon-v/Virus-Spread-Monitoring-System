@@ -74,7 +74,7 @@ public class SimulationFile {
 		double x;
 		do {
 			x = (ran.nextGaussian() * standardDeviation + Mean); // random number for x by normal distribution
-		}while(x < 0);
+		} while (x < 0);
 		int yMin = 0;
 		int yMax = 4;
 		double y = Math.random() * (yMax - yMin + 1) + yMin; // random number for y

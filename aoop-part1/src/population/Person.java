@@ -119,9 +119,6 @@ public abstract class Person {
 		m_settlement = s;
 	}
 	
-	// test
-//	public abstract Vaccinated tryToVac();// ???
-	// delete after
 
 	//attributes
 	private int m_age;// Person's age
