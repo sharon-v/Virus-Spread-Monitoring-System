@@ -4,6 +4,11 @@ import country.Settlement;
 import location.Point;
 import virus.IVirus;
 
+/**
+ * 
+ * @author Yarden Hovav, Sharon Vazana
+ *
+ */
 public class Convalescent extends Person {
 	
 	/**

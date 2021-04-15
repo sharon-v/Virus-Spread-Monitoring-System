@@ -14,6 +14,11 @@ import location.Point;
 import location.Size;
 import population.Healthy;
 
+/**
+ * 
+ * @author Yarden Hovav, Sharon Vazana
+ *
+ */
 public class SimulationFile {
 
 	/**

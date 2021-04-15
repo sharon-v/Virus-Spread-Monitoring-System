@@ -4,6 +4,11 @@ import location.Point;
 import simulation.Clock;
 import virus.IVirus;
 
+/**
+ * 
+ * @author Yarden Hovav, Sharon Vazana
+ *
+ */
 public abstract class Person {
 	
 	/**

@@ -4,6 +4,11 @@ import java.util.Scanner;
 
 import io.SimulationFile;
 
+/**
+ * 
+ * @author Yarden Hovav, Sharon Vazana
+ *
+ */
 public class Map {
 	/**
 	 * constructor

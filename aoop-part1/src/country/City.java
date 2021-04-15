@@ -2,6 +2,11 @@ package country;
 
 import location.Location;
 
+/**
+ * 
+ * @author Yarden Hovav, Sharon Vazana
+ *
+ */
 public class City extends Settlement {
 	/**
 	 * constructor

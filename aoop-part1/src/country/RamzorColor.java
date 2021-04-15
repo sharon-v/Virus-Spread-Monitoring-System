@@ -1,5 +1,10 @@
 package country;
 
+/**
+ * 
+ * @author Yarden Hovav, Sharon Vazana
+ *
+ */
 public enum RamzorColor {
 	GREEN(0.4),		// up to
 	YELLOW(0.6),	// up to

@@ -1,6 +1,10 @@
 package location;
 
-
+/**
+ * 
+ * @author Yarden Hovav, Sharon Vazana
+ *
+ */
 public class Point {
 	/**
 	 * constructor

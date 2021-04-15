@@ -7,6 +7,11 @@ import population.Person;
 import population.Sick;
 import simulation.Clock;
 
+/**
+ * 
+ * @author Yarden Hovav, Sharon Vazana
+ *
+ */
 public class BritishVariant implements IVirus {
 	
 	//attributes

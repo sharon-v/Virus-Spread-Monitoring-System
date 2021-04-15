@@ -1,5 +1,10 @@
 package simulation;
 
+/**
+ * 
+ * @author Yarden Hovav, Sharon Vazana
+ *
+ */
 public class Clock {
 	
 	/**

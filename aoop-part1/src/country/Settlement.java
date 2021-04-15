@@ -9,6 +9,11 @@ import virus.ChineseVariant;
 import virus.IVirus;
 import virus.SouthAfricanVariant;
 
+/**
+ * 
+ * @author Yarden Hovav, Sharon Vazana
+ *
+ */
 public abstract class Settlement {
 	/**
 	 * 

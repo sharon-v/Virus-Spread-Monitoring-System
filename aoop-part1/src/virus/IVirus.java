@@ -3,6 +3,11 @@ package virus;
 import population.Person;
 import population.Sick;
 
+/**
+ * 
+ * @author Yarden Hovav, Sharon Vazana
+ *
+ */
 public interface IVirus {
 	
 	/**

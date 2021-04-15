@@ -2,6 +2,11 @@ package simulation;
 
 import country.Map;
 
+/**
+ * 
+ * @author Yarden Hovav, Sharon Vazana
+ *
+ */
 public class Main {
 
 	public static void main(String[] args) {

@@ -3,6 +3,11 @@ package population;
 import country.Settlement;
 import location.Point;
 
+/**
+ * 
+ * @author Yarden Hovav, Sharon Vazana
+ *
+ */
 public class Healthy extends Person{
 	
 	/**

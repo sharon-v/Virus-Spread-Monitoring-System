@@ -4,6 +4,11 @@ import country.Settlement;
 import location.Point;
 import simulation.Clock;
 
+/**
+ * 
+ * @author Yarden Hovav, Sharon Vazana
+ *
+ */
 public class Vaccinated extends Person {
 	
 	/**

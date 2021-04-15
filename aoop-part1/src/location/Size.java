@@ -1,5 +1,10 @@
 package location;
 
+/**
+ * 
+ * @author Yarden Hovav, Sharon Vazana
+ *
+ */
 public class Size {
 	/**
 	 * constructor
