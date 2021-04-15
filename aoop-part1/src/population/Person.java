@@ -116,7 +116,8 @@ public abstract class Person {
 	 * @param s - new Settlement
 	 */
 	public void setSettlement(Settlement s) {
-		m_settlement = s;
+		if (m_settlement.removePerson(this))
+			m_settlement = s;
 	}
 	
 

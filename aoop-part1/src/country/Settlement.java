@@ -65,7 +65,7 @@ public abstract class Settlement {
 		xMin = m_location.getPoint().getX();
 		yMax = m_location.getPoint().getY();
 		xMax = xMin + m_location.getSize().getWidth();
-		yMin = yMax - m_location.getSize().getHeith();
+		yMin = yMax + m_location.getSize().getHeith();
 		int randX = xMin + (int)(Math.random() * ((xMax - xMin) + 1));
 		int randY = yMin + (int)(Math.random() * ((yMax - yMin) + 1));
 		return new Point(randX, randY);
@@ -142,8 +142,10 @@ public abstract class Settlement {
 	 * @return true if successfully transferred
 	 */
 	public boolean transferPerson(Person p, Settlement s) {
-		for (int i = 0; i < p.getSettlement().length;)
-		return true; // for this part of the project
+		p.setSettlement(s);
+		if (addPerson(p))
+			return true; // for this part of the project
+		return false;
 	}
 	
 	/**
