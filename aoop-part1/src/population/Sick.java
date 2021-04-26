@@ -71,7 +71,10 @@ public class Sick extends Person {
 	 * @return Convalescent object of the current Person
 	 */
 	public Person recover() {
-		return new Convalescent(getAge(), getLocation(), getSettelement(), m_virus);
+		Convalescent newConv = new Convalescent(getAge(), getLocation(), getSettelement(), m_virus);
+		getSettelement().removePerson(this);
+		getSettelement().addPerson(newConv);
+		return newConv;
 	}
 	
 	/**

@@ -12,6 +12,7 @@ public class Clock {
 	 */
 	public Clock() {
 		m_currentTime = 0;
+		ticks_per_day = 1;
 	}
 	
 	/**
@@ -31,6 +32,19 @@ public class Clock {
 		++m_currentTime;
 	}
 	
+	/**
+	 * 
+	 * @param x - num of ticks in a single day
+	 */
+	public static void setTicksPerDay(int x) {
+		ticks_per_day = x;
+	}
+
+	public static long calculateDays(long startTime) {
+		return (long) (Math.ceil((now() - startTime) / ticks_per_day));
+	}
+
 	//attributes
 	private static long m_currentTime; // current time
+	private static int ticks_per_day;
 }

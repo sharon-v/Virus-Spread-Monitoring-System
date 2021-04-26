@@ -58,7 +58,7 @@ public class BritishVariant implements IVirus {
 			p = deathProbTo18;
 		else
 			p = deathProb18Above;
-		long t = Clock.now() - s.getContagiousTime(); //the time that passed since contagion 
+		long t = Clock.calculateDays(s.getContagiousTime()); // the time that passed since contagion
 		if(Math.max(0, p - 0.01 * p * Math.pow(t - 15, 2)) > randonNumber)
 			return true; 
 		return false;

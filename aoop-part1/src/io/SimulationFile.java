@@ -20,11 +20,14 @@ import population.Healthy;
  *
  */
 public class SimulationFile {
+	public SimulationFile() {
+		m_connections = new String[0];
+	}
 
 	/**
 	 * reads from file
 	 */
-	public void readFromFile(Map map, String filePath) throws Exception {
+	public String[] readFromFile(Map map, String filePath) throws Exception {
 		FileReader fr = null;
 		BufferedReader br = null;
 		try {
@@ -32,6 +35,8 @@ public class SimulationFile {
 			br = new BufferedReader(fr);
 			String settl = br.readLine();
 			while (settl != null) {
+				if (settl.contains("#"))// if its a connection
+					addConnection(settl.replaceAll("\\s+", ""));
 				String[] settlDeteails = settl.replaceAll("\\s+", "").split(";");
 				String settlementType = settlDeteails[0];
 				String settlemntName = settlDeteails[1];
@@ -43,11 +48,14 @@ public class SimulationFile {
 
 				Settlement mySettlement;
 				if (settlementType.equals("City"))
-					mySettlement = new City(settlemntName, settlementLocation);
+					mySettlement = new City(settlemntName, settlementLocation,
+							calculateMaxCapacity(settlementPopulationAmount));
 				else if (settlementType.equals("Moshav"))
-					mySettlement = new Moshav(settlemntName, settlementLocation);
+					mySettlement = new Moshav(settlemntName, settlementLocation,
+							calculateMaxCapacity(settlementPopulationAmount));
 				else if (settlementType.equals("Kibbutz")) 
-					mySettlement = new Kibbutz(settlemntName, settlementLocation);
+					mySettlement = new Kibbutz(settlemntName, settlementLocation,
+							calculateMaxCapacity(settlementPopulationAmount));
 				else
 					throw new Exception("No such settlement !");
 				map.addSettlement(mySettlement);
@@ -63,6 +71,7 @@ public class SimulationFile {
 			br.close();
 			fr.close();
 		} // EXCEPTION
+		return m_connections;
 	}
 
 
@@ -87,4 +96,29 @@ public class SimulationFile {
 		double y = Math.random() * (yMax - yMin + 1) + yMin; // random number for y
 		return (int) ((5 * x) + y);
 	}
+
+	/**
+	 * 
+	 * @param amountOfPeople - amount of people in settlement
+	 * @return max capacity of the settlement
+	 */
+	private int calculateMaxCapacity(int amountOfPeople) {
+		return (int) (CAPACITY * amountOfPeople);
+	}
+
+	/**
+	 * 
+	 * @param s - new String type connection
+	 */
+	private void addConnection(String s) {
+		String[] temp = new String[m_connections.length + 1];
+		for (int i = 0; i < m_connections.length; ++i) {
+			temp[i] = m_connections[i];
+		}
+		temp[m_connections.length] = s;
+		m_connections = temp;
+	}
+
+	private static final double CAPACITY = 1.3;
+	private String[] m_connections;
 }

@@ -63,7 +63,10 @@ public abstract class Person {
 	 * @return Sick object of the current Person
 	 */
 	public Person contagion(IVirus virus) { 
-		return new Sick(m_age, m_location, m_settlement, virus);	
+		Sick newSick = new Sick(m_age, m_location, m_settlement, virus);
+		m_settlement.removePerson(this);
+		m_settlement.addPerson(newSick);
+		return newSick;
 	}
 	
 	@Override
@@ -123,8 +126,7 @@ public abstract class Person {
 	 * @param s - new Settlement
 	 */
 	public void setSettlement(Settlement s) {
-		if (m_settlement.removePerson(this))
-			m_settlement = s;
+		m_settlement = s;
 	}
 	
 

@@ -56,9 +56,11 @@ public class Map {
 		Scanner sc = new Scanner(System.in);
 		System.out.println("Please enter the file path: ");
 		String filePath = sc.nextLine();
+		String[] connections = null;
 		try {
 			SimulationFile loadMap = new SimulationFile();
-			loadMap.readFromFile(this, filePath);
+			connections = loadMap.readFromFile(this, filePath);
+			makeConnections(connections);
 		} catch (Exception e) {
 			System.out.println(e);	
 		} finally {
@@ -93,6 +95,38 @@ public class Map {
 		for (int i = 0; i < m_settlement.length; ++i) {
 			m_settlement[i].infectOnePercent();
 		}
+	}
+
+	/**
+	 * 
+	 * @param arr
+	 */
+	private void makeConnections(String[] connections) {
+		String[] temp = null;
+		for (int i = 0; i < connections.length; ++i) {
+			temp = connections[i].split(";");
+			connectSettlements(temp[1], temp[2]);
+		}
+	}
+
+	/**
+	 * 
+	 * @param s1
+	 * @param s2
+	 */
+	private void connectSettlements(String s1, String s2) {
+		Settlement settl1 = null, settl2 = null;
+		for (int i = 0; i < m_settlement.length; ++i) {
+			if (m_settlement[i].getSettlementName().equals(s1))
+				settl1 = m_settlement[i];
+			else if (m_settlement[i].getSettlementName().equals(s2))
+				settl2 = m_settlement[i];
+		}
+		if (settl1 != null && settl2 != null) {
+			settl1.addNewConnection(settl2);
+			settl2.addNewConnection(settl1);
+		}
+
 	}
 
 	private Settlement m_settlement[];// array of Settlements

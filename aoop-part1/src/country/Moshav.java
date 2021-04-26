@@ -15,8 +15,8 @@ public class Moshav extends Settlement {
 	 * @param location - location input
 	 * @param people   - Person array for the settlement
 	 */
-	public Moshav(String name, Location location) {
-		super(name, new Location(location));
+	public Moshav(String name, Location location, int population) {
+		super(name, new Location(location), population);
 	}
 	
 	@Override

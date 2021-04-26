@@ -21,17 +21,21 @@ public abstract class Settlement {
 	 * @param location - Location of the Settlement
 	 * @param people - Person array of residents in Settlement
 	 */
-	public Settlement(String name, Location location) {
+	public Settlement(String name, Location location, int population) {
 		m_name = name;
 		m_location = new Location(location);
-		m_people = new Person[0];
+		m_healthyPeople = new Person[0];
 		m_ramzorColor = RamzorColor.GREEN;	// default
+		m_maxPopulation = population;
+		m_vaccineDoses = 0;
+		m_connectedSettlements = new Settlement[0];
+		m_sickPeople = new Person[0];
 	}
 	
 	@Override
 	public String toString() {
 		return "settlement name: " + m_name + "\nlocation: " + m_location + "\ncolor grade: " + m_ramzorColor
-				+ "\nnum of people: " + m_people.length + toStringPeople();
+				+ "\nnum of people: " + m_healthyPeople.length + toStringPeople();
 	}
 	
 	@Override
@@ -54,11 +58,11 @@ public abstract class Settlement {
 	 */
 	public double contagiousPercent() {// 0 to 1 max
 		int amountSick = 0;
-		for(int i = 0; i < m_people.length; ++i) {
-			if (m_people[i].healthCondition().equals("Sick"))
+		for(int i = 0; i < m_healthyPeople.length; ++i) {
+			if (m_healthyPeople[i].healthCondition().equals("Sick"))
 				++amountSick;
 		}
-		return amountSick / m_people.length;
+		return amountSick / m_healthyPeople.length;
 	}
 	
 	/**
@@ -85,13 +89,18 @@ public abstract class Settlement {
 		// use equals no 2 people the same
 		if(findPerson(p))
 			return false;	// person is already in settlement
-		Person[] temp = new Person[m_people.length + 1];
-		for(int i = 0; i < m_people.length; ++i) {
-			temp[i] = m_people[i];
+		Person[] arr = null;
+		if (p.healthCondition().equals("Sick"))
+			arr = m_sickPeople;
+		else
+			arr = m_healthyPeople;
+		Person[] temp = new Person[arr.length + 1];
+		for (int i = 0; i < arr.length; ++i) {
+			temp[i] = arr[i];
 		}
 		p.setSettlement(this); // change Settlement
-		temp[m_people.length] = p;
-		m_people = temp;
+		temp[arr.length] = p;
+		arr = temp;
 		return true;
 	}
 	
@@ -102,17 +111,22 @@ public abstract class Settlement {
 	 * @return true if Person deleted successfully
 	 */
 	public boolean removePerson(Person p) {
+		Person[] arr = null;
 		if (!findPerson(p))
 			return false; // person is not in settlement
+		if (p.healthCondition().equals("Sick"))
+			arr = m_sickPeople;
+		else
+			arr = m_healthyPeople;
 		int j = 0;
-		Person[] temp = new Person[m_people.length - 1]; // decrease 1 in size
-		for (int i = 0; i < m_people.length; ++i) {
-			if (!(m_people[i].equals(p))) {
-				temp[j] = m_people[i]; //need to change to j
+		Person[] temp = new Person[arr.length - 1]; // decrease 1 in size
+		for (int i = 0; i < arr.length; ++i) {
+			if (!(arr[i].equals(p))) {
+				temp[j] = arr[i];
 				++j;
 			}
 		}
-		m_people = temp;
+		arr = temp;
 		return true;
 	}
 
@@ -122,8 +136,8 @@ public abstract class Settlement {
 	 * @return true if the person already exists in the settlement
 	 */
 	private boolean findPerson(Person p) {
-		for(int i = 0; i < m_people.length; ++i) {
-			if(m_people[i].equals(p))
+		for(int i = 0; i < m_healthyPeople.length; ++i) {
+			if(m_healthyPeople[i].equals(p))
 				return true;
 		}
 		return false;
@@ -135,8 +149,8 @@ public abstract class Settlement {
 	 */
 	private String toStringPeople() {
 		String str = "\n-- residents -- \n";
-		for (int i = 0; i < m_people.length; ++i)
-			str += m_people[i].toString() + "\n";
+		for (int i = 0; i < m_healthyPeople.length; ++i)
+			str += m_healthyPeople[i].toString() + "\n";
 		return str;
 	}
 
@@ -147,9 +161,15 @@ public abstract class Settlement {
 	 * @return true if successfully transferred
 	 */
 	public boolean transferPerson(Person p, Settlement s) {
-		p.setSettlement(s);
-		if (addPerson(p))
+		if (s.m_maxPopulation == getNumOfPeople())
+			return false;
+		if (getRamzorColor().getTransferProb() * s.getRamzorColor().getTransferProb() < Math.random()) // [0, 1)
+			return false;
+		if (removePerson(p)) {
+			s.addPerson(p);
+			p.setSettlement(s);
 			return true; // for this part of the project
+		}
 		return false;
 	}
 	
@@ -158,12 +178,12 @@ public abstract class Settlement {
 	 */
 	public void infectOnePercent() {
 		// calculate 1%
-		int amount = (int) (m_people.length * 0.01);
+		int amount = (int) (m_healthyPeople.length * 0.01);
 		int randomIndex;
 		IVirus virus;
 		for(int i = 0; i < amount; ++i) {
-			randomIndex = (int)(Math.random() * (m_people.length));
-			if(!(m_people[randomIndex].healthCondition().equals("Sick"))) {
+			randomIndex = (int)(Math.random() * (m_healthyPeople.length));
+			if(!(m_healthyPeople[randomIndex].healthCondition().equals("Sick"))) {
 				if(randomIndex % 3 == 0)
 					virus = new ChineseVariant();
 				else if(randomIndex % 3 == 1)
@@ -171,7 +191,7 @@ public abstract class Settlement {
 				else 
 					virus = new SouthAfricanVariant();
 				try {
-					m_people[randomIndex] = m_people[randomIndex].contagion(virus);
+					m_healthyPeople[randomIndex] = m_healthyPeople[randomIndex].contagion(virus);
 				}
 				catch(Exception e){
 					System.out.println(e);
@@ -187,16 +207,29 @@ public abstract class Settlement {
 	 */
 	public void simulation() throws Exception {
 		int[] tempIndex = new int[0];
-			for (int j = 0; j < m_people.length; ++j) {// run over the population of each settlement
+			for (int j = 0; j < m_healthyPeople.length; ++j) {// run over the population of each settlement
 				Clock.nextTick();
-				if (m_people[j].healthCondition().equals("Sick")) {
+				if (m_healthyPeople[j].healthCondition().equals("Sick")) {
 					if(!(searchIndex(tempIndex, j))) {
-						tempIndex = randomContagion(m_people[j], tempIndex);
+						tempIndex = randomContagion(m_healthyPeople[j], tempIndex);
 					}
 				}
 			}
 		}
-	
+
+	/**
+	 * 
+	 * @param s - settlement to connect to the current settlement
+	 */
+	public void addNewConnection(Settlement s) {
+		Settlement[] temp = new Settlement[m_connectedSettlements.length + 1];
+		for (int i = 0; i < m_connectedSettlements.length; ++i) {
+			temp[i] = m_connectedSettlements[i];
+		}
+		temp[m_connectedSettlements.length] = s;
+		m_connectedSettlements = temp;
+	}
+
 	/**
 	 * updates array of new sick Persons indexes
 	 * 
@@ -236,12 +269,12 @@ public abstract class Settlement {
 	 */
 	private int[] randomContagion( Person sickPerson, int[] tempIndex) throws Exception {
 		for (int i = 0; i < 6; ++i) {
-			int randomIndex = (int)(Math.random() * (m_people.length));
+			int randomIndex = (int)(Math.random() * (m_healthyPeople.length));
 			if (sickPerson.getVirusFromPerson() == null)
 				throw new Exception("this person isn't sick...");
-			if (sickPerson.getVirusFromPerson().tryToContagion(sickPerson, m_people[randomIndex])) {
+			if (sickPerson.getVirusFromPerson().tryToContagion(sickPerson, m_healthyPeople[randomIndex])) {
 				try {
-					m_people[randomIndex] = m_people[randomIndex].contagion(sickPerson.getVirusFromPerson());
+					m_healthyPeople[randomIndex] = m_healthyPeople[randomIndex].contagion(sickPerson.getVirusFromPerson());
 					tempIndex = addTempIndex(tempIndex, randomIndex);
 				}catch(Exception e) {
 					System.out.println(e);
@@ -269,6 +302,14 @@ public abstract class Settlement {
 	}
 
 	/**
+	 * 
+	 * @return total population in settlement
+	 */
+	private int getNumOfPeople() {
+		return m_sickPeople.length + m_healthyPeople.length;
+	}
+
+	/**
 	 * set method
 	 * @param r - new RamzorColor of the settlement
 	 */
@@ -277,7 +318,11 @@ public abstract class Settlement {
 	
 	private final String m_name;// Settlement's name
 	private final Location m_location;// Settlement's Location
-	private Person[] m_people;// Settlement's residents
+	private Person[] m_healthyPeople;// Settlement's healthy residents
 	private RamzorColor m_ramzorColor;// Settlement's RamzorColor grade
-	
+	private int m_maxPopulation;// max residents in settlement
+	private int m_vaccineDoses; // num of vaccine doses
+	private Settlement[] m_connectedSettlements;// all the connections to current settlement
+	private Person[] m_sickPeople;// Settlement's sick residents
+
 }

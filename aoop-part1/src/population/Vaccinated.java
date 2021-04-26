@@ -30,10 +30,11 @@ public class Vaccinated extends Person {
 
 	@Override
 	public double contagionProbability() {
-		if(m_vaccinationTime < 21)
-			return Math.min(1, (0.56 + 0.15 * Math.sqrt(21 - m_vaccinationTime)));
+		long days = Clock.calculateDays(m_vaccinationTime);
+		if (days < 21)
+			return Math.min(1, (0.56 + 0.15 * Math.sqrt(21 - days)));
 		else
-			return Math.max(0.05, (1.05 / (m_vaccinationTime - 14)));
+			return Math.max(0.05, (1.05 / (days - 14)));
 	}
 	
 
