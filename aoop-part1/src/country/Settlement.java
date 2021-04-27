@@ -62,7 +62,7 @@ public abstract class Settlement {
 			if (m_healthyPeople[i].healthCondition().equals("Sick"))
 				++amountSick;
 		}
-		return amountSick / m_healthyPeople.length;
+		return amountSick / getNumOfPeople();
 	}
 	
 	/**
