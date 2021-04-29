@@ -2,6 +2,8 @@ package country;
 
 import java.util.Scanner;
 
+import javax.swing.JTable;
+
 import io.SimulationFile;
 
 /**
@@ -97,29 +99,29 @@ public class Map {
 		}
 	}
 
-	public String[][] getTableData() {
-		String[][] temp = new String[m_settlement.length][];
-		for (int i = 0; i < m_settlement.length; ++i) {
-			temp[i] = new String[7];//????? datamember
-			for(int j = 0; j < temp[i].length; ++j) {
-				if (j % temp[i].length == 0)
-					temp[i][j] = m_settlement[i].getSettlementName();
-				else if (j % temp[i].length == 1)
-					temp[i][j] = m_settlement[i].getSettlementType();
-				else if (j % temp[i].length == 2)
-					temp[i][j] = m_settlement[i].getRamzorColor().toString();
-				else if (j % temp[i].length == 3)
-					temp[i][j] = String.valueOf(m_settlement[i].contagiousPercent());
-				else if (j % temp[i].length == 4)
-					temp[i][j] = m_settlement[i].getVaccineDoses() + "";
-				else if (j % temp[i].length == 5)
-					temp[i][j] = m_settlement[i].getNumOfDeceased() + "";
-				else if (j % temp[i].length == 6)
-					temp[i][j] = m_settlement[i].getNumOfPeople() + "";
-			}
-		}
-		return temp;
-	}
+//	public String[][] getTableData() {
+//		String[][] temp = new String[m_settlement.length][];
+//		for (int i = 0; i < m_settlement.length; ++i) {
+//			temp[i] = new String[7];//????? datamember
+//			for(int j = 0; j < temp[i].length; ++j) {
+//				if (j % temp[i].length == 0)
+//					temp[i][j] = m_settlement[i].getSettlementName();
+//				else if (j % temp[i].length == 1)
+//					temp[i][j] = m_settlement[i].getSettlementType();
+//				else if (j % temp[i].length == 2)
+//					temp[i][j] = m_settlement[i].getRamzorColor().toString();
+//				else if (j % temp[i].length == 3)
+//					temp[i][j] = String.valueOf(m_settlement[i].contagiousPercent());
+//				else if (j % temp[i].length == 4)
+//					temp[i][j] = m_settlement[i].getVaccineDoses() + "";
+//				else if (j % temp[i].length == 5)
+//					temp[i][j] = m_settlement[i].getNumOfDeceased() + "";
+//				else if (j % temp[i].length == 6)
+//					temp[i][j] = m_settlement[i].getNumOfPeople() + "";
+//			}
+//		}
+//		return temp;
+//	}
 
 	/**
 	 * 
@@ -133,28 +135,41 @@ public class Map {
 		}
 	}
 
-	public static String[][] filtering(String[][] data, String type) {
-		if (type.equals("filter by"))
-			return data;
+//	public static String[][] filtering(String[][] data, String type) {
+//		if (type.equals("filter by"))
+//			return data;
+//
+//		String[][] temp = new String[0][];
+//		for (int i = 0; i < data.length; ++i) {
+//			for (int j = 0; j < data[i].length; ++j) {
+//				if (data[i][j].equals(type))
+//					temp = addData(temp, data[i]);
+//			}
+//		}
+//		return temp;
+//	}
 
-		String[][] temp = new String[0][];
-		for (int i = 0; i < data.length; ++i) {
-			for (int j = 0; j < data[i].length; ++j) {
-				if (data[i][j].equals(type))
-					temp = addData(temp, data[i]);
+	public static JTable filtering(JTable statTable, String type) {
+		if (type.equals("filter by"))
+			return statTable;
+		for (int i = 0; i < statTable.getRowCount(); ++i) {
+			for (int j = 0; j < statTable.getColumnCount(); ++j) {
+				if (statTable.getValueAt(i, j).equals(type))
+					statTable.remove(i);
 			}
 		}
-		return temp;
+		return statTable;
 	}
 
-	private static String[][] addData(String[][] arr, String[] newStr) {
-		String[][] temp = new String[arr.length + 1][];
-		for (int i = 0; i < arr.length; ++i) {
-			temp[i] = arr[i];
-		}
-		temp[arr.length] = newStr;
-		return temp;
-	}
+
+//	private static String[][] addData(String[][] arr, String[] newStr) {
+//		String[][] temp = new String[arr.length + 1][];
+//		for (int i = 0; i < arr.length; ++i) {
+//			temp[i] = arr[i];
+//		}
+//		temp[arr.length] = newStr;
+//		return temp;
+//	}
 
 	/**
 	 * 
@@ -176,5 +191,15 @@ public class Map {
 
 	}
 
-	private Settlement m_settlement[];// array of Settlements
+	public int getMapSize() {
+		return m_settlement.length;
+	}
+	public Settlement at(int rowIndex) {
+		if (rowIndex < getMapSize())
+			return m_settlement[rowIndex];
+		return null;
+	}
+
+	private Settlement[] m_settlement;// array of Settlements
+
 }

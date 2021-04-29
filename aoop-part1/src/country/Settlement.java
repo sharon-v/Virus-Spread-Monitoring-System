@@ -320,7 +320,9 @@ public abstract class Settlement {
 	 * get method
 	 * @return current RamzorColor
 	 */
-	protected RamzorColor getRamzorColor() {return m_ramzorColor;}
+	public RamzorColor getRamzorColor() {
+		return m_ramzorColor;
+	}
 
 	/**
 	 * get method

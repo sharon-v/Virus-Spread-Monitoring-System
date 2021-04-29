@@ -25,7 +25,9 @@ public class Main {
 		//???????????????????
 		
 		JFrame frame = new JFrame("Table Example"); 		
-		Statistics st = new Statistics(myMap, frame);		
+//		frame.setLayout(new BoxLayout(frame.getContentPane(), BoxLayout.PAGE_AXIS));
+		Statistics st = new Statistics(myMap, frame);
+		frame.add(st);
 		frame.pack();
 		frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
 		frame.setVisible(true);
