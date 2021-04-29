@@ -24,6 +24,10 @@ import country.Settlement;
 import io.StatisticsFile;
 
 public class Statistics extends JPanel {
+	/**
+	 * 
+	 */
+	private static final long serialVersionUID = 1L;
 	public Statistics(Map map, JFrame f) {// change to panel
 		this.setLayout(new BoxLayout(this, BoxLayout.PAGE_AXIS));// statistics window frame
 
@@ -57,13 +61,11 @@ public class Statistics extends JPanel {
 
 			@Override
 			public void actionPerformed(ActionEvent e) {
-				DefaultTableModel model = new DefaultTableModel(
-						Map.filtering(new JTable(model1), m_combo.getItemAt(m_combo.getSelectedIndex()).toString())
-								.getSelectionModel(),
-						model1.getColNames());
-				table.setModel(
-						Map.filtering(new JTable(model1), m_combo.getItemAt(m_combo.getSelectedIndex()).toString())
-								.getSelectionModel());
+				JTable tempModel = new JTable(model1);// copy of current TableModel
+				DefaultTableModel model = Map.filtering(tempModel,
+						m_combo.getItemAt(m_combo.getSelectedIndex()).toString());
+//				tempModel = Map.filtering(tempModel, m_combo.getItemAt(m_combo.getSelectedIndex()).toString());
+				table.setModel(tempModel.getModel());
 				model.fireTableDataChanged();
 			}
 		});
@@ -85,7 +87,17 @@ public class Statistics extends JPanel {
 			}
 		});
 
+		JButton addSickBt = new JButton("Add Sick");
+		addSickBt.addActionListener(new ActionListener() {
+			@Override
+			public void actionPerformed(ActionEvent e) {
+
+			}
+		});
+
+
 		lowerMenu.add(saveBt);
+		lowerMenu.add(addSickBt);
 
 		this.add(upperMenu);
 		this.add(table);

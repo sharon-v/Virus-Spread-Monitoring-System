@@ -3,6 +3,7 @@ package country;
 import java.util.Scanner;
 
 import javax.swing.JTable;
+import javax.swing.table.DefaultTableModel;
 
 import io.SimulationFile;
 
@@ -149,16 +150,19 @@ public class Map {
 //		return temp;
 //	}
 
-	public static JTable filtering(JTable statTable, String type) {
+	public static DefaultTableModel filtering(JTable statTable, String type) {
+		DefaultTableModel model = (DefaultTableModel) statTable.getModel();
 		if (type.equals("filter by"))
-			return statTable;
+			return model;
 		for (int i = 0; i < statTable.getRowCount(); ++i) {
 			for (int j = 0; j < statTable.getColumnCount(); ++j) {
 				if (statTable.getValueAt(i, j).equals(type))
-					statTable.remove(i);
+					model.removeRow(i);
+//					statTable.remove(i);
+
 			}
 		}
-		return statTable;
+		return model;
 	}
 
 
