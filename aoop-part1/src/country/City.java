@@ -21,11 +21,14 @@ public class City extends Settlement {
 
 	// toString-optional
 
-	@Override
+	public String getSettlementType() {
+		return "City";
+	}
+
 	protected RamzorColor calculateRamzorGrade() {
 		double p = contagiousPercent();
 		double res = 0.2 * Math.pow(4, 1.25 * p);
-		return getRamzorColor().doubleToRamzorColor(res); // ???
+		return getRamzorColor().doubleToRamzorColor(res);
 	}
 
 }

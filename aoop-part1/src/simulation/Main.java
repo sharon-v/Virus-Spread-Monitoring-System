@@ -1,6 +1,9 @@
 package simulation;
 
+import javax.swing.JFrame;
+
 import country.Map;
+import ui.Statistics;
 
 /**
  * 
@@ -19,5 +22,15 @@ public class Main {
 			System.out.println(e);
 			System.out.println("an unexpected ERROR has occurred :(");
 		}
+		//???????????????????
+		
+		JFrame frame = new JFrame("Table Example"); 		
+		Statistics st = new Statistics(myMap, frame);		
+		frame.pack();
+		frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
+		frame.setVisible(true);
+
+			  
+		//???????????????????
 	}
 }

@@ -19,7 +19,10 @@ public class Moshav extends Settlement {
 		super(name, new Location(location), population);
 	}
 	
-	@Override
+	public String getSettlementType() {
+		return "Moshav";
+	}
+
 	protected RamzorColor calculateRamzorGrade() {
 		// p - sick percentage , c - current color
 		double p = contagiousPercent();
