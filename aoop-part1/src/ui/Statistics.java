@@ -65,7 +65,7 @@ public class Statistics extends JPanel {
 				DefaultTableModel model = Map.filtering(tempModel,
 						m_combo.getItemAt(m_combo.getSelectedIndex()).toString());
 //				tempModel = Map.filtering(tempModel, m_combo.getItemAt(m_combo.getSelectedIndex()).toString());
-				table.setModel(tempModel.getModel());
+				table.setModel(model);
 				model.fireTableDataChanged();
 			}
 		});
@@ -91,10 +91,19 @@ public class Statistics extends JPanel {
 		addSickBt.addActionListener(new ActionListener() {
 			@Override
 			public void actionPerformed(ActionEvent e) {
+				map.activateOnePercent(table.getValueAt(table.getSelectedRow(), 0));
 
 			}
 		});
 
+		JButton addVaccineBt = new JButton("Vaccinate");
+		addVaccineBt.addActionListener(new ActionListener() {
+			@Override
+			public void actionPerformed(ActionEvent e) {
+				map.addVaccines(table.getValueAt(table.getSelectedRow(), 0));/// read amount from table?????
+
+			}
+		});
 
 		lowerMenu.add(saveBt);
 		lowerMenu.add(addSickBt);

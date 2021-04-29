@@ -365,6 +365,11 @@ public abstract class Settlement {
 		return m_numOfDeceased;
 	}
 
+	public void setVaccineDoses(int amount) {
+		if (amount >= 0)
+			m_vaccineDoses += amount;
+	}
+
 	private final String m_name;// Settlement's name
 	private final Location m_location;// Settlement's Location
 	private Person[] m_healthyPeople;// Settlement's healthy residents

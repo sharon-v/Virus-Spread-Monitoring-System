@@ -124,6 +124,22 @@ public class Map {
 //		return temp;
 //	}
 
+	public void activateOnePercent(Object settName) {
+		findSettlementByName(settName.toString()).infectOnePercent();
+	}
+
+	private Settlement findSettlementByName(String name) {
+		for (int i = 0; i < m_settlement.length; ++i) {
+			if (m_settlement[i].getSettlementName().equals(name))
+				return m_settlement[i];
+		}
+		return null;
+	}
+
+	public void addVaccines(Object settName, int amount) {
+		findSettlementByName(settName.toString()).setVaccineDoses(amount);
+	}
+
 	/**
 	 * 
 	 * @param arr

@@ -14,7 +14,7 @@ public class StatisticsFile {
 		try {
 
 			TableModel model = tableToExport.getModel();
-			FileWriter csv = new FileWriter(new File(pathToExportTo));
+			FileWriter csv = new FileWriter(new File(pathToExportTo + ".csv"));
 
 			for (int i = 0; i < model.getColumnCount(); i++) {
 				csv.write(model.getColumnName(i) + ",");
