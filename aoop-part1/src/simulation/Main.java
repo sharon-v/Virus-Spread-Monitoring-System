@@ -1,8 +1,15 @@
 package simulation;
 
+import java.awt.event.ActionEvent;
+import java.awt.event.ActionListener;
+
+import javax.swing.JButton;
+import javax.swing.JCheckBox;
 import javax.swing.JFrame;
+import javax.swing.JTable;
 
 import country.Map;
+import ui.Mutations;
 import ui.Statistics;
 
 /**
@@ -27,7 +34,20 @@ public class Main {
 		JFrame frame = new JFrame("Table Example"); 		
 //		frame.setLayout(new BoxLayout(frame.getContentPane(), BoxLayout.PAGE_AXIS));
 		Statistics st = new Statistics(myMap, frame);
-		frame.add(st);
+		
+		JButton b = new JButton("bbbb");
+		b.addActionListener(new ActionListener() {
+			
+			@Override
+			public void actionPerformed(ActionEvent e) {
+				Mutations m = new Mutations(frame);
+				m.showDialog();
+			}
+		});
+		
+//		
+		frame.add(b);
+//		frame.add(st);
 		frame.pack();
 		frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
 		frame.setVisible(true);
