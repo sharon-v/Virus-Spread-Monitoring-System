@@ -137,7 +137,7 @@ public class Map {
 	}
 
 	public void addVaccines(Object settName, int amount) {
-		findSettlementByName(settName.toString()).setVaccineDoses(amount);
+		findSettlementByName(settName.toString()).setVaccineDoses((int) amount);// ???????
 	}
 
 	/**

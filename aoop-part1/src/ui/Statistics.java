@@ -1,5 +1,6 @@
 package ui;
 
+import java.awt.Dimension;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 
@@ -8,7 +9,9 @@ import javax.swing.JButton;
 import javax.swing.JComboBox;
 import javax.swing.JFileChooser;
 import javax.swing.JFrame;//????
+import javax.swing.JOptionPane;
 import javax.swing.JPanel;
+import javax.swing.JScrollPane;
 import javax.swing.JTable;
 import javax.swing.JTextField;
 import javax.swing.ListSelectionModel;
@@ -36,6 +39,7 @@ public class Statistics extends JPanel {
 		JPanel upperMenu = new JPanel();
 		JPanel lowerMenu = new JPanel();
 		table.setSelectionMode(ListSelectionModel.SINGLE_SELECTION);
+		table.setPreferredScrollableViewportSize(new Dimension(750, 200));
 		table.setFillsViewportHeight(true);
 
 
@@ -100,17 +104,29 @@ public class Statistics extends JPanel {
 		addVaccineBt.addActionListener(new ActionListener() {
 			@Override
 			public void actionPerformed(ActionEvent e) {
-				map.addVaccines(table.getValueAt(table.getSelectedRow(), 0));/// read amount from table?????
-
+				int row = table.getSelectedRow();
+				int num;
+				String result = (String) JOptionPane.showInputDialog(table, "Enter amount of vaccine doses",
+										"Vaccine", JOptionPane.PLAIN_MESSAGE, null, null, "0");
+				try {
+					num = Integer.parseInt(result);
+				} catch (NumberFormatException ex) {
+					ex.printStackTrace();
+					return;
+				}
+				map.addVaccines(table.getValueAt(table.getSelectedRow(), 0), num);
+				return;
 			}
 		});
 
+
 		lowerMenu.add(saveBt);
 		lowerMenu.add(addSickBt);
+		lowerMenu.add(addVaccineBt);
 
 		this.add(upperMenu);
 		this.add(table);
-		this.add(new RowedTableScroll(table, model1.getColNames()));
+		this.add(new JScrollPane(table));
 		this.add(lowerMenu);
 
 	}
@@ -194,9 +210,31 @@ public class Statistics extends JPanel {
 			return getValueAt(0, column).getClass();
 		}
 
+		@Override
+		public boolean isCellEditable(int rowIndex, int columnIndex) {
+			return columnIndex > 0;
+		}
+
+//		@Override
+//		public void setValueAt(Object aValue, int row, int col) {
+//			Settlement settlement = data.at(row);
+//			if (col == 2)
+//
+//			fireTableCellUpdated(row, col);
+//		}
+
 		public String[] getColNames() {
 			return colNames;
 		}
+
+//		public int getColIndex(String name) {
+//			for (int i = 0; i < colNames.length; ++i) {
+//				if (colNames[i].equals(name))
+//					return i;
+//			}
+//
+//		}
+
 
 	}
 
