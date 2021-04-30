@@ -4,9 +4,7 @@ import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 
 import javax.swing.JButton;
-import javax.swing.JCheckBox;
 import javax.swing.JFrame;
-import javax.swing.JTable;
 
 import country.Map;
 import ui.Mutations;
@@ -45,9 +43,8 @@ public class Main {
 			}
 		});
 		
-//		
-//		frame.add(b);
-		frame.add(st);
+		frame.add(b);
+//		frame.add(st);
 		frame.pack();
 		frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
 		frame.setVisible(true);
