@@ -47,6 +47,7 @@ public class Statistics extends JPanel {
 		lowerMenu.setLayout(new BoxLayout(lowerMenu, BoxLayout.LINE_AXIS));
 		
 		table.setRowSorter(sorter = new TableRowSorter<MyMapModel>(model1));
+//		table.setRowFilter();
 		m_combo = new JComboBox<>(filterOptions.values());
 
 		upperMenu.add(m_combo);
@@ -65,12 +66,15 @@ public class Statistics extends JPanel {
 
 			@Override
 			public void actionPerformed(ActionEvent e) {
-//				JTable tempModel = new JTable(model1);// copy of current TableModel
-				DefaultTableModel model = new DefaultTableModel(
-						Map.filtering(map.getTableData(), m_combo.getItemAt(m_combo.getSelectedIndex()).toString()),
-						model1.getColNames());
-				table.setModel(model);
-	            model.fireTableDataChanged();
+				String value = m_combo.getItemAt(m_combo.getSelectedIndex()).toString();
+				if(value.equals("filter by"))
+					sorter.setRowFilter(null);
+				else
+					newFilter1();
+				
+
+				
+
 			}
 		});
 		JButton saveBt = new JButton("Save");
@@ -123,7 +127,7 @@ public class Statistics extends JPanel {
 		lowerMenu.add(saveBt);
 		lowerMenu.add(addSickBt);
 		lowerMenu.add(addVaccineBt);
-
+		
 		this.add(upperMenu);
 		this.add(table);
 		this.add(new JScrollPane(table));
@@ -138,6 +142,17 @@ public class Statistics extends JPanel {
 			// If current expression doesn't parse, don't update.
 		}
 	}
+	
+	private void newFilter1() {
+		String value = m_combo.getItemAt(m_combo.getSelectedIndex()).toString();
+		try {
+			sorter.setRowFilter(RowFilter.regexFilter(value, 1, 2));
+		} catch (java.util.regex.PatternSyntaxException e) {
+			// If current expression doesn't parse, don't update.
+		}
+	}
+	
+	
 
 //	private enum columnNames {
 //		col1("settlement name"), col2("settlement type"), col3("ramzor color"), col4("sick percentage"),
@@ -258,5 +273,6 @@ public class Statistics extends JPanel {
 
 	private JTextField tbFilterText;
 	private TableRowSorter<MyMapModel> sorter;
+	private TableRowSorter<MyMapModel> sorter1;
 	public final JComboBox<filterOptions> m_combo;// ?????
 }
