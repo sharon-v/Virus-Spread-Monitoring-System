@@ -21,13 +21,12 @@ public class Mutations extends JDialog implements ItemListener {
 		super(window, "Edit mutations", true);
 		
 		
-		JTable table = new JTable();
 		String[] colNames = { "British Variant", "Chinese Variant", "South African Variant" };
 		JCheckBox[][] data = new JCheckBox[3][3];
 		for(int i = 0 ; i < 3 ; ++i) {
 			for(int j =0 ;j < 3; ++j) {
 				data[i][j] = new JCheckBox();
-				table.add(data[i][j]);
+			
 				data[i][j].addItemListener(this);
 			}
 		}
@@ -38,7 +37,7 @@ public class Mutations extends JDialog implements ItemListener {
 		
 //		MyCheckModel model = new MyCheckModel();
 		
-//		JTable table = new JTable(data, colNames);
+		JTable table = new JTable(data, colNames);
 		this.add(table);
 		this.add(new RowedTableScroll(table, colNames));
 
