@@ -65,12 +65,12 @@ public class Statistics extends JPanel {
 
 			@Override
 			public void actionPerformed(ActionEvent e) {
-				JTable tempModel = new JTable(model1);// copy of current TableModel
-				DefaultTableModel model = Map.filtering(tempModel,
-						m_combo.getItemAt(m_combo.getSelectedIndex()).toString());
-//				tempModel = Map.filtering(tempModel, m_combo.getItemAt(m_combo.getSelectedIndex()).toString());
+//				JTable tempModel = new JTable(model1);// copy of current TableModel
+				DefaultTableModel model = new DefaultTableModel(
+						Map.filtering(map.getTableData(), m_combo.getItemAt(m_combo.getSelectedIndex()).toString()),
+						model1.getColNames());
 				table.setModel(model);
-				model.fireTableDataChanged();
+	            model.fireTableDataChanged();
 			}
 		});
 		JButton saveBt = new JButton("Save");
