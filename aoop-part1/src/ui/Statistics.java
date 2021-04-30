@@ -122,8 +122,7 @@ public class Statistics extends JPanel {
 				return;
 			}
 		});
-
-
+		
 		lowerMenu.add(saveBt);
 		lowerMenu.add(addSickBt);
 		lowerMenu.add(addVaccineBt);

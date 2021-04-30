@@ -43,8 +43,8 @@ public class Main {
 			}
 		});
 		
-		frame.add(b);
-//		frame.add(st);
+//		frame.add(b);
+		frame.add(st);
 		frame.pack();
 		frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
 		frame.setVisible(true);
