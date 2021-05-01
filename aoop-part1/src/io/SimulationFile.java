@@ -37,32 +37,34 @@ public class SimulationFile {
 			while (settl != null) {
 				if (settl.contains("#"))// if its a connection
 					addConnection(settl.replaceAll("\\s+", ""));
-				String[] settlDeteails = settl.replaceAll("\\s+", "").split(";");
-				String settlementType = settlDeteails[0];
-				String settlemntName = settlDeteails[1];
-				Point settlementPoint = new Point(Integer.parseInt(settlDeteails[2]),
+				else {
+					String[] settlDeteails = settl.replaceAll("\\s+", "").split(";");
+					String settlementType = settlDeteails[0];
+					String settlemntName = settlDeteails[1];
+					Point settlementPoint = new Point(Integer.parseInt(settlDeteails[2]),
 						Integer.parseInt(settlDeteails[3]));// convert
-				Size settlementSize = new Size(Integer.parseInt(settlDeteails[4]), Integer.parseInt(settlDeteails[5]));
-				Location settlementLocation = new Location(settlementPoint, settlementSize); // ??
-				int settlementPopulationAmount = Integer.parseInt(settlDeteails[6]);
+					Size settlementSize = new Size(Integer.parseInt(settlDeteails[4]), Integer.parseInt(settlDeteails[5]));
+					Location settlementLocation = new Location(settlementPoint, settlementSize); // ??
+					int settlementPopulationAmount = Integer.parseInt(settlDeteails[6]);
 
-				Settlement mySettlement;
-				if (settlementType.equals("City"))
-					mySettlement = new City(settlemntName, settlementLocation,
-							calculateMaxCapacity(settlementPopulationAmount));
-				else if (settlementType.equals("Moshav"))
-					mySettlement = new Moshav(settlemntName, settlementLocation,
-							calculateMaxCapacity(settlementPopulationAmount));
-				else if (settlementType.equals("Kibbutz")) 
-					mySettlement = new Kibbutz(settlemntName, settlementLocation,
-							calculateMaxCapacity(settlementPopulationAmount));
-				else
-					throw new Exception("No such settlement !");
-				map.addSettlement(mySettlement);
+					Settlement mySettlement;
+					if (settlementType.equals("City"))
+						mySettlement = new City(settlemntName, settlementLocation,
+								calculateMaxCapacity(settlementPopulationAmount));
+					else if (settlementType.equals("Moshav"))
+						mySettlement = new Moshav(settlemntName, settlementLocation,
+								calculateMaxCapacity(settlementPopulationAmount));
+					else if (settlementType.equals("Kibbutz")) 
+						mySettlement = new Kibbutz(settlemntName, settlementLocation,
+								calculateMaxCapacity(settlementPopulationAmount));
+					else
+						throw new Exception("No such settlement !");
+					map.addSettlement(mySettlement);
 
-				for (int i = 0; i < settlementPopulationAmount; ++i)
-					if(!mySettlement.addPerson(new Healthy(randomAge(), mySettlement.randomLocation(), mySettlement)))
+					for (int i = 0; i < settlementPopulationAmount; ++i)
+						if(!mySettlement.addPerson(new Healthy(randomAge(), mySettlement.randomLocation(), mySettlement)))
 							--i;
+				}// end else
 				settl = br.readLine();
 			} // end while
 		} catch (Exception e) {

@@ -1,10 +1,14 @@
-City;Ashdod; 0;0;90;50;200
-City;Beer-Sheva;30;0;80;80;300
-Moshav;Gevim;15;15;10; 20;100
-Moshav ;Emonim;5;10;10;30;200
-Kibbutz;Erez;6;11;20;30;300
-Kibbutz;Bari;20;4;10;10 ;100
-City;Eilat;15;20;30;15;200
-City ;Tel-Aviv;20;0;40;40;300
-Moshav; Bitzaron;45;0;14;15;100
-Moshav;Hagor;20;10 ;30;20;290
+City;Ashdod;500;1;90;50;200
+City;Beer-Sheva;100;500;80;80;300
+Moshav;Gevim;300;100;100; 20;100
+Moshav ;Emonim;200;200;70;40;200
+Kibbutz;Erez;300;300;50;30;300
+Kibbutz;Bari;400;400;30;30 ;100
+City;Eilat;550;550;30;15;200
+City ;Tel-Aviv;600;600;40;40;300
+#;Ashdod;Tel-Aviv
+#;Bari;Erez
+Moshav; Bitzaron;700;700;14;15;100
+Moshav;Hagor;750;750 ;30;20;290
+#;Tel-Aviv; Beer-Sheva
+#;Tel-Aviv;Eilat

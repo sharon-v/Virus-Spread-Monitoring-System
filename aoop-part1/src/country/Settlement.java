@@ -245,6 +245,16 @@ public abstract class Settlement {
 			}
 		}
 	}
+	
+	/**
+	 * 
+	 * @return point of the middel of the settlements
+	 */
+	public Point middelOfSettlement() {
+		int x = (int)(m_location.getPoint().getX() + (m_location.getSize().getWidth()/ 2)) ;
+		int y = (int)(m_location.getPoint().getY() + (m_location.getSize().getHeith()/2)); //need to be minus(-)
+		return new Point(x, y);
+	}
 
 
 	/**
@@ -368,6 +378,14 @@ public abstract class Settlement {
 	public void setVaccineDoses(int amount) {
 		if (amount >= 0)
 			m_vaccineDoses += amount;
+	}
+	
+	public Settlement[] getConnections() {///????????????????????
+		return m_connectedSettlements;
+	}
+	
+	public Location getLocation() { //??????
+		return m_location;
 	}
 
 	private final String m_name;// Settlement's name

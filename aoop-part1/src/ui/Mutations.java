@@ -16,30 +16,34 @@ import javax.swing.table.DefaultTableModel;
 import country.Map;
 import country.Settlement;
 
-public class Mutations extends JDialog implements ItemListener {	
+public class Mutations extends JDialog implements ItemListener  {	
 	public Mutations(Frame window) {
 		super(window, "Edit mutations", true);
 		
 		
-		String[] colNames = { "British Variant", "Chinese Variant", "South African Variant" };
-		JCheckBox[][] data = new JCheckBox[3][3];
-		for(int i = 0 ; i < 3 ; ++i) {
-			for(int j =0 ;j < 3; ++j) {
-				data[i][j] = new JCheckBox();
+//		String[] colNames = { "British Variant", "Chinese Variant", "South African Variant" };
+//		JCheckBox[][] data = new JCheckBox[3][3];
+//		for(int i = 0 ; i < 3 ; ++i) {
+//			for(int j =0 ;j < 3; ++j) {
+//				data[i][j] = new JCheckBox();
+//			
+//				data[i][j].addItemListener(this);
+//			}
+//		}
+		
+
 			
-				data[i][j].addItemListener(this);
-			}
-		}
 	
 		
 //		DefaultTableModel model = new DefaultTableModel(data, colNames);
 		
 		
-//		MyCheckModel model = new MyCheckModel();
+		MyCheckModel model = new MyCheckModel();
 		
-		JTable table = new JTable(data, colNames);
-		this.add(table);
-		this.add(new RowedTableScroll(table, colNames));
+		JTable table = new JTable(model);
+		
+//		this.add(table);
+		this.add(new RowedTableScroll(table, model.getColNames()));
 
 	}
 	
@@ -58,35 +62,35 @@ public class Mutations extends JDialog implements ItemListener {
 	
 	
 	
-	private class MyCheckModel extends DefaultTableModel implements ItemListener {
-		private final JCheckBox[][] data;
-		private final String[] colNames = { "British Variant", "Chinese Variant", "South African Variant" };
-		
-		public MyCheckModel() {
-			data = new JCheckBox[getColumnCount()][getColumnCount()];
-			for(int i = 0 ; i < getColumnCount() ; ++i) {
-				for(int j =0 ;j < getColumnCount(); ++j) {
-					data[i][j] = new JCheckBox();
-					data[i][j].addItemListener(this);
-				}
-			}
-		}
-		
-		@Override
-		public void itemStateChanged(ItemEvent e) {
-		JCheckBox ck = (JCheckBox) e.getItemSelectable();
-		String state = (e.getStateChange() == ItemEvent.DESELECTED ? "Deselected" : "Selected");
-		
-//		this.fireTableDataChanged();
-		}
-		
-	
-		
-		public String[] getColNames() {
-		return colNames;
-		}
-
-	}
+//	private class MyCheckModel extends DefaultTableModel implements ItemListener {
+//		private final JCheckBox[][] data;
+//		private final String[] colNames = { "British Variant", "Chinese Variant", "South African Variant" };
+//		
+//		public MyCheckModel() {
+//			data = new JCheckBox[getColumnCount()][getColumnCount()];
+//			for(int i = 0 ; i < getColumnCount() ; ++i) {
+//				for(int j =0 ;j < getColumnCount(); ++j) {
+//					data[i][j] = new JCheckBox();
+//					data[i][j].addItemListener(this);
+//				}
+//			}
+//		}
+//		
+//		@Override
+//		public void itemStateChanged(ItemEvent e) {
+//		JCheckBox ck = (JCheckBox) e.getItemSelectable();
+//		String state = (e.getStateChange() == ItemEvent.DESELECTED ? "Deselected" : "Selected");
+//		
+////		this.fireTableDataChanged();
+//		}
+//		
+//	
+//		
+//		public String[] getColNames() {
+//		return colNames;
+//		}
+//
+//	}
 	
 	
 //	private class MyCheckModel extends AbstractTableModel implements ItemListener {
@@ -115,7 +119,7 @@ public class Mutations extends JDialog implements ItemListener {
 //
 //		@Override
 //		public Object getValueAt(int rowIndex, int columnIndex) {	
-//			return data[rowIndex][columnIndex].getIcon();
+//			return data[rowIndex][columnIndex].getAccessibleContext();
 //		
 //		}
 //
@@ -148,4 +152,58 @@ public class Mutations extends JDialog implements ItemListener {
 //		}
 //
 //	}
+	
+	
+	/////**********************Sharon boolean way ************************************
+	private class MyCheckModel extends DefaultTableModel {
+		String[] colNames = { "British Variant", "Chinese Variant", "South African Variant" };
+		Boolean[][] data;
+		Boolean bool = false;
+		public MyCheckModel() {
+			data = new Boolean[getRowCount()][getColumnCount()];
+			for (int i = 0; i < getRowCount(); ++i) {
+				for (int j = 0; j < getColumnCount(); ++j) {
+					data[i][j] = bool;
+				}
+			}
+		}
+
+		public Boolean[][] getData() {
+			return data;
+		}
+		public String[] getColNames() {
+			return colNames;
+		}
+
+		public String getColumnName(int column) {
+			return colNames[column];
+		}
+
+		public Class getColumnClass(int column) {
+			return Boolean.class;
+		}
+
+		public Object getValueAt(int row, int col) {
+			return data[row][col];
+		}
+
+		@Override
+		public int getRowCount() {
+			return getColumnCount();
+		}
+
+		@Override
+		public int getColumnCount() {
+			return colNames.length;
+		}
+
+		public boolean isCellEditable(int row, int col) {
+			return true;
+		}
+
+		public void setValueAt(Boolean value, int row, int col) {
+			data[row][col] = value;
+			fireTableCellUpdated(row, col);
+		}
+	}
 }

@@ -6,6 +6,7 @@ import javax.swing.JTable;
 import javax.swing.table.DefaultTableModel;
 
 import io.SimulationFile;
+import location.Point;
 
 /**
  * 
@@ -209,6 +210,10 @@ public class Map {
 			settl2.addNewConnection(settl1);
 		}
 
+	}
+	
+	public Settlement[] getSettlement() {//????????????????????
+		return m_settlement;
 	}
 
 	public int getMapSize() {

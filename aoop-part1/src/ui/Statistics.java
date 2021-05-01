@@ -1,5 +1,6 @@
 package ui;
 
+import java.awt.Container;
 import java.awt.Dimension;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
@@ -31,7 +32,7 @@ public class Statistics extends JPanel {
 	 * 
 	 */
 	private static final long serialVersionUID = 1L;
-	public Statistics(Map map, JFrame f) {// change to panel
+	public Statistics(Map map, Container f) {// change to panel
 		this.setLayout(new BoxLayout(this, BoxLayout.PAGE_AXIS));// statistics window frame
 
 		MyMapModel model1 = new MyMapModel(map);
@@ -71,9 +72,6 @@ public class Statistics extends JPanel {
 					sorter.setRowFilter(null);
 				else
 					newFilter1();
-				
-
-				
 
 			}
 		});
@@ -127,6 +125,8 @@ public class Statistics extends JPanel {
 		lowerMenu.add(addSickBt);
 		lowerMenu.add(addVaccineBt);
 		
+		m_table = table; ////??????????????????????????????????????????????????????????????????/
+		
 		this.add(upperMenu);
 		this.add(table);
 		this.add(new JScrollPane(table));
@@ -149,6 +149,12 @@ public class Statistics extends JPanel {
 		} catch (java.util.regex.PatternSyntaxException e) {
 			// If current expression doesn't parse, don't update.
 		}
+	}
+	
+	public void markLine(String settl) {
+		for(int i=0;i<7;++i)
+			if(m_table.getValueAt(i, 0).equals(settl))
+				m_table.addRowSelectionInterval(i, i); //can mark a selected line
 	}
 	
 	
@@ -269,7 +275,8 @@ public class Statistics extends JPanel {
 			return opName;
 		}
 	}
-
+	
+	private JTable m_table;////???? ask sharon
 	private JTextField tbFilterText;
 	private TableRowSorter<MyMapModel> sorter;
 	private TableRowSorter<MyMapModel> sorter1;

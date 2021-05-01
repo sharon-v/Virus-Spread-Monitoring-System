@@ -7,6 +7,7 @@ import javax.swing.JButton;
 import javax.swing.JFrame;
 
 import country.Map;
+import ui.MapDrawing;
 import ui.Mutations;
 import ui.Statistics;
 
@@ -43,8 +44,11 @@ public class Main {
 			}
 		});
 		
-//		frame.add(b);
-		frame.add(st);
+		 
+//		frame.add(new MapDrawing(myMap)); //the map drawing model
+		
+		frame.add(b);
+//		frame.add(st);
 		frame.pack();
 		frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
 		frame.setVisible(true);
