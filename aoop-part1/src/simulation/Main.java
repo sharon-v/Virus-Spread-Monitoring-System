@@ -45,9 +45,9 @@ public class Main {
 		});
 		
 		 
-//		frame.add(new MapDrawing(myMap)); //the map drawing model
+		frame.add(new MapDrawing(myMap)); // the map drawing model
 		
-		frame.add(b);
+//		frame.add(b);
 //		frame.add(st);
 		frame.pack();
 		frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);

@@ -1,15 +1,12 @@
 package ui;
 
-import java.awt.Color;
 import java.awt.Dimension;
-import java.awt.FlowLayout;
 import java.awt.Graphics;
 import java.awt.Graphics2D;
 import java.awt.RenderingHints;
 import java.awt.event.MouseEvent;
 import java.awt.event.MouseListener;
 
-import javax.swing.JFrame;
 import javax.swing.JPanel;
 
 import country.Map;
@@ -21,6 +18,7 @@ public class MapDrawing extends JPanel implements MouseListener{
 	private Map map;
 	
 	public MapDrawing(Map myMap) {
+//		this.setLayout(new BoxLayout(this, BoxLayout.PAGE_AXIS));
 		settl = myMap.getSettlement();
 		map = myMap;
 		
@@ -74,7 +72,9 @@ public class MapDrawing extends JPanel implements MouseListener{
 		    	  if(x >= startX && x <= endX && y >= startY && y <= endY) {
 		    			Statistics st = new Statistics(map, this.getParent());
 		    			//to think how to open the statistic from here and mark the selected settlement
-		    			this.getParent().add(st);
+						this.getParent().add(st);
+//						this.add(st);
+
 		    			st.markLine(settl[i].getSettlementName());
 //		    			n.pack();
 //		    			n.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
