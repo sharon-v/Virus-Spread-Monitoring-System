@@ -101,7 +101,7 @@ public class Statistics extends JDialog {
 			@Override
 			public void actionPerformed(ActionEvent e) {
 				map.activateOnePercent(table.getValueAt(table.getSelectedRow(), 0));
-
+				table.updateUI();
 			}
 		});
 
@@ -120,6 +120,7 @@ public class Statistics extends JDialog {
 					return;
 				}
 				map.addVaccines(table.getValueAt(table.getSelectedRow(), 0), num);
+				table.updateUI();
 				return;
 			}
 		});
