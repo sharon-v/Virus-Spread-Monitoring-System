@@ -4,6 +4,9 @@ package ui;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 
+import javax.swing.BoxLayout;
+import javax.swing.JButton;
+import javax.swing.JComponent;
 import javax.swing.JDialog;
 import javax.swing.JFileChooser;
 import javax.swing.JFrame;
@@ -11,7 +14,7 @@ import javax.swing.JLabel;
 import javax.swing.JMenu;
 import javax.swing.JMenuBar;
 import javax.swing.JMenuItem;
-import javax.swing.JOptionPane;
+import javax.swing.JPanel;
 import javax.swing.JSpinner;
 import javax.swing.SpinnerModel;
 import javax.swing.SpinnerNumberModel;
@@ -175,8 +178,36 @@ public class Menu extends JMenuBar {
 
 				@Override
 				public void actionPerformed(ActionEvent e) {
-					SpinnerModel model = new SpinnerNumberModel(Clock.getTicksPerDay(), 1, 10000, 1);
+					JDialog di = new JDialog();
+					JPanel panel = new JPanel();
+					panel.setLayout(new BoxLayout(panel, BoxLayout.PAGE_AXIS));
+					JLabel lb = new JLabel("Set Ticks Per Day");
+					SpinnerModel model = new SpinnerNumberModel(Clock.getTicksPerDay(),
+							Clock.getTicksPerDay() - 1000 + 1,
+							Clock.getTicksPerDay() + 1000, 1);
 					JSpinner spinner = new JSpinner(model);
+					JButton btn = new JButton("Save");
+					JLabel ticks = new JLabel("ticks per day is now = " + Clock.getTicksPerDay());
+					btn.addActionListener(new ActionListener() {
+
+						@Override
+						public void actionPerformed(ActionEvent e) {// remove button
+							Clock.setTicksPerDay((int) spinner.getValue());
+							ticks.setText("ticks per day is now = " + Clock.getTicksPerDay());
+						}
+					});
+					JComponent editor = new JSpinner.NumberEditor(spinner);
+					spinner.setEditor(editor);
+					spinner.setSize(70, 30);
+					panel.add(lb);
+					panel.add(spinner);
+					panel.add(btn);
+					panel.add(ticks);
+					di.add(panel);
+					di.setSize(200, 200);
+					di.setVisible(true);
+					// "Set Ticks Per Day"
+
 				}
 			});
 		}

@@ -3,8 +3,6 @@ package ui;
 import javax.swing.BoxLayout;
 import javax.swing.JFrame;
 import javax.swing.JSlider;
-import javax.swing.event.ChangeEvent;
-import javax.swing.event.ChangeListener;
 
 import country.Map;
 
@@ -22,8 +20,8 @@ public class MainWindow extends JFrame {
 		// add Menu instance
 		menu = new Menu(this, stat, map, drawMap);
 //		 add JSlider instance
-		slider = new JSlider(JSlider.HORIZONTAL,
-		                                   FPS_MIN, FPS_MAX, FPS_INIT);
+		slider = new JSlider(JSlider.HORIZONTAL, FPS_MIN, FPS_MAX, FPS_INIT);
+
 //		slider.addChangeListener(new ChangeListener c);
 
 		//Turn on labels at major tick marks.
