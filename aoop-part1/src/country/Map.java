@@ -96,7 +96,7 @@ public class Map {
 	 */
 	public void intialization() { // 1%
 		for (int i = 0; i < m_settlement.length; ++i) {
-			m_settlement[i].infectOnePercent();
+			m_settlement[i].infectTwentyPercent();
 		}
 	}
 
@@ -125,7 +125,7 @@ public class Map {
 	}
 
 	public void activateOnePercent(Object settName) {
-		findSettlementByName(settName.toString()).infectOnePercent();
+		findSettlementByName(settName.toString()).infectTwentyPercent();
 	}
 
 	private Settlement findSettlementByName(String name) {
@@ -138,6 +138,26 @@ public class Map {
 
 	public void addVaccines(Object settName, int amount) {
 		findSettlementByName(settName.toString()).setVaccineDoses((int) amount);// ???????
+	}
+
+	/**
+	 * vaccinates Healthy People if there are enough vaccines foe each Settlement
+	 */
+	public void massVaccination() {
+		for (int i = 0; i < m_settlement.length; ++i) {
+			m_settlement[i].vaccineTime();
+		}
+	}
+
+	/**
+	 * tries to transfer random 3% from each Settlement
+	 */
+	public void tryToTransfer() {
+		int ran;
+		for (int i = 0; i < m_settlement.length; ++i) {
+			ran = (int) (Math.random() * m_settlement.length);
+			m_settlement[i].randomTransfer(m_settlement[ran]);
+		}
 	}
 
 	/**
