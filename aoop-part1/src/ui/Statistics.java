@@ -1,6 +1,5 @@
 package ui;
 
-import java.awt.Container;
 import java.awt.Dimension;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
@@ -8,8 +7,9 @@ import java.awt.event.ActionListener;
 import javax.swing.BoxLayout;
 import javax.swing.JButton;
 import javax.swing.JComboBox;
+import javax.swing.JDialog;
 import javax.swing.JFileChooser;
-import javax.swing.JFrame;//????
+import javax.swing.JFrame;
 import javax.swing.JOptionPane;
 import javax.swing.JPanel;
 import javax.swing.JScrollPane;
@@ -20,19 +20,20 @@ import javax.swing.RowFilter;
 import javax.swing.event.DocumentEvent;
 import javax.swing.event.DocumentListener;
 import javax.swing.table.AbstractTableModel;
-import javax.swing.table.DefaultTableModel;
 import javax.swing.table.TableRowSorter;
 
 import country.Map;
 import country.Settlement;
 import io.StatisticsFile;
 
-public class Statistics extends JPanel {
+public class Statistics extends JDialog {
 	/**
 	 * 
 	 */
 	private static final long serialVersionUID = 1L;
-	public Statistics(Map map, Container f) {// change to panel
+
+	public Statistics(Map map, JFrame f) {// change to panel
+		super(f, "Statistics Window", false);
 		this.setLayout(new BoxLayout(this, BoxLayout.PAGE_AXIS));// statistics window frame
 
 		MyMapModel model1 = new MyMapModel(map);
@@ -85,6 +86,7 @@ public class Statistics extends JPanel {
 				// In response to a button click:
 				int returnVal = fc.showOpenDialog(saveBt);
 				fc.setDialogTitle("Choose Directory");
+				fc.setFileSelectionMode(JFileChooser.DIRECTORIES_ONLY);
 				if (returnVal == JFileChooser.APPROVE_OPTION) {
 					String path = fc.getSelectedFile().getAbsolutePath();
 					// This is where a real application would open the file.

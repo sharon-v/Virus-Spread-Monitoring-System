@@ -1,15 +1,21 @@
 package ui;
 
 
-import javax.swing.JDialog;
+import java.awt.event.ActionEvent;
+import java.awt.event.ActionListener;
+
+import javax.swing.JFileChooser;
 import javax.swing.JFrame;
 import javax.swing.JMenu;
 import javax.swing.JMenuBar;
 import javax.swing.JMenuItem;
 
+import country.Map;
+
 public class Menu {
 
 	public Menu(JFrame frame) {
+		window = frame;
 		// large menu
 		mb = new JMenuBar();
 		// menu options on bar
@@ -37,15 +43,65 @@ public class Menu {
 			m_file.add(edit);
 			m_file.add(exit);
 
+			// add ActionListeners
+			load.addActionListener(new ActionListener() {
+
+				@Override
+				public void actionPerformed(ActionEvent e) {
+					if (map == null) {// ?????? maybe check if initialized somehow
+						// Create a file chooser
+						final JFileChooser fc = new JFileChooser();
+
+						// In response to a button click:
+						int returnVal = fc.showOpenDialog(load);
+						fc.setDialogTitle("Choose Directory");
+						if (returnVal == JFileChooser.APPROVE_OPTION) {
+							String path = fc.getSelectedFile().getAbsolutePath();
+							// This is where a real application would open the file.
+							map.loadInfo(path);
+							map.intialization();// second stage
+							try {
+								map.executeSimulation(); // third stage
+							} catch (Exception ex) {
+								System.out.println(ex);
+								System.out.println("an unexpected ERROR has occurred :(");
+							}
+						}
+					}
+				}
+			});
+
+			stats.addActionListener(new ActionListener() {
+
+				@Override
+				public void actionPerformed(ActionEvent e) {
+					stat = new Statistics(map, window);
+				}
+			});
+
+			edit.addActionListener(new ActionListener() {
+
+				@Override
+				public void actionPerformed(ActionEvent e) {
+					Mutations mutation = new Mutations(window);
+				}
+			});
+
+			exit.addActionListener(new ActionListener() {
+				public void actionPerformed(ActionEvent e) {
+					System.exit(0);
+				}
+			});
+
+
 		}
 	}
 
-		private class Statistics extends JDialog {
+//		private class Statistics extends JDialog {
 //			private final JTextField tbUsername;
 //			private final JTextField tbPassword;
 //			private int result = -1;
-			public Statistics(JFrame frame) {
-				super(frame, "Statistics Window", false);
+//				super(frame, "Statistics Window", false);
 //				this.setLayout(new GridLayout(0, 2));
 //				this.add(new JLabel("Username: "));
 //				this.add(tbUsername = new JTextField());
@@ -58,9 +114,9 @@ public class Menu {
 //					}
 //				});
 //				this.add(cancel);
-
-			}
-		}
+//
+//			}
+//		}
 
 	private class Simulation extends JMenu {
 		public Simulation() {
@@ -75,7 +131,29 @@ public class Menu {
 			m_simulation.add(stop);
 			m_simulation.add(setTicks);
 
+			// need to action listeners for all??????
+
+			// set ticks
+			setTicks.addActionListener(new ActionListener() {
+
+				@Override
+				public void actionPerformed(ActionEvent e) {
+//					int num;
+//					String result = (String) JOptionPane.showInputDialog(setTicks, "Enter amount of ticks",
+//											"Set Ticks Per Day", JOptionPane.PLAIN_MESSAGE, null, null, "1");
+//					try {
+//						num = Integer.parseInt(result);
+//					} catch (NumberFormatException ex) {
+//						ex.printStackTrace();
+//						return;
+//					}
+//					return;
+				}
+					
+					
+			});
 		}
+		
 
 	}
 
@@ -96,6 +174,9 @@ public class Menu {
 	private final File m_file;
 	private final Simulation m_simulation;
 	private final Help m_help;
+	private Map map;// maybe can be final????
+	private Statistics stat;
+	private final JFrame window;// hold frame
 
 }
 

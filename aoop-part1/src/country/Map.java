@@ -1,10 +1,6 @@
 package country;
 
 import java.awt.Color;
-import java.util.Scanner;
-
-import javax.swing.JTable;
-import javax.swing.table.DefaultTableModel;
 
 import io.SimulationFile;
 import location.Location;
@@ -58,21 +54,22 @@ public class Map {
 	/**
 	 * manages input of data from file
 	 */
-	public void loadInfo() {
-		Scanner sc = new Scanner(System.in);
-		System.out.println("Please enter the file path: ");
-		String filePath = sc.nextLine();
+	public void loadInfo(String filePath) {
+//			Scanner sc = new Scanner(System.in);
+//			System.out.println("Please enter the file path: ");
+//			String filePath = sc.nextLine();
 		String[] connections = null;
 		try {
 			SimulationFile loadMap = new SimulationFile();
 			connections = loadMap.readFromFile(this, filePath);
 			makeConnections(connections);
 		} catch (Exception e) {
-			System.out.println(e);	
-		} finally {
-			sc.close();
+			System.out.println(e);
 		}
-	}
+//			} finally {
+//				sc.close();
+//			}
+		}
 
 	/**
 	 * manages simulation sequence
