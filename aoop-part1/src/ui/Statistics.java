@@ -74,7 +74,6 @@ public class Statistics extends JDialog {
 					sorter.setRowFilter(null);
 				else
 					newFilter1();
-
 			}
 		});
 		JButton saveBt = new JButton("Save");
