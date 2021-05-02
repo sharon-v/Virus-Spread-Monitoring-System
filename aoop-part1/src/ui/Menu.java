@@ -9,8 +9,12 @@ import javax.swing.JFrame;
 import javax.swing.JMenu;
 import javax.swing.JMenuBar;
 import javax.swing.JMenuItem;
+import javax.swing.JSpinner;
+import javax.swing.SpinnerModel;
+import javax.swing.SpinnerNumberModel;
 
 import country.Map;
+import simulation.Clock;
 
 public class Menu {
 
@@ -138,23 +142,11 @@ public class Menu {
 
 				@Override
 				public void actionPerformed(ActionEvent e) {
-//					int num;
-//					String result = (String) JOptionPane.showInputDialog(setTicks, "Enter amount of ticks",
-//											"Set Ticks Per Day", JOptionPane.PLAIN_MESSAGE, null, null, "1");
-//					try {
-//						num = Integer.parseInt(result);
-//					} catch (NumberFormatException ex) {
-//						ex.printStackTrace();
-//						return;
-//					}
-//					return;
+					SpinnerModel model = new SpinnerNumberModel(Clock.getTicksPerDay(), 1, 10000, 1);
+					JSpinner spinner = new JSpinner(model);
 				}
-					
-					
 			});
 		}
-		
-
 	}
 
 	private class Help extends JMenu {

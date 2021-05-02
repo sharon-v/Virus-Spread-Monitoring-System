@@ -40,6 +40,19 @@ public class Clock {
 		ticks_per_day = x;
 	}
 
+	/**
+	 * 
+	 * @return value of ticks per day
+	 */
+	public static int getTicksPerDay() {
+		return ticks_per_day;
+	}
+
+	/**
+	 * 
+	 * @param startTime - the initial time to compare to
+	 * @return how many days passed since
+	 */
 	public static long calculateDays(long startTime) {
 		return (long) (Math.ceil((now() - startTime) / ticks_per_day));
 	}
