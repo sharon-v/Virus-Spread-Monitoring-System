@@ -9,9 +9,12 @@ import java.awt.RenderingHints;
 import java.awt.event.MouseEvent;
 import java.awt.event.MouseListener;
 
+import javax.swing.BorderFactory;
 import javax.swing.JDialog;
 import javax.swing.JFrame;
 import javax.swing.JPanel;
+import javax.swing.JScrollPane;
+import javax.swing.border.Border;
 
 import country.Map;
 import country.Settlement;
@@ -19,15 +22,19 @@ import location.Location;
 import location.Point;
 
 public class MapDrawing extends JPanel implements MouseListener{
-//	private Settlement[] settl;///??????????????????????????????????????
 	private Map map;
 	private final Statistics st;
 	
 	public MapDrawing(Map myMap, Statistics stat) {
-//		this.setLayout(new BoxLayout(this, BoxLayout.PAGE_AXIS));
-//		settl = myMap.getSettlement();
+		//create border
+		Border raisedbevel = BorderFactory.createRaisedBevelBorder();
+		Border loweredbevel = BorderFactory.createLoweredBevelBorder();
+		Border compound = BorderFactory.createCompoundBorder(raisedbevel, loweredbevel);
+		this.setBorder(compound);
+
 		map = myMap;
 		st = stat;
+		this.add(new JScrollPane());
 		
 	}
 	
@@ -55,13 +62,16 @@ public class MapDrawing extends JPanel implements MouseListener{
 		}
 				
 		addMouseListener(this);
-		
-		
 	}
+	
+//	public void setMapDraw(Map map) {
+//		this.map = map;
+//		paintComponent(getGraphics());
+//	}
 	
 	@Override
 	public Dimension getPreferredSize() {
-		return new Dimension(1000, 800);
+		return new Dimension(600, 400);
 	}
 	
 	public void mousePressed(MouseEvent e) {
