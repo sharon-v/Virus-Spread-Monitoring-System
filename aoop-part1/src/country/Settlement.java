@@ -323,6 +323,34 @@ public abstract class Settlement {
 //		}
 //		return tempIndex;
 //	}
+	
+	
+	/**
+	 * 
+	 * @return middle Points connections of a settlement array 
+	 */
+	public Point[] conectionsPoints() {
+		Point[] settlPoints = new Point[0];
+		for(int i=0 ; i< m_connectedSettlements.length; ++i) {
+			Point middel = m_connectedSettlements[i].middelOfSettlement();
+			settlPoints = addToConectionsPoints(settlPoints, middel);
+		}
+		return settlPoints;
+	}
+	
+	/**
+	 * 
+	 * @param arr - array of Point
+	 * @param p - new Point
+	 * @return new Point array with the new Point
+	 */
+	private Point[] addToConectionsPoints(Point[] arr, Point p) {
+		Point[] temp = new Point[arr.length + 1];
+		for(int i=0 ; i<arr.length;++i) 
+			temp[i] = arr[i];
+		temp[arr.length] = p;
+		return temp;
+	}
 
 
 

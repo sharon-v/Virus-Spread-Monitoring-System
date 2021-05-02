@@ -1,11 +1,13 @@
 package country;
 
+import java.awt.Color;
 import java.util.Scanner;
 
 import javax.swing.JTable;
 import javax.swing.table.DefaultTableModel;
 
 import io.SimulationFile;
+import location.Location;
 import location.Point;
 
 /**
@@ -152,20 +154,119 @@ public class Map {
 			connectSettlements(temp[1], temp[2]);
 		}
 	}
-
-	public static String[][] filtering(String[][] data, String type) {
-		if (type.equals("filter by"))
-			return data;
-
-		String[][] temp = new String[0][];
-		for (int i = 0; i < data.length; ++i) {
-			for (int j = 0; j < data[i].length; ++j) {
-				if (data[i][j].equals(type))
-					temp = addData(temp, data[i]);
+	
+	/**
+	 * 
+	 * @return Color array of all the settlements ramzor color
+	 */
+	public Color[] settlementsColors() {
+		Color[] settlColor = new Color[m_settlement.length];
+		for(int i= 0 ;i< m_settlement.length;++i) 
+			settlColor[i] = m_settlement[i].getRamzorColor().getColor();
+		return settlColor;
+	}
+	
+	/**
+	 * 
+	 * @return Location array of all the settlements location
+	 */
+	public Location[] settlementsLocation() {
+		Location[] settlPoints = new Location[m_settlement.length];
+		for(int i= 0 ;i< m_settlement.length;++i) 
+			settlPoints[i] = m_settlement[i].getLocation();
+		return settlPoints;
+	}
+	
+	/**
+	 * 
+	 * @return String array of all the settlements name
+	 */
+	public String[] settlementsNames() {
+		String[] settlNames = new String[m_settlement.length];
+		for(int i= 0 ;i< m_settlement.length;++i) 
+			settlNames[i] = m_settlement[i].getSettlementName();
+		return settlNames;
+	}
+	
+	/**
+	 * 
+	 * @return Point array of all the settlements middle point
+	 */
+	public Point[] settlementPoints() {
+		Point[] settlPoints = new Point[m_settlement.length];
+		for(int i= 0 ;i< m_settlement.length;++i) 
+			settlPoints[i] = m_settlement[i].middelOfSettlement();
+		return settlPoints;
+	}
+	
+	/**
+	 * 
+	 * @return all the connections in the map
+	 */
+	public Point[] middelPoints() {
+		Point[] Connections = new Point[0];
+		for(int i=0 ; i< m_settlement.length;++i){
+			Point[] connectionsMid = m_settlement[i].conectionsPoints();
+			Point settleMiddle = m_settlement[i].middelOfSettlement();
+			Connections = addConection(Connections, connectionsMid, settleMiddle);
+		}
+		return Connections;
+	}
+	
+	/**
+	 * 
+	 * @param arr - - middle point of the connections settlement array 
+	 * @param newPoints - new points connection of settlement
+	 * @param settlPoint - middle point of settlement
+	 * @return
+	 */
+	private Point[] addConection(Point[] arr, Point[] newPoints, Point settlPoint) {
+		Point[] temp = arr;
+		for(int j = 0; j< newPoints.length ; ++j) {
+			if(!checkIfConnectionExist(arr, newPoints[j], settlPoint)) {
+				temp = new Point[arr.length + 2];
+				for(int i=0 ; i< arr.length;++i) 
+					temp[i] = arr[i];
+				temp[arr.length] = settlPoint;
+				temp[arr.length + 1] = newPoints[j];
 			}
 		}
 		return temp;
 	}
+	
+	/**
+	 * 
+	 * @param PointsConnection - middle point of the connections settlement array
+	 * @param settl1 - middle point of settlement
+	 * @param settl2 - - middle point of settlement
+	 * @return - true if the connection exist in the array, if not return false
+	 */
+	private boolean checkIfConnectionExist(Point[] PointsConnection, Point settl1, Point settl2) {
+		for(int i = 0 ; i < PointsConnection.length - 1 ; i+=2) {
+			if(PointsConnection[i].equals(settl1))
+				if(PointsConnection[i+1].equals(settl2))                  
+					return true;
+			if(PointsConnection[i].equals(settl2))
+				if(PointsConnection[i+1].equals(settl1))
+					return true;	
+		}
+		return false;
+	}
+	
+
+//	public static String[][] filtering(String[][] data, String type) {
+//		if (type.equals("filter by"))
+//			return data;
+//
+//		String[][] temp = new String[0][];
+//		for (int i = 0; i < data.length; ++i) {
+//			for (int j = 0; j < data[i].length; ++j) {
+//				if (data[i][j].equals(type))
+//					temp = addData(temp, data[i]);
+//			}
+//		}
+//		return temp;
+//	}
 
 //	public static DefaultTableModel filtering(JTable statTable, String type) {
 //		DefaultTableModel model = (DefaultTableModel) statTable.getModel();
@@ -182,15 +283,15 @@ public class Map {
 //		return model;
 //	}
 
-
-	private static String[][] addData(String[][] arr, String[] newStr) {
-		String[][] temp = new String[arr.length + 1][];
-		for (int i = 0; i < arr.length; ++i) {
-			temp[i] = arr[i];
-		}
-		temp[arr.length] = newStr;
-		return temp;
-	}
+//
+//	private static String[][] addData(String[][] arr, String[] newStr) {
+//		String[][] temp = new String[arr.length + 1][];
+//		for (int i = 0; i < arr.length; ++i) {
+//			temp[i] = arr[i];
+//		}
+//		temp[arr.length] = newStr;
+//		return temp;
+//	}
 
 	/**
 	 * 
