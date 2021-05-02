@@ -4,10 +4,13 @@ import java.awt.Color;
 import java.awt.Dimension;
 import java.awt.Graphics;
 import java.awt.Graphics2D;
+import java.awt.Rectangle;
 import java.awt.RenderingHints;
 import java.awt.event.MouseEvent;
 import java.awt.event.MouseListener;
 
+import javax.swing.JDialog;
+import javax.swing.JFrame;
 import javax.swing.JPanel;
 
 import country.Map;
@@ -16,13 +19,15 @@ import location.Location;
 import location.Point;
 
 public class MapDrawing extends JPanel implements MouseListener{
-	private Settlement[] settl;///??????????????????????????????????????
+//	private Settlement[] settl;///??????????????????????????????????????
 	private Map map;
+	private final Statistics st;
 	
-	public MapDrawing(Map myMap) {
+	public MapDrawing(Map myMap, Statistics stat) {
 //		this.setLayout(new BoxLayout(this, BoxLayout.PAGE_AXIS));
-		settl = myMap.getSettlement();
+//		settl = myMap.getSettlement();
 		map = myMap;
+		st = stat;
 		
 	}
 	
@@ -76,29 +81,18 @@ public class MapDrawing extends JPanel implements MouseListener{
 
 	    public void mouseClicked(MouseEvent e) {
 	    	int x = e.getX();
-		      int y = e.getY();
-		      for(int i = 0; i < settl.length ; ++i) {//run over the settlements and printing them by color
-		    	  int startX = settl[i].getLocation().getPoint().getX();
-		    	  int startY = settl[i].getLocation().getPoint().getY();
-		    	  int endX = settl[i].getLocation().getSize().getWidth() + startX;
-		    	  int endY = settl[i].getLocation().getSize().getHeith() + startY;
-		    	  if(x >= startX && x <= endX && y >= startY && y <= endY) {
-		    			Statistics st = new Statistics(map, this.getParent());
-		    			//to think how to open the statistic from here and mark the selected settlement
-						this.getParent().add(st);
-//						this.add(st);
-
-		    			st.markLine(settl[i].getSettlementName());
-//		    			n.pack();
-//		    			n.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
-//		    			n.setVisible(true);
-
-		    			
-//		    			this.getParent().removeAll();
-//		    			this.getParent().add(st);
-		     	  }
-		      }
-
+		    int y = e.getY();
+			Location[] settlLocations = map.settlementsLocation();
+		    for(int i = 0; i < settlLocations.length ; ++i) {//run over the settlements and printing them by color
+		    	 int startX = settlLocations[i].getPoint().getX();
+		    	 int startY = settlLocations[i].getPoint().getY();
+		    	 int endX = settlLocations[i].getSize().getWidth() + startX;
+		    	 int endY = settlLocations[i].getSize().getHeith() + startY;
+		    	 if(x >= startX && x <= endX && y >= startY && y <= endY) {
+		    		 st.markLine(i);
+		    		 st.showDialog();
+		    	 }
+		    }
 	    }
 
 

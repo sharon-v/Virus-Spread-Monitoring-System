@@ -20,7 +20,7 @@ public class Main {
 
 	public static void main(String[] args) {
 		Map myMap = new Map();
-		myMap.loadInfo(); // first stage
+		myMap.loadInfo("testRun.txt"); // first stage
 		myMap.intialization();// second stage
 		try {
 			myMap.executeSimulation(); // third stage
@@ -30,7 +30,8 @@ public class Main {
 		}
 		//???????????????????
 		
-		JFrame frame = new JFrame("Table Example"); 		
+		JFrame frame = new JFrame("Table Example"); 
+
 //		frame.setLayout(new BoxLayout(frame.getContentPane(), BoxLayout.PAGE_AXIS));
 		Statistics st = new Statistics(myMap, frame);
 		
@@ -45,8 +46,8 @@ public class Main {
 		});
 		
 		 
-		frame.add(new MapDrawing(myMap)); // the map drawing model
-		
+		frame.add(new MapDrawing(myMap, st)); // the map drawing model
+
 //		frame.add(b);
 //		frame.add(st);
 		frame.pack();

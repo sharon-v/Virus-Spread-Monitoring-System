@@ -170,7 +170,7 @@ public class Map {
 	public Location[] settlementsLocation() {
 		Location[] settlPoints = new Location[m_settlement.length];
 		for(int i= 0 ;i< m_settlement.length;++i) 
-			settlPoints[i] = m_settlement[i].getLocation();
+			settlPoints[i] = new Location(m_settlement[i].getLocation());
 		return settlPoints;
 	}
 	
@@ -192,7 +192,7 @@ public class Map {
 	public Point[] settlementPoints() {
 		Point[] settlPoints = new Point[m_settlement.length];
 		for(int i= 0 ;i< m_settlement.length;++i) 
-			settlPoints[i] = m_settlement[i].middelOfSettlement();
+			settlPoints[i] = new Point(m_settlement[i].middelOfSettlement());
 		return settlPoints;
 	}
 	

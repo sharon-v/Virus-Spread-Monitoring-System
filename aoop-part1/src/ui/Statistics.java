@@ -34,7 +34,8 @@ public class Statistics extends JDialog {
 
 	public Statistics(Map map, JFrame f) {// change to panel
 		super(f, "Statistics Window", false);
-		this.setLayout(new BoxLayout(this, BoxLayout.PAGE_AXIS));// statistics window frame
+		JPanel panel = new JPanel();
+		panel.setLayout(new BoxLayout(panel, BoxLayout.PAGE_AXIS));// statistics window frame
 
 		MyMapModel model1 = new MyMapModel(map);
 		JTable table = new JTable(model1);
@@ -129,11 +130,19 @@ public class Statistics extends JDialog {
 		
 		m_table = table; ////??????????????????????????????????????????????????????????????????/
 		
-		this.add(upperMenu);
-		this.add(table);
-		this.add(new JScrollPane(table));
-		this.add(lowerMenu);
+		panel.add(upperMenu);
+		panel.add(table);
+		panel.add(new JScrollPane(table));
+		panel.add(lowerMenu);
+		this.add(panel);
 
+		
+	}
+	
+	public void showDialog() {
+		setLocationRelativeTo(getParent());
+		pack();
+		setVisible(true);
 	}
 
 	private void newFilter() {
@@ -153,10 +162,8 @@ public class Statistics extends JDialog {
 		}
 	}
 	
-	public void markLine(String settl) {
-		for(int i=0;i<7;++i)
-			if(m_table.getValueAt(i, 0).equals(settl))
-				m_table.addRowSelectionInterval(i, i); //can mark a selected line
+	public void markLine(int index) {
+		m_table.addRowSelectionInterval(index, index); //can mark a selected line
 	}
 	
 	
