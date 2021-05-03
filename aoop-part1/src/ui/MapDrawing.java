@@ -4,30 +4,45 @@ import java.awt.Color;
 import java.awt.Dimension;
 import java.awt.Graphics;
 import java.awt.Graphics2D;
+import java.awt.Rectangle;
 import java.awt.RenderingHints;
+import java.awt.event.MouseAdapter;
 import java.awt.event.MouseEvent;
 import java.awt.event.MouseListener;
 
+import javax.swing.JDialog;
+import javax.swing.JFrame;
 import javax.swing.JPanel;
 
 import country.Map;
+import country.Settlement;
 import location.Location;
 import location.Point;
 
-public class MapDrawing extends JPanel implements MouseListener{
+public class MapDrawing extends JPanel{
 	private Map map;
 	private final Statistics st;
 	
 	public MapDrawing(Map myMap, Statistics stat) {
-		//create border
-//		Border raisedbevel = BorderFactory.createRaisedBevelBorder();
-//		Border loweredbevel = BorderFactory.createLoweredBevelBorder();
-//		Border compound = BorderFactory.createCompoundBorder(raisedbevel, loweredbevel);
-//		this.setBorder(compound);
-
 		map = myMap;
 		st = stat;
-//		this.add(new JScrollPane());
+		this.addMouseListener(new MouseAdapter() {
+			public void mouseClicked(MouseEvent e) {
+				int x = e.getX();
+			    int y = e.getY();
+				Location[] settlLocations = map.settlementsLocation();
+			    for(int i = 0; i < settlLocations.length ; ++i) {//run over the settlements and printing them by color
+			    	 int startX = settlLocations[i].getPoint().getX();
+			    	 int startY = settlLocations[i].getPoint().getY();
+			    	 int endX = settlLocations[i].getSize().getWidth() + startX;
+			    	 int endY = settlLocations[i].getSize().getHeith() + startY;
+			    	 if(x >= startX && x <= endX && y >= startY && y <= endY) {
+			    		 st.markLine(i);
+			    		 st.showDialog();
+			    	 }
+			    }
+			}
+		});
 		
 	}
 	
@@ -52,51 +67,13 @@ public class MapDrawing extends JPanel implements MouseListener{
 					settlLocations[i].getSize().getWidth(), settlLocations[i].getSize().getHeith());
 			g.setColor(Color.BLACK);
 			g.drawString(settleNames[i], settlLocations[i].getPoint().getX()+5, settlementsMiddlePoints[i].getY()+5);
-		}
-				
-		addMouseListener(this);
+		}		
+		
 	}
-	
-//	public void setMapDraw(Map map) {
-//		this.map = map;
-//		paintComponent(getGraphics());
-//	}
 	
 	@Override
 	public Dimension getPreferredSize() {
-		return new Dimension(600, 400);
+		return new Dimension(400, 400);////?????????????????????	
 	}
-	
-	public void mousePressed(MouseEvent e) {
-	       
-	    }
-
-	    public void mouseReleased(MouseEvent e) {
-	    }
-
-	    public void mouseEntered(MouseEvent e) {
-	       
-	    }
-
-	    public void mouseExited(MouseEvent e) {
-	      
-	    }
-
-	    public void mouseClicked(MouseEvent e) {
-	    	int x = e.getX();
-		    int y = e.getY();
-			Location[] settlLocations = map.settlementsLocation();
-		    for(int i = 0; i < settlLocations.length ; ++i) {//run over the settlements and printing them by color
-		    	 int startX = settlLocations[i].getPoint().getX();
-		    	 int startY = settlLocations[i].getPoint().getY();
-		    	 int endX = settlLocations[i].getSize().getWidth() + startX;
-		    	 int endY = settlLocations[i].getSize().getHeith() + startY;
-		    	 if(x >= startX && x <= endX && y >= startY && y <= endY) {
-		    		 st.markLine(i);
-		    		 st.showDialog();
-		    	 }
-		    }
-	    }
-
-
 }
+

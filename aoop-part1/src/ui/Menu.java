@@ -1,6 +1,7 @@
 package ui;
 
 
+import java.awt.FileDialog;
 import java.awt.FlowLayout;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
@@ -14,6 +15,7 @@ import javax.swing.JMenu;
 import javax.swing.JMenuBar;
 import javax.swing.JMenuItem;
 import javax.swing.JPanel;
+import javax.swing.JSlider;
 import javax.swing.JSpinner;
 import javax.swing.SpinnerModel;
 import javax.swing.SpinnerNumberModel;
@@ -21,18 +23,19 @@ import javax.swing.event.ChangeEvent;
 import javax.swing.event.ChangeListener;
 
 import country.Map;
+import io.StatisticsFile;
 import simulation.Clock;
 
 public class Menu extends JMenuBar {
 
-	public Menu(JFrame frame, Statistics st, Map map, MapDrawing draw) {
+	public Menu(JFrame frame, Statistics st, Map map, MapDrawing draw, JSlider slider) {
 		window = frame;
 		stat =st;
 		mutation = new Mutations(window);
 		this.map = map;
+		m_slider = slider;
 		myMapDraw = draw;
-		playFlag = false;// currently simulation is not playing
-		loadFlag = false;// currently map is not loaded
+	
 		// large menu
 		m_menu = new JMenu("Menu");
 		// menu options on bar
@@ -66,23 +69,34 @@ public class Menu extends JMenuBar {
 
 				@Override
 				public void actionPerformed(ActionEvent e) {
-					
+
 					if (loadFlag == false) {// ?????? maybe check if initialized somehow----------->fixxxxxxxxxxxxxxxx
 						loadFlag = true;
 						// Create a file chooser
-						final JFileChooser fc = new JFileChooser();
+						
+						FileDialog dialog = new FileDialog((JFrame)null, "Select File to Open");
+					    dialog.setMode(FileDialog.LOAD);
+					    dialog.setVisible(true);
+					    String path = dialog.getFile();
+					    map.loadInfo(path);
+						myMapDraw.repaint();
+						map.intialization();// second stage
+						
+//						StatisticsFile.exportToCSV(table, path);
+						
+//						final JFileChooser fc = new JFileChooser();
 
 						// In response to a button click:
-						int returnVal = fc.showOpenDialog(load);
-						fc.setDialogTitle("Choose Directory");
-						if (returnVal == JFileChooser.APPROVE_OPTION) {
-							String path = fc.getSelectedFile().getAbsolutePath();
+//						int returnVal = fc.showOpenDialog(load);
+//						fc.setDialogTitle("Choose Directory");
+//						if (returnVal == JFileChooser.APPROVE_OPTION) {
+//							String path = fc.getSelectedFile().getAbsolutePath();
 							// This is where a real application would open the file.
-							map.loadInfo(path);
-							myMapDraw.repaint();
-						
-							map.intialization();// second stage
-						}
+//							map.loadInfo(path);
+//							myMapDraw.repaint();
+//
+//							map.intialization();// second stage
+//						}
 					}
 				}
 			});
@@ -113,26 +127,6 @@ public class Menu extends JMenuBar {
 		}
 	}
 
-//		private class Statistics extends JDialog {
-//			private final JTextField tbUsername;
-//			private final JTextField tbPassword;
-//			private int result = -1;
-//				super(frame, "Statistics Window", false);
-//				this.setLayout(new GridLayout(0, 2));
-//				this.add(new JLabel("Username: "));
-//				this.add(tbUsername = new JTextField());
-//				JButton cancel = new JButton("Cancel");
-//				cancel.addActionListener(new ActionListener() {
-//					@Override
-//					public void actionPerformed(ActionEvent e) {
-//						result = JOptionPane.CANCEL_OPTION;
-//						setVisible(false);
-//					}
-//				});
-//				this.add(cancel);
-//
-//			}
-//		}
 
 	private class Simulation extends JMenu {
 		public Simulation() {
@@ -147,31 +141,22 @@ public class Menu extends JMenuBar {
 			this.add(stop);
 			this.add(setTicks);
 
-			// need to action listeners for all??????
-			
 			play.addActionListener(new ActionListener() {
-				
+
 				@Override
 				public void actionPerformed(ActionEvent e) {
-					if (playFlag == false && loadFlag == true) {
-						playFlag = true;
-						try {
-							map.executeSimulation(); // third stage
-						} catch (Exception ex) {
-							System.out.println("an unexpected ERROR has occurred :(");
-							ex.printStackTrace();
-						}
-					}
+				
+
 				}
 			});
-			
+
 			pause.addActionListener(new ActionListener() {
-				
+
 				@Override
 				public void actionPerformed(ActionEvent e) {
 					if (playFlag == true) {
 						playFlag = false;
-					//countinue
+						//countinue
 					}
 				}
 			});
@@ -233,24 +218,24 @@ public class Menu extends JMenuBar {
 			// add to file
 			this.add(help);
 			this.add(about);
-			
+
 			help.addActionListener(new ActionListener() {
-				
+
 				@Override
 				public void actionPerformed(ActionEvent e) {
 					JDialog info = new JDialog(window, "Information", JDialog.ModalityType.DOCUMENT_MODAL);
 					String expl = "Our program ....";  //?????
-//					JOptionPane.showMessageDialog(info, expl,  JOptionPane.INFORMATION_MESSAGE);
+					//					JOptionPane.showMessageDialog(info, expl,  JOptionPane.INFORMATION_MESSAGE);
 					JLabel text = new JLabel(expl);
 					info.add(text);
 					info.setSize(300, 300);
 					info.setVisible(true);
-					
+
 				}
 			});
-			
+
 			about.addActionListener(new ActionListener() {
-				
+
 				@Override
 				public void actionPerformed(ActionEvent e) {
 					JDialog info = new JDialog(window, "About");
@@ -272,8 +257,8 @@ public class Menu extends JMenuBar {
 	private final Help m_help;
 	private final JMenu m_menu;
 	private MapDrawing myMapDraw;
-	private boolean playFlag;
-	private boolean loadFlag;
+	private final JSlider m_slider;
+	
 
 	private Map map;// maybe can be final????
 	private Statistics stat;

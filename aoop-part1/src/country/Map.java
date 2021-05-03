@@ -5,6 +5,7 @@ import java.awt.Color;
 import io.SimulationFile;
 import location.Location;
 import location.Point;
+import simulation.Clock;
 
 /**
  * 
@@ -75,22 +76,12 @@ public class Map {
 	 * manages simulation sequence
 	 */
 	public void executeSimulation() throws Exception {
-//		for (int i = 0; i < 5; ++i) {
-//			System.out.println("\n		=== simulation num. " + (i + 1) + " ===");
-//			for (int j = 0; j < m_settlement.length; ++j) // run over settlements
-//			{
-//				System.out.println("\n\t-- settlement " + (j + 1) + "--");
-//				m_settlement[j].simulation();
-//				System.out.println(m_settlement[j]);
-//				
-//			}
-//		}
-//		System.out.println("			THE END !! ");
+		
 		sampleTwentyPercent();
 		massRecovery();
 		tryToTransfer();
 		massVaccination();
-		System.out.println(toStringSettlements());
+//		System.out.println(toStringSettlements());///??????
 	}
 
 	public void sampleTwentyPercent() {

@@ -27,7 +27,6 @@ public abstract class Person {
 		m_age = age;
 		m_location = new Point(location);
 		m_settlement = settlement;
-		// Clock.nextTick();
 	}
 	
 	/**
