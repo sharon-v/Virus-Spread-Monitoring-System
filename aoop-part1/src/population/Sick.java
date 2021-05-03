@@ -57,7 +57,7 @@ public class Sick extends Person {
 			return false;
 		Sick s = (Sick) o;
 		return super.equals(s) && m_contagiousTime == s.getContagiousTime() 
-				&& m_virus.equals(s.getVirus());
+				&& m_virus.equals(s.getVirusFromPerson());
 	}
 
 	@Override
@@ -93,15 +93,6 @@ public class Sick extends Person {
 	 */
 	public long getContagiousTime() {
 		return m_contagiousTime;
-	}
-	
-	/**
-	 * get method
-	 * 
-	 * @return reference to the Person's IVirus object
-	 */
-	public IVirus getVirus() {
-		return m_virus; 
 	}
 	
 	

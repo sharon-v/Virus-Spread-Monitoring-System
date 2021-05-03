@@ -2,6 +2,7 @@ package ui;
 
 import javax.swing.BoxLayout;
 import javax.swing.JFrame;
+import javax.swing.JScrollPane;
 import javax.swing.JSlider;
 
 import country.Map;
@@ -32,6 +33,7 @@ public class MainWindow extends JFrame {
 		
 		this.add(menu);
 		this.add(drawMap);
+		this.add(new JScrollPane(drawMap));
 		this.add(slider);
 		this.pack();
 		this.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);

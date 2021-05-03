@@ -75,20 +75,35 @@ public class Map {
 	 * manages simulation sequence
 	 */
 	public void executeSimulation() throws Exception {
-		for (int i = 0; i < 5; ++i) {
-			System.out.println("\n		=== simulation num. " + (i + 1) + " ===");
-			for (int j = 0; j < m_settlement.length; ++j) // run over settlements
-			{
-				System.out.println("\n\t-- settlement " + (j + 1) + "--");
-				m_settlement[j].simulation();
-				System.out.println(m_settlement[j]);
-				
-			}
-		}
-		System.out.println("			THE END !! ");
+//		for (int i = 0; i < 5; ++i) {
+//			System.out.println("\n		=== simulation num. " + (i + 1) + " ===");
+//			for (int j = 0; j < m_settlement.length; ++j) // run over settlements
+//			{
+//				System.out.println("\n\t-- settlement " + (j + 1) + "--");
+//				m_settlement[j].simulation();
+//				System.out.println(m_settlement[j]);
+//				
+//			}
+//		}
+//		System.out.println("			THE END !! ");
+		sampleTwentyPercent();
+		massRecovery();
+		tryToTransfer();
+		massVaccination();
+		System.out.println(toStringSettlements());
 	}
 
+	public void sampleTwentyPercent() {
+		for (int i = 0; i < m_settlement.length; ++i) {
+			m_settlement[i].simulation();
+		}
+	}
 
+	public void massRecovery() {
+		for (int i = 0; i < m_settlement.length; ++i) {
+			m_settlement[i].sickToConvalescent();
+		}
+	}
 
 	
 	/**
@@ -96,36 +111,36 @@ public class Map {
 	 */
 	public void intialization() { // 1%
 		for (int i = 0; i < m_settlement.length; ++i) {
-			m_settlement[i].infectTwentyPercent();
+			m_settlement[i].infectPercent(0.01);
 		}
 	}
 
-	public String[][] getTableData() {
-		String[][] temp = new String[m_settlement.length][];
-		for (int i = 0; i < m_settlement.length; ++i) {
-			temp[i] = new String[7];//????? datamember
-			for(int j = 0; j < temp[i].length; ++j) {
-				if (j % temp[i].length == 0)
-					temp[i][j] = m_settlement[i].getSettlementName();
-				else if (j % temp[i].length == 1)
-					temp[i][j] = m_settlement[i].getSettlementType();
-				else if (j % temp[i].length == 2)
-					temp[i][j] = m_settlement[i].getRamzorColor().toString();
-				else if (j % temp[i].length == 3)
-					temp[i][j] = String.valueOf(m_settlement[i].contagiousPercent());
-				else if (j % temp[i].length == 4)
-					temp[i][j] = m_settlement[i].getVaccineDoses() + "";
-				else if (j % temp[i].length == 5)
-					temp[i][j] = m_settlement[i].getNumOfDeceased() + "";
-				else if (j % temp[i].length == 6)
-					temp[i][j] = m_settlement[i].getNumOfPeople() + "";
-			}
-		}
-		return temp;
-	}
+//	public String[][] getTableData() {
+//		String[][] temp = new String[m_settlement.length][];
+//		for (int i = 0; i < m_settlement.length; ++i) {
+//			temp[i] = new String[7];//????? datamember
+//			for(int j = 0; j < temp[i].length; ++j) {
+//				if (j % temp[i].length == 0)
+//					temp[i][j] = m_settlement[i].getSettlementName();
+//				else if (j % temp[i].length == 1)
+//					temp[i][j] = m_settlement[i].getSettlementType();
+//				else if (j % temp[i].length == 2)
+//					temp[i][j] = m_settlement[i].getRamzorColor().toString();
+//				else if (j % temp[i].length == 3)
+//					temp[i][j] = String.valueOf(m_settlement[i].contagiousPercent());
+//				else if (j % temp[i].length == 4)
+//					temp[i][j] = m_settlement[i].getVaccineDoses() + "";
+//				else if (j % temp[i].length == 5)
+//					temp[i][j] = m_settlement[i].getNumOfDeceased() + "";
+//				else if (j % temp[i].length == 6)
+//					temp[i][j] = m_settlement[i].getNumOfPeople() + "";
+//			}
+//		}
+//		return temp;
+//	}
 
 	public void activateOnePercent(Object settName) {
-		findSettlementByName(settName.toString()).infectTwentyPercent();
+		findSettlementByName(settName.toString()).infectPercent(0.001);
 	}
 
 	private Settlement findSettlementByName(String name) {
@@ -259,7 +274,7 @@ public class Map {
 	 * @return - true if the connection exist in the array, if not return false
 	 */
 	private boolean checkIfConnectionExist(Point[] PointsConnection, Point settl1, Point settl2) {
-		for(int i = 0 ; i < PointsConnection.length - 1 ; i+=2) {
+		for (int i = 0; i < PointsConnection.length - 1; i += 2) {
 			if(PointsConnection[i].equals(settl1))
 				if(PointsConnection[i+1].equals(settl2))                  
 					return true;
@@ -330,10 +345,6 @@ public class Map {
 
 	}
 	
-	public Settlement[] getSettlement() {//????????????????????
-		return m_settlement;
-	}
-
 	public int getMapSize() {
 		return m_settlement.length;
 	}

@@ -8,20 +8,11 @@ package simulation;
 public class Clock {
 	
 	/**
-	 * Constructor
-	 */
-	public Clock() {
-		m_currentTime = 0;
-		ticks_per_day = 1;
-	}
-	
-	/**
 	 * get method
 	 * 
 	 * @return current time
 	 */
 	public static long now() {
-		nextTick();
 		return m_currentTime;
 	}
 	
@@ -37,6 +28,8 @@ public class Clock {
 	 * @param x - num of ticks in a single day
 	 */
 	public static void setTicksPerDay(int x) {
+		if(x == 0)
+			x = 1;
 		ticks_per_day = x;
 	}
 
@@ -58,6 +51,6 @@ public class Clock {
 	}
 
 	//attributes
-	private static long m_currentTime; // current time
-	private static int ticks_per_day;
+	private static long m_currentTime = 0; // current time
+	private static int ticks_per_day = 1;
 }

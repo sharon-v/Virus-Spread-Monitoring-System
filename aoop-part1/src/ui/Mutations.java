@@ -1,18 +1,53 @@
 package ui;
 
+import java.awt.BorderLayout;
 import java.awt.Frame;
+import java.awt.event.ActionEvent;
+import java.awt.event.ActionListener;
+import java.util.ArrayList;
 
+import javax.swing.JButton;
 import javax.swing.JDialog;
+import javax.swing.JPanel;
 import javax.swing.JTable;
 import javax.swing.table.AbstractTableModel;
+
+import virus.BritishVariant;
+import virus.ChineseVariant;
+import virus.SouthAfricanVariant;
 
 public class Mutations extends JDialog {
 	public Mutations(Frame window) {
 		super(window, "Edit Mutations", true);
 		MyCheckModel model = new MyCheckModel();
 		JTable table = new JTable(model);
-		this.add(table);
-		this.add(new RowedTableScroll(table, model.getColNames()));
+		BorderLayout bLayout;
+		JPanel panel = new JPanel(bLayout = new BorderLayout());
+		JButton saveBtn = new JButton("Save");
+		saveBtn.addActionListener(new ActionListener() {
+
+			@Override
+			public void actionPerformed(ActionEvent e) {
+				for (int i = 0; i < table.getRowCount(); ++i) {
+					ArrayList<String> variants = new ArrayList<>();
+					for (int j = 0; j < table.getColumnCount(); ++j) {
+						if (table.getValueAt(i, j).equals(true))
+							variants.add(table.getColumnName(j));
+					}
+					String name = table.getColumnName(i);
+					if (name.equals("British Variant"))
+						BritishVariant.setPossibleVariants(variants);
+					else if (name.equals("Chinese Variant"))
+						ChineseVariant.setPossibleVariants(variants);
+					else
+						SouthAfricanVariant.setPossibleVariants(variants);
+				}
+			}
+		});
+		panel.add(table, BorderLayout.CENTER);
+		panel.add(new RowedTableScroll(table, model.getColNames()));
+		panel.add(saveBtn, BorderLayout.SOUTH);
+		this.add(panel);
 	}
 
 	public void showDialog() {
@@ -23,7 +58,7 @@ public class Mutations extends JDialog {
 
 
 	private class MyCheckModel extends AbstractTableModel {
-
+		// get current variants?????????????
 		private final Boolean[][] data;
 		private final String[] colNames = { "British Variant", "Chinese Variant", "South African Variant" };
 

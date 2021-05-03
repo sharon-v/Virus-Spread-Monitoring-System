@@ -1,5 +1,7 @@
 package virus;
 
+import java.util.ArrayList;
+
 import population.Person;
 import population.Sick;
 
@@ -34,4 +36,11 @@ public interface IVirus {
 	 * @return true if the person will die from the virus
 	 */
 	public boolean tryToKill(Sick s);
+
+	/**
+	 * 
+	 * @return ArrayList of possible variants
+	 */
+	public ArrayList<String> getVars();
+
 }

@@ -1,11 +1,10 @@
 package ui;
 
 
+import java.awt.FlowLayout;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 
-import javax.swing.BoxLayout;
-import javax.swing.JButton;
 import javax.swing.JComponent;
 import javax.swing.JDialog;
 import javax.swing.JFileChooser;
@@ -18,6 +17,8 @@ import javax.swing.JPanel;
 import javax.swing.JSpinner;
 import javax.swing.SpinnerModel;
 import javax.swing.SpinnerNumberModel;
+import javax.swing.event.ChangeEvent;
+import javax.swing.event.ChangeListener;
 
 import country.Map;
 import simulation.Clock;
@@ -27,9 +28,11 @@ public class Menu extends JMenuBar {
 	public Menu(JFrame frame, Statistics st, Map map, MapDrawing draw) {
 		window = frame;
 		stat =st;
+		mutation = new Mutations(window);
 		this.map = map;
 		myMapDraw = draw;
-		simulationFlag = false;
+		playFlag = false;// currently simulation is not playing
+		loadFlag = false;// currently map is not loaded
 		// large menu
 		m_menu = new JMenu("Menu");
 		// menu options on bar
@@ -64,7 +67,8 @@ public class Menu extends JMenuBar {
 				@Override
 				public void actionPerformed(ActionEvent e) {
 					
-					if (simulationFlag == false) {// ?????? maybe check if initialized somehow----------->fixxxxxxxxxxxxxxxx
+					if (loadFlag == false) {// ?????? maybe check if initialized somehow----------->fixxxxxxxxxxxxxxxx
+						loadFlag = true;
 						// Create a file chooser
 						final JFileChooser fc = new JFileChooser();
 
@@ -78,12 +82,6 @@ public class Menu extends JMenuBar {
 							myMapDraw.repaint();
 						
 							map.intialization();// second stage
-							try {
-								map.executeSimulation(); // third stage
-							} catch (Exception ex) {
-								System.out.println(ex);
-								System.out.println("an unexpected ERROR has occurred :(");
-							}
 						}
 					}
 				}
@@ -101,7 +99,6 @@ public class Menu extends JMenuBar {
 
 				@Override
 				public void actionPerformed(ActionEvent e) {
-					Mutations mutation = new Mutations(window);
 					mutation.showDialog();
 				}
 			});
@@ -156,9 +153,15 @@ public class Menu extends JMenuBar {
 				
 				@Override
 				public void actionPerformed(ActionEvent e) {
-					//nedd to do condition-????????????????????????????????????
-					simulationFlag = true;
-					//countinue
+					if (playFlag == false && loadFlag == true) {
+						playFlag = true;
+						try {
+							map.executeSimulation(); // third stage
+						} catch (Exception ex) {
+							System.out.println("an unexpected ERROR has occurred :(");
+							ex.printStackTrace();
+						}
+					}
 				}
 			});
 			
@@ -166,10 +169,20 @@ public class Menu extends JMenuBar {
 				
 				@Override
 				public void actionPerformed(ActionEvent e) {
-					//nedd to do condition--??????????????????????????????????
-					simulationFlag = false;
+					if (playFlag == true) {
+						playFlag = false;
 					//countinue
-					
+					}
+				}
+			});
+
+			stop.addActionListener(new ActionListener() {
+
+				@Override
+				public void actionPerformed(ActionEvent e) {
+					if (loadFlag == true)
+						loadFlag = false;
+					// stop simulation ????????????
 				}
 			});
 
@@ -180,20 +193,20 @@ public class Menu extends JMenuBar {
 				public void actionPerformed(ActionEvent e) {
 					JDialog di = new JDialog();
 					JPanel panel = new JPanel();
-					panel.setLayout(new BoxLayout(panel, BoxLayout.PAGE_AXIS));
+					panel.setLayout(new FlowLayout());
 					JLabel lb = new JLabel("Set Ticks Per Day");
 					SpinnerModel model = new SpinnerNumberModel(Clock.getTicksPerDay(),
 							Clock.getTicksPerDay() - 1000 + 1,
 							Clock.getTicksPerDay() + 1000, 1);
-					JSpinner spinner = new JSpinner(model);
-					JButton btn = new JButton("Save");
 					JLabel ticks = new JLabel("ticks per day is now = " + Clock.getTicksPerDay());
-					btn.addActionListener(new ActionListener() {
+					JSpinner spinner = new JSpinner(model);
+					spinner.addChangeListener(new ChangeListener() {
 
 						@Override
-						public void actionPerformed(ActionEvent e) {// remove button
+						public void stateChanged(ChangeEvent e) {
 							Clock.setTicksPerDay((int) spinner.getValue());
 							ticks.setText("ticks per day is now = " + Clock.getTicksPerDay());
+
 						}
 					});
 					JComponent editor = new JSpinner.NumberEditor(spinner);
@@ -201,10 +214,9 @@ public class Menu extends JMenuBar {
 					spinner.setSize(70, 30);
 					panel.add(lb);
 					panel.add(spinner);
-					panel.add(btn);
 					panel.add(ticks);
 					di.add(panel);
-					di.setSize(200, 200);
+					di.setSize(200, 150);
 					di.setVisible(true);
 					// "Set Ticks Per Day"
 
@@ -255,16 +267,17 @@ public class Menu extends JMenuBar {
 
 	}
 
-//	private final JMenuBar mb;
 	private final File m_file;
 	private final Simulation m_simulation;
 	private final Help m_help;
 	private final JMenu m_menu;
 	private MapDrawing myMapDraw;
-	private boolean simulationFlag;
+	private boolean playFlag;
+	private boolean loadFlag;
 
 	private Map map;// maybe can be final????
 	private Statistics stat;
+	private Mutations mutation;
 	private final JFrame window;// hold frame
 
 }

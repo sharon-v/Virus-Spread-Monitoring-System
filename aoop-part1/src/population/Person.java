@@ -1,8 +1,13 @@
 package population;
+
+import java.util.ArrayList;
+
 import country.Settlement;
 import location.Point;
-import simulation.Clock;
+import virus.BritishVariant;
+import virus.ChineseVariant;
 import virus.IVirus;
+import virus.SouthAfricanVariant;
 
 /**
  * 
@@ -19,10 +24,10 @@ public abstract class Person {
 	 * @param settlement - settlement input
 	 */
 	public Person(int age, Point location, Settlement settlement) {
-		m_age = age; // abs???
+		m_age = age;
 		m_location = new Point(location);
 		m_settlement = settlement;
-		Clock.nextTick();
+		// Clock.nextTick();
 	}
 	
 	/**
@@ -62,12 +67,25 @@ public abstract class Person {
 	 * @param virus - type of virus input
 	 * @return Sick object of the current Person
 	 */
-	public Person contagion(IVirus virus) { 
+	public Person contagion(IVirus virus) {
 		Sick newSick = new Sick(m_age, m_location, m_settlement, virus);
 		m_settlement.removePerson(this);
 		m_settlement.addPerson(newSick);
 		return newSick;
 	}
+
+	public Person contagionVariants(ArrayList<String> variants) {
+		IVirus virus;
+		int rand = (int) (Math.random() * variants.size());
+		if (variants.get(rand).equals("British Variant"))
+			virus = new BritishVariant();
+		else if (variants.get(rand).equals("Chinese Variant"))
+			virus = new ChineseVariant();
+		else
+			virus = new SouthAfricanVariant();
+		return contagion(virus);
+	}
+
 	
 	@Override
 	public String toString() {

@@ -4,20 +4,13 @@ import java.awt.Color;
 import java.awt.Dimension;
 import java.awt.Graphics;
 import java.awt.Graphics2D;
-import java.awt.Rectangle;
 import java.awt.RenderingHints;
 import java.awt.event.MouseEvent;
 import java.awt.event.MouseListener;
 
-import javax.swing.BorderFactory;
-import javax.swing.JDialog;
-import javax.swing.JFrame;
 import javax.swing.JPanel;
-import javax.swing.JScrollPane;
-import javax.swing.border.Border;
 
 import country.Map;
-import country.Settlement;
 import location.Location;
 import location.Point;
 
@@ -27,14 +20,14 @@ public class MapDrawing extends JPanel implements MouseListener{
 	
 	public MapDrawing(Map myMap, Statistics stat) {
 		//create border
-		Border raisedbevel = BorderFactory.createRaisedBevelBorder();
-		Border loweredbevel = BorderFactory.createLoweredBevelBorder();
-		Border compound = BorderFactory.createCompoundBorder(raisedbevel, loweredbevel);
-		this.setBorder(compound);
+//		Border raisedbevel = BorderFactory.createRaisedBevelBorder();
+//		Border loweredbevel = BorderFactory.createLoweredBevelBorder();
+//		Border compound = BorderFactory.createCompoundBorder(raisedbevel, loweredbevel);
+//		this.setBorder(compound);
 
 		map = myMap;
 		st = stat;
-		this.add(new JScrollPane());
+//		this.add(new JScrollPane());
 		
 	}
 	
