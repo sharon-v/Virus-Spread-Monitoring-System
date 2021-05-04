@@ -10,7 +10,7 @@ import javax.swing.table.TableModel;
 public class StatisticsFile {
 // write to file format csv
 	public static boolean exportToCSV(JTable tableToExport, String pathToExportTo) {
-		FileWriter csv;
+		FileWriter csv = null;
 		try {
 
 			TableModel model = tableToExport.getModel();
@@ -33,9 +33,13 @@ public class StatisticsFile {
 			csv.close();
 			return true;
 		} catch (IOException e) {
-			csv.close();
 			e.printStackTrace();
-			return false;
+
+			try {
+				csv.close();
+			} catch (IOException ex) {
+				ex.printStackTrace();
+			}
 		}
 		return false;
 	}
