@@ -67,9 +67,17 @@ public class Statistics extends JDialog {
 
 		tbFilterText.setToolTipText("Filter Name Column");
 		tbFilterText.getDocument().addDocumentListener(new DocumentListener() {
-		public void insertUpdate(DocumentEvent e) { newFilter(m_combo.getSelectedIndex()); }
-		public void removeUpdate(DocumentEvent e) { newFilter(m_combo.getSelectedIndex()); }
-		public void changedUpdate(DocumentEvent e) { newFilter(m_combo.getSelectedIndex()); }
+			public void insertUpdate(DocumentEvent e) {
+				newFilter(model1.getColIndexCombo(filterOptions[m_combo.getSelectedIndex()]));
+			}
+
+			public void removeUpdate(DocumentEvent e) {
+				newFilter(model1.getColIndexCombo(filterOptions[m_combo.getSelectedIndex()]));
+			}
+
+			public void changedUpdate(DocumentEvent e) {
+				newFilter(model1.getColIndexCombo(filterOptions[m_combo.getSelectedIndex()]));
+			}
 		});
 		
 		
@@ -227,13 +235,13 @@ public class Statistics extends JDialog {
 			return colNames;
 		}
 
-//		public int getColIndex(String name) {
-//			for (int i = 0; i < colNames.length; ++i) {
-//				if (colNames[i].equals(name))
-//					return i;
-//			}
-//
-//		}
+		public int getColIndexCombo(String name) {
+			for (int i = 0; i < colNames.length; ++i) {
+				if (colNames[i].equals(name))
+					return i;
+			}
+			return -1;
+		}
 
 
 	}
