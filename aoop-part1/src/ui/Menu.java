@@ -8,14 +8,12 @@ import java.awt.event.ActionListener;
 
 import javax.swing.JComponent;
 import javax.swing.JDialog;
-import javax.swing.JFileChooser;
 import javax.swing.JFrame;
 import javax.swing.JLabel;
 import javax.swing.JMenu;
 import javax.swing.JMenuBar;
 import javax.swing.JMenuItem;
 import javax.swing.JPanel;
-import javax.swing.JSlider;
 import javax.swing.JSpinner;
 import javax.swing.SpinnerModel;
 import javax.swing.SpinnerNumberModel;
@@ -23,19 +21,20 @@ import javax.swing.event.ChangeEvent;
 import javax.swing.event.ChangeListener;
 
 import country.Map;
-import io.StatisticsFile;
 import simulation.Clock;
+import simulation.Main;
 
 public class Menu extends JMenuBar {
 
-	public Menu(JFrame frame, Statistics st, Map map, MapDrawing draw, JSlider slider) {
+//	public Menu(JFrame frame, Statistics st, Map map, MapDrawing draw, JSlider slider) {
+	public Menu(JFrame frame, Statistics st, MapDrawing draw, Map map) {
+
 		window = frame;
 		stat =st;
 		mutation = new Mutations(window);
 		this.map = map;
-		m_slider = slider;
+//		m_slider = slider;
 		myMapDraw = draw;
-	
 		// large menu
 		m_menu = new JMenu("Menu");
 		// menu options on bar
@@ -70,8 +69,8 @@ public class Menu extends JMenuBar {
 				@Override
 				public void actionPerformed(ActionEvent e) {
 
-					if (loadFlag == false) {// ?????? maybe check if initialized somehow----------->fixxxxxxxxxxxxxxxx
-						loadFlag = true;
+					if (Main.getLoadFlag() == false) {// ?????? maybe check if initialized
+															// somehow----------->fixxxxxxxxxxxxxxxx
 						// Create a file chooser
 						
 						FileDialog dialog = new FileDialog((JFrame)null, "Select File to Open");
@@ -81,7 +80,8 @@ public class Menu extends JMenuBar {
 					    map.loadInfo(path);
 						myMapDraw.repaint();
 						map.intialization();// second stage
-						
+						Main.setLoadFlag(true);
+
 //						StatisticsFile.exportToCSV(table, path);
 						
 //						final JFileChooser fc = new JFileChooser();
@@ -145,8 +145,7 @@ public class Menu extends JMenuBar {
 
 				@Override
 				public void actionPerformed(ActionEvent e) {
-				
-
+					Main.setPlayFlag(true);
 				}
 			});
 
@@ -154,8 +153,8 @@ public class Menu extends JMenuBar {
 
 				@Override
 				public void actionPerformed(ActionEvent e) {
-					if (playFlag == true) {
-						playFlag = false;
+					if (Main.getPlayFlag() == true) {
+						Main.setPlayFlag(false);
 						//countinue
 					}
 				}
@@ -165,8 +164,10 @@ public class Menu extends JMenuBar {
 
 				@Override
 				public void actionPerformed(ActionEvent e) {
-					if (loadFlag == true)
-						loadFlag = false;
+					if (Main.getLoadFlag() == true) {
+						Main.setLoadFlag(false);
+						Main.setPlayFlag(false);
+					}
 					// stop simulation ????????????
 				}
 			});
@@ -257,7 +258,7 @@ public class Menu extends JMenuBar {
 	private final Help m_help;
 	private final JMenu m_menu;
 	private MapDrawing myMapDraw;
-	private final JSlider m_slider;
+//	private final JSlider m_slider;
 	
 
 	private Map map;// maybe can be final????

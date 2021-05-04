@@ -1,16 +1,7 @@
 package simulation;
 
-import java.awt.event.ActionEvent;
-import java.awt.event.ActionListener;
-
-import javax.swing.JButton;
-import javax.swing.JFrame;
-
 import country.Map;
 import ui.MainWindow;
-import ui.MapDrawing;
-import ui.Mutations;
-import ui.Statistics;
 
 /**
  * 
@@ -20,44 +11,59 @@ import ui.Statistics;
 public class Main {
 
 	public static void main(String[] args) {
-		MainWindow theWindow = new MainWindow();
-		
-//		Map myMap = new Map();
-//		myMap.loadInfo("testRun.txt"); // first stage
-//		myMap.intialization();// second stage
-//		try {
-//			myMap.executeSimulation(); // third stage
-//		} catch (Exception e) {
-//			System.out.println(e);
-//			System.out.println("an unexpected ERROR has occurred :(");
-//		}
-		//???????????????????
-		
-//		JFrame frame = new JFrame("Table Example"); 
-
-//		frame.setLayout(new BoxLayout(frame.getContentPane(), BoxLayout.PAGE_AXIS));
-//		Statistics st = new Statistics(myMap, frame);
-//		
-//		JButton b = new JButton("bbbb");
-//		b.addActionListener(new ActionListener() {
-//			
-//			@Override
-//			public void actionPerformed(ActionEvent e) {
-//				Mutations m = new Mutations(frame);
-//				m.showDialog();
-//			}
-//		});
-//		
-//		 
-//		frame.add(new MapDrawing(myMap, st)); // the map drawing model
-
-//		frame.add(b);
-//		frame.add(st);
-//		frame.pack();
-//		frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
-//		frame.setVisible(true);
-
-			  
-		//???????????????????
+		Map map = new Map();// Map instance
+		MainWindow theWindow = new MainWindow(map);
+		playSimu(map);
 	}
+
+//	public static void callSimu() {
+//		playSimu(myMap);
+//	}
+
+	private static void playSimu(Map myMap) {
+//		if (playFlag == true) {
+		while (true) {
+			if (playFlag == true && loadFlag == true) {
+					try {
+						System.out.println("ticks : " + Clock.now());
+						myMap.executeSimulation(); // third stage
+						Clock.nextTick();
+
+//						System.out.println(slider.getValue());
+//						Thread.sleep(slider.getValue()*1000);
+						Thread.sleep(sleepTime * 1000);
+					} catch (Exception ex) {
+						System.out.println("an unexpected ERROR has occurred :(");
+						ex.printStackTrace();
+					}
+				}
+			}
+//		}
+	}
+
+	public static void setPlayFlag(boolean val) {
+		playFlag = val;
+	}
+
+	public static void setLoadFlag(boolean val) {
+		loadFlag = val;
+	}
+
+	public static boolean getPlayFlag() {
+		return playFlag;
+	}
+
+	public static boolean getLoadFlag() {
+		return loadFlag;
+	}
+
+	public static void setSleepTime(int val) {
+		sleepTime = val;
+	}
+
+
+	private static boolean playFlag = true;
+	private static boolean loadFlag = false;
+	private static int sleepTime = 1;
+
 }

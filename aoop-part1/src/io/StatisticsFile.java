@@ -22,12 +22,20 @@ public class StatisticsFile {
 
 			csv.write("\n");
 
-			for (int i = 0; i < model.getRowCount(); i++) {
-				for (int j = 0; j < model.getColumnCount(); j++) {
-					csv.write(model.getValueAt(i, j).toString() + ",");
+			for (int row = 0; row < tableToExport.getRowCount(); ++row) {
+				for (int col = 0; col < tableToExport.getColumnCount(); ++col) {
+					csv.write(tableToExport.getModel().getValueAt(tableToExport.convertRowIndexToModel(row),
+							tableToExport.convertColumnIndexToModel(col)) + ",");
+
 				}
 				csv.write("\n");
 			}
+//			for (int i = 0; i < model.getRowCount(); i++) {
+//				for (int j = 0; j < model.getColumnCount(); j++) {
+//					csv.write(model.getValueAt(i, j).toString() + ",");
+//				}
+//				csv.write("\n");
+//			}
 
 			csv.close();
 			return true;
