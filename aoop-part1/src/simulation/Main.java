@@ -12,25 +12,21 @@ public class Main {
 
 	public static void main(String[] args) {
 		Map map = new Map();// Map instance
+		
 		MainWindow theWindow = new MainWindow(map);
 		playSimu(map);
 	}
 
-//	public static void callSimu() {
-//		playSimu(myMap);
-//	}
+
 
 	private static void playSimu(Map myMap) {
-//		if (playFlag == true) {
 		while (true) {
+			System.out.print("");
 			if (playFlag == true && loadFlag == true) {
 					try {
 						System.out.println("ticks : " + Clock.now());
 						myMap.executeSimulation(); // third stage
 						Clock.nextTick();
-
-//						System.out.println(slider.getValue());
-//						Thread.sleep(slider.getValue()*1000);
 						Thread.sleep(sleepTime * 1000);
 					} catch (Exception ex) {
 						System.out.println("an unexpected ERROR has occurred :(");
@@ -38,7 +34,6 @@ public class Main {
 					}
 				}
 			}
-//		}
 	}
 
 	public static void setPlayFlag(boolean val) {

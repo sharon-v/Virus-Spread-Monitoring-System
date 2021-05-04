@@ -66,13 +66,6 @@ public class Statistics extends JDialog {
 		
 
 		m_combo.setSelectedIndex(0);
-//		m_combo.addActionListener(new ActionListener() {
-//
-//			@Override
-//			public void actionPerformed(ActionEvent e) {
-//				
-//			}
-//		});
 		JButton saveBt = new JButton("Save");
 		saveBt.addActionListener(new ActionListener() {
 			@Override
@@ -104,8 +97,10 @@ public class Statistics extends JDialog {
 		addSickBt.addActionListener(new ActionListener() {
 			@Override
 			public void actionPerformed(ActionEvent e) {
-				map.activateOnePercent(table.getValueAt(table.getSelectedRow(), 0));
-				
+				int row = table.getSelectedRow();
+				if(row == -1)
+					row = 0;
+				map.activateOnePercent(table.getValueAt(row, 0));
 				table.updateUI();
 			}
 		});
@@ -115,6 +110,8 @@ public class Statistics extends JDialog {
 			@Override
 			public void actionPerformed(ActionEvent e) {
 				int row = table.getSelectedRow();
+				if(row == -1)
+					row = 0;
 				int num;
 				String result = (String) JOptionPane.showInputDialog(table, "Enter amount of vaccine doses",
 										"Vaccine", JOptionPane.PLAIN_MESSAGE, null, null, "0");
@@ -124,7 +121,7 @@ public class Statistics extends JDialog {
 					ex.printStackTrace();
 					return;
 				}
-				map.addVaccines(table.getValueAt(table.getSelectedRow(), 0), num);
+				map.addVaccines(table.getValueAt(row, 0), num);
 				table.updateUI();
 				return;
 			}
@@ -159,14 +156,6 @@ public class Statistics extends JDialog {
 		}
 	}
 	
-//	private void newFilter1() {
-//		String value = m_combo.getItemAt(m_combo.getSelectedIndex()).toString();
-//		try {
-//			sorter.setRowFilter(RowFilter.regexFilter(value, 1, 2));
-//		} catch (java.util.regex.PatternSyntaxException e) {
-//			// If current expression doesn't parse, don't update.
-//		}
-//	}
 	
 	public void markLine(int index) {
 		m_table.addRowSelectionInterval(index, index); //can mark a selected line
@@ -226,16 +215,17 @@ public class Statistics extends JDialog {
 
 		@Override
 		public boolean isCellEditable(int rowIndex, int columnIndex) {
-			return columnIndex > 0;
+//			return columnIndex > 0;
+			return false;
 		}
 
-//		@Override
-//		public void setValueAt(Object aValue, int row, int col) {
+		@Override
+		public void setValueAt(Object aValue, int row, int col) {
 //			Settlement settlement = data.at(row);
 //			if (col == 2)
-//
-//			fireTableCellUpdated(row, col);
-//		}
+
+			fireTableCellUpdated(row, col);
+		}
 
 		public String[] getColNames() {
 			return colNames;

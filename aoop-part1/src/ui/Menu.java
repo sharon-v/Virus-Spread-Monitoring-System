@@ -35,18 +35,14 @@ public class Menu extends JMenuBar {
 		this.map = map;
 //		m_slider = slider;
 		myMapDraw = draw;
-		// large menu
-		m_menu = new JMenu("Menu");
-		// menu options on bar
+	
 		m_file = new File();
 		m_simulation = new Simulation();
 		m_help = new Help();
 		// add menu options to bar
-		m_menu.add(m_file);
-		m_menu.add(m_simulation);
-		m_menu.add(m_help);
-		this.add(m_menu);
-
+		this.add(m_file);
+		this.add(m_simulation);
+		this.add(m_help);
 
 	}
 
@@ -256,7 +252,7 @@ public class Menu extends JMenuBar {
 	private final File m_file;
 	private final Simulation m_simulation;
 	private final Help m_help;
-	private final JMenu m_menu;
+//	private final JMenu m_menu;
 	private MapDrawing myMapDraw;
 //	private final JSlider m_slider;
 	

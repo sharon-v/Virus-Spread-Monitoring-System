@@ -77,22 +77,28 @@ public class Map {
 	 */
 	public void executeSimulation() throws Exception {
 		
+		
 		sampleTwentyPercent();
 		massRecovery();
 		tryToTransfer();
 		massVaccination();
-//		System.out.println(toStringSettlements());///??????
+		
+		
 	}
-
+	
 	public void sampleTwentyPercent() {
 		for (int i = 0; i < m_settlement.length; ++i) {
 			m_settlement[i].simulation();
+			m_settlement[i].setRamzorColor(m_settlement[i].calculateRamzorGrade());
 		}
+		
 	}
 
 	public void massRecovery() {
 		for (int i = 0; i < m_settlement.length; ++i) {
 			m_settlement[i].sickToConvalescent();
+			m_settlement[i].setRamzorColor(m_settlement[i].calculateRamzorGrade());
+
 		}
 	}
 
@@ -103,6 +109,8 @@ public class Map {
 	public void intialization() { // 1%
 		for (int i = 0; i < m_settlement.length; ++i) {
 			m_settlement[i].infectPercent(0.01);
+			m_settlement[i].setRamzorColor(m_settlement[i].calculateRamzorGrade());
+
 		}
 	}
 
@@ -152,6 +160,7 @@ public class Map {
 	public void massVaccination() {
 		for (int i = 0; i < m_settlement.length; ++i) {
 			m_settlement[i].vaccineTime();
+			m_settlement[i].setRamzorColor(m_settlement[i].calculateRamzorGrade());
 		}
 	}
 
@@ -163,6 +172,7 @@ public class Map {
 		for (int i = 0; i < m_settlement.length; ++i) {
 			ran = (int) (Math.random() * m_settlement.length);
 			m_settlement[i].randomTransfer(m_settlement[ran]);
+			m_settlement[i].setRamzorColor(m_settlement[i].calculateRamzorGrade());
 		}
 	}
 
