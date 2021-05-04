@@ -73,7 +73,7 @@ public abstract class Person {
 		return newSick;
 	}
 
-	public Person contagionVariants(ArrayList<String> variants) {
+	public IVirus contagionVariants(ArrayList<String> variants) {
 		IVirus virus;
 		int rand = (int) (Math.random() * variants.size());
 		if (variants.get(rand).equals("British Variant"))
@@ -82,7 +82,7 @@ public abstract class Person {
 			virus = new ChineseVariant();
 		else
 			virus = new SouthAfricanVariant();
-		return contagion(virus);
+		return virus;
 	}
 
 	

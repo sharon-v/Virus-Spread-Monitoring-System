@@ -11,6 +11,11 @@ import javax.swing.ListCellRenderer;
 import javax.swing.UIManager;
 import javax.swing.table.JTableHeader;
 
+/**
+ * 
+ * @author Yarden Hovav, Sharon Vazana
+ *
+ */
 public class RowedTableScroll extends JScrollPane {
 	private static class RowHeaderRenderer extends JLabel implements ListCellRenderer<String> {
 		RowHeaderRenderer(JTable table) {

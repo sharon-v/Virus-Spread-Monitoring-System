@@ -7,6 +7,11 @@ import java.io.IOException;
 import javax.swing.JTable;
 import javax.swing.table.TableModel;
 
+/**
+ * 
+ * @author Yarden Hovav, Sharon Vazana
+ *
+ */
 public class StatisticsFile {
 // write to file format csv
 	public static boolean exportToCSV(JTable tableToExport, String pathToExportTo) {

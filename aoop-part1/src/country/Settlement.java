@@ -291,12 +291,17 @@ public abstract class Settlement {
 	 * @param sickPerson - array of sick people
 	 */
 	public void randomContagion(Person sickPerson) {
+		IVirus virus = null;
 		for (int i = 0; i < 3; ++i) {
+			if (m_healthyPeople.length == 0)
+				return;
 			int randomIndex = (int) (Math.random() * (m_healthyPeople.length));
-			if (sickPerson.getVirusFromPerson().tryToContagion(sickPerson, m_healthyPeople[randomIndex])) {
-				if (sickPerson.getVirusFromPerson().getVars().size() != 0) {
-					m_healthyPeople[randomIndex].contagionVariants(sickPerson.getVirusFromPerson().getVars());
-					System.out.println("contagion");
+			virus = sickPerson.getVirusFromPerson();
+			if (virus.getVars().size() != 0) {
+				virus = sickPerson.contagionVariants(virus.getVars());
+				if (virus.tryToContagion(sickPerson, m_healthyPeople[randomIndex])) {
+					m_healthyPeople[randomIndex].contagion(virus);
+//					System.out.println("contagion");
 				}
 			}
 		}
@@ -330,7 +335,7 @@ public abstract class Settlement {
 		for (int i = 0; i < m_sickPeople.length; ++i) {
 			if (Clock.calculateDays(m_sickPeople[i].getContagiousTime()) > m_recoveryTime) {
 				m_sickPeople[i].recover();
-				System.out.println("recovery");
+//				System.out.println("recovery");
 			}
 
 		}

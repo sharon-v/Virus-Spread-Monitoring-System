@@ -35,6 +35,11 @@ import country.Map;
 import simulation.Clock;
 import simulation.Main;
 
+/**
+ * 
+ * @author Yarden Hovav, Sharon Vazana
+ *
+ */
 public class Menu extends JMenuBar {
 
 	public Menu(JFrame frame, Statistics st, MapDrawing draw, Map map) {
@@ -87,6 +92,7 @@ public class Menu extends JMenuBar {
 						String path = dialog.getFile();
 						if (path != null) {
 							map.loadInfo(path);
+//							stats.
 							map.intialization();// second stage
 							myMapDraw.repaint();
 							Main.setLoadFlag(true);

@@ -13,6 +13,11 @@ import javax.swing.event.ChangeListener;
 import country.Map;
 import simulation.Main;
 
+/**
+ * 
+ * @author Yarden Hovav, Sharon Vazana
+ *
+ */
 public class MainWindow extends JFrame {
 	public MainWindow(Map map) {
 		super("Main Window");

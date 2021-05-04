@@ -16,6 +16,11 @@ import virus.BritishVariant;
 import virus.ChineseVariant;
 import virus.SouthAfricanVariant;
 
+/**
+ * 
+ * @author Yarden Hovav, Sharon Vazana
+ *
+ */
 public class Mutations extends JDialog {
 	public Mutations(Frame window) {
 		super(window, "Edit Mutations", true);

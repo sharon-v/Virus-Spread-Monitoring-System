@@ -1,20 +1,8 @@
 package simulation;
 
-import java.util.Random;
-
-import country.City;
 import country.Map;
-import country.RamzorColor;
-import country.Settlement;
-import location.Location;
-import location.Point;
-import location.Size;
-import population.Healthy;
-import population.Sick;
 import ui.MainWindow;
 import ui.MapDrawing;
-import virus.BritishVariant;
-import virus.ChineseVariant;
 
 /**
  * 
@@ -38,9 +26,11 @@ public class Main {
 			if (playFlag == true && loadFlag == true) {
 				try {
 					System.out.println("ticks : " + Clock.now());
+					draw.repaint();
+
 					myMap.executeSimulation(); // third stage
 					Clock.nextTick();
-					draw.repaint();
+//					draw.repaint();
 					Thread.sleep(sleepTime * 1000);
 				} catch (Exception ex) {
 					System.out.println("an unexpected ERROR has occurred :(");

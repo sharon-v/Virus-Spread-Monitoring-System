@@ -3,7 +3,6 @@
  */
 package virus;
 
-import java.awt.Color;
 import java.util.ArrayList;
 import java.util.Random;
 
@@ -47,8 +46,6 @@ public class BritishVariant implements IVirus {
 			double d = p1.distance(p2); // distance between 2 people
 			if ((contagionProbability(p2) * Math.min(1, 0.14 * Math.exp(2 - 0.25 * d))) > randonNumber)
 				return true; 
-			else 
-				return false;
 		}
 		return false;
 	}

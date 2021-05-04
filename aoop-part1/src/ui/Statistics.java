@@ -1,6 +1,5 @@
 package ui;
 
-import java.awt.BorderLayout;
 import java.awt.Dimension;
 import java.awt.FileDialog;
 import java.awt.event.ActionEvent;
@@ -28,6 +27,11 @@ import country.Map;
 import country.Settlement;
 import io.StatisticsFile;
 
+/**
+ * 
+ * @author Yarden Hovav, Sharon Vazana
+ *
+ */
 public class Statistics extends JDialog {
 	/**
 	 * 
@@ -43,17 +47,18 @@ public class Statistics extends JDialog {
 		JTable table = new JTable(model1);
 		JPanel upperMenu = new JPanel();
 		JPanel lowerMenu = new JPanel();
+		JLabel label = new JLabel("  Filter TextField: ");
 		table.setSelectionMode(ListSelectionModel.SINGLE_SELECTION);
 		table.setPreferredScrollableViewportSize(new Dimension(750, 200));
 		table.setFillsViewportHeight(true);
+		table.setRowSorter(sorter = new TableRowSorter<MyMapModel>(model1));
+		m_table = table;
 
-		JLabel label = new JLabel("  Filter TextField: ");
 
 		
 		upperMenu.setLayout(new BoxLayout(upperMenu, BoxLayout.LINE_AXIS));
 		lowerMenu.setLayout(new BoxLayout(lowerMenu, BoxLayout.LINE_AXIS));
 		
-		table.setRowSorter(sorter = new TableRowSorter<MyMapModel>(model1));
 		
 		String[] filterOptions = {"Settlement Name", "Settlement Type", "Ramzor Color"};
 		m_combo = new JComboBox<>(filterOptions);
@@ -134,7 +139,6 @@ public class Statistics extends JDialog {
 		lowerMenu.add(addSickBt);
 		lowerMenu.add(addVaccineBt);
 		
-		m_table = table; ////??????????????????????????????????????????????????????????????????/
 		
 		panel.add(upperMenu);
 		panel.add(table);
@@ -164,6 +168,10 @@ public class Statistics extends JDialog {
 		m_table.addRowSelectionInterval(index, index); //can mark a selected line
 	}
 	
+//	public TableModel getMyTableModel() {
+//		return m_table.setModel();
+//
+//	}
 	
 	private class MyMapModel extends AbstractTableModel {
 		private Map data;

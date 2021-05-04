@@ -4,21 +4,21 @@ import java.awt.Color;
 import java.awt.Dimension;
 import java.awt.Graphics;
 import java.awt.Graphics2D;
-import java.awt.Rectangle;
 import java.awt.RenderingHints;
 import java.awt.event.MouseAdapter;
 import java.awt.event.MouseEvent;
-import java.awt.event.MouseListener;
 
-import javax.swing.JDialog;
-import javax.swing.JFrame;
 import javax.swing.JPanel;
 
 import country.Map;
-import country.Settlement;
 import location.Location;
 import location.Point;
 
+/**
+ * 
+ * @author Yarden Hovav, Sharon Vazana
+ *
+ */
 public class MapDrawing extends JPanel{
 	private Map map;
 	private final Statistics st;
@@ -37,8 +37,8 @@ public class MapDrawing extends JPanel{
 			    	 int endX = settlLocations[i].getSize().getWidth() + startX;
 			    	 int endY = settlLocations[i].getSize().getHeith() + startY;
 			    	 if(x >= startX && x <= endX && y >= startY && y <= endY) {
-			    		 st.markLine(i);
-			    		 st.showDialog();
+						st.markLine(i);
+						st.showDialog();
 			    	 }
 			    }
 			}
