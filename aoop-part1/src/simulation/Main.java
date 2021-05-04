@@ -25,9 +25,9 @@ public class Main {
 			if (playFlag == true && loadFlag == true) {
 				try {
 					System.out.println("ticks : " + Clock.now());
-					draw.repaint();
 					myMap.executeSimulation(); // third stage
 					Clock.nextTick();
+					draw.repaint();
 					Thread.sleep(sleepTime * 1000);
 				} catch (Exception ex) {
 					System.out.println("an unexpected ERROR has occurred :(");

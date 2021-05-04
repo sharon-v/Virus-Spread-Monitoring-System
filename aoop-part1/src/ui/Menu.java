@@ -1,8 +1,10 @@
 package ui;
 
 
+import java.awt.BorderLayout;
 import java.awt.FileDialog;
 import java.awt.FlowLayout;
+import java.awt.GridLayout;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 
@@ -15,11 +17,19 @@ import javax.swing.JMenuBar;
 import javax.swing.JMenuItem;
 import javax.swing.JOptionPane;
 import javax.swing.JPanel;
+import javax.swing.JScrollPane;
 import javax.swing.JSpinner;
+import javax.swing.JTextPane;
 import javax.swing.SpinnerModel;
 import javax.swing.SpinnerNumberModel;
 import javax.swing.event.ChangeEvent;
 import javax.swing.event.ChangeListener;
+import javax.swing.text.BadLocationException;
+import javax.swing.text.DefaultStyledDocument;
+import javax.swing.text.Style;
+import javax.swing.text.StyleConstants;
+import javax.swing.text.StyleContext;
+import javax.swing.text.StyledDocument;
 
 import country.Map;
 import simulation.Clock;
@@ -27,7 +37,6 @@ import simulation.Main;
 
 public class Menu extends JMenuBar {
 
-//	public Menu(JFrame frame, Statistics st, Map map, MapDrawing draw, JSlider slider) {
 	public Menu(JFrame frame, Statistics st, MapDrawing draw, Map map) {
 
 		window = frame;
@@ -70,27 +79,28 @@ public class Menu extends JMenuBar {
 						Clock.reset();// reset current time to 0 // somehow----------->fixxxxxxxxxxxxxxxx
 						// Create a file chooser
 						
-						FileDialog dialog = new FileDialog((JFrame)null, "Select File to Open");
-					    dialog.setMode(FileDialog.LOAD);
-					    dialog.setVisible(true);
-					    String path = dialog.getFile();
+						FileDialog dialog = new FileDialog((JFrame) null, "Select File to Open");
+						dialog.setMode(FileDialog.LOAD);
+						dialog.setVisible(true);
+						dialog.setLocationRelativeTo(null);
+
+						String path = dialog.getFile();
 						if (path != null) {
 							map.loadInfo(path);
-							myMapDraw.repaint();
 							map.intialization();// second stage
+							myMapDraw.repaint();
 							Main.setLoadFlag(true);
-							JOptionPane.showMessageDialog(load, "Simulation Started");
-						}
-//						StatisticsFile.exportToCSV(table, path);
-						
-//						final JFileChooser fc = new JFileChooser();
 
-						// In response to a button click:
+						}
+//						
+//						final JFileChooser fc = new JFileChooser();
+//
+//						// In response to a button click:
 //						int returnVal = fc.showOpenDialog(load);
 //						fc.setDialogTitle("Choose Directory");
 //						if (returnVal == JFileChooser.APPROVE_OPTION) {
 //							String path = fc.getSelectedFile().getAbsolutePath();
-							// This is where a real application would open the file.
+////							 This is where a real application would open the file.
 //							map.loadInfo(path);
 //							myMapDraw.repaint();
 //
@@ -237,12 +247,37 @@ public class Menu extends JMenuBar {
 
 				@Override
 				public void actionPerformed(ActionEvent e) {
-					JDialog info = new JDialog(window, "Information", JDialog.ModalityType.DOCUMENT_MODAL);
-					String expl = "Our program ....";  //?????
-					//					JOptionPane.showMessageDialog(info, expl,  JOptionPane.INFORMATION_MESSAGE);
-					JLabel text = new JLabel(expl);
-					info.add(text);
-					info.setSize(300, 300);
+					JDialog info = new JDialog(window, "Information", true);
+					String expl = "////////////////////////////////////\n" + "************\n"
+							+ "Background: \n************\n this program was developed in order to keep track of the developement of the Virus and it's mutations in our country.\n"
+							+ "************\n"
+							+ "Contains: \n************\n Displays real-time Statistic data in a graphic, user friendly interface. "
+							+ "in order to use the program you will need a pre-made .txt file that contains the countries information and the connections between Settlements in the following format: \n"
+							+ "---Settlement information---\n 'Settlement Type; Settlement-Name; x-coardinate; y-coardinte; Settlement Width; Settlement Height; Population'\n"
+							+ "---Connection---\n '#; First-Settlement-Name; Second-Settlement-Name;'\n"
+							+ "////////////////////////////////////";
+
+					StyleContext context = new StyleContext();
+					StyledDocument document = new DefaultStyledDocument(context);
+
+					Style style = context.getStyle(StyleContext.DEFAULT_STYLE);
+					StyleConstants.setAlignment(style, StyleConstants.ALIGN_LEFT);
+					StyleConstants.setFontSize(style, 14);
+					StyleConstants.setSpaceAbove(style, 4);
+					StyleConstants.setSpaceBelow(style, 4);
+
+					try {
+						document.insertString(document.getLength(), expl, style);
+					} catch (BadLocationException badLocationException) {
+						System.err.println("Oops");
+					}
+
+					JTextPane textPane = new JTextPane(document);
+					textPane.setEditable(false);
+					JScrollPane scrollPane = new JScrollPane(textPane);
+					info.add(scrollPane, BorderLayout.CENTER);
+
+					info.setSize(600, 400);
 					info.setVisible(true);
 
 				}
@@ -252,12 +287,25 @@ public class Menu extends JMenuBar {
 
 				@Override
 				public void actionPerformed(ActionEvent e) {
-					JDialog info = new JDialog(window, "About");
-					String expl = "Authors : Sharon Vazana and Yarden Hovav\n "
-							+ "Time of writing : April 2021";  //?????
+					JDialog info = new JDialog(window, "About", false);
+					JPanel panel = new JPanel(new GridLayout(4, 1));
+
+					String expl = "Authors : Sharon Vazana, Yarden Hovav";
+					String expl1 = "Date : May 2021";
+					String expl2 = "Version : 1.2";
+					String expl3 = "Java SE 16";
 					JLabel text = new JLabel(expl);
-					info.add(text);
-					info.setSize(300, 300);
+					JLabel text1 = new JLabel(expl1);
+					JLabel text2 = new JLabel(expl2);
+					JLabel text3 = new JLabel(expl3);
+
+					panel.add(text);
+					panel.add(text1);
+					panel.add(text2);
+					panel.add(text3);
+
+					info.add(panel);
+					info.setSize(300, 200);
 					info.setVisible(true);
 				}
 			});

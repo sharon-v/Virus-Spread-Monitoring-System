@@ -1,11 +1,11 @@
 package ui;
 
-import java.awt.BorderLayout;
 import java.awt.Frame;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.util.ArrayList;
 
+import javax.swing.BoxLayout;
 import javax.swing.JButton;
 import javax.swing.JDialog;
 import javax.swing.JPanel;
@@ -21,8 +21,8 @@ public class Mutations extends JDialog {
 		super(window, "Edit Mutations", true);
 		MyCheckModel model = new MyCheckModel();
 		JTable table = new JTable(model);
-		BorderLayout bLayout;
-		JPanel panel = new JPanel(bLayout = new BorderLayout());
+		JPanel panel = new JPanel();
+		panel.setLayout(new BoxLayout(panel, BoxLayout.PAGE_AXIS));
 		JButton saveBtn = new JButton("Save");
 		saveBtn.addActionListener(new ActionListener() {
 
@@ -44,9 +44,9 @@ public class Mutations extends JDialog {
 				}
 			}
 		});
-		panel.add(table, BorderLayout.CENTER);
+		panel.add(table);
 		panel.add(new RowedTableScroll(table, model.getColNames()));
-		panel.add(saveBtn, BorderLayout.SOUTH);
+		panel.add(saveBtn);
 		this.add(panel);
 	}
 
@@ -58,14 +58,13 @@ public class Mutations extends JDialog {
 
 
 	private class MyCheckModel extends AbstractTableModel {
-		// get current variants?????????????
 		private final Boolean[][] data;
 		private final String[] colNames = { "British Variant", "Chinese Variant", "South African Variant" };
 
 		public MyCheckModel() {
-			// make data array foe checkbox
-			data = new Boolean[getColumnCount()][getColumnCount()];
-			for (int i = 0; i < getColumnCount(); ++i) {
+			// make data array for checkboxes
+			data = new Boolean[getRowCount()][getColumnCount()];
+			for (int i = 0; i < getRowCount(); ++i) {
 				for (int j = 0; j < getColumnCount(); ++j) {
 					data[i][j] = false;
 				}
