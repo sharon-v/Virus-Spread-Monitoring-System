@@ -76,7 +76,7 @@ public class Map {
 	 */
 	public void executeSimulation() throws Exception {
 		sampleTwentyPercent();
-//		massRecovery();
+		massRecovery();
 		tryToTransfer();
 		massVaccination();
 		
@@ -106,29 +106,6 @@ public class Map {
 		}
 	}
 
-//	public String[][] getTableData() {
-//		String[][] temp = new String[m_settlement.length][];
-//		for (int i = 0; i < m_settlement.length; ++i) {
-//			temp[i] = new String[7];//????? datamember
-//			for(int j = 0; j < temp[i].length; ++j) {
-//				if (j % temp[i].length == 0)
-//					temp[i][j] = m_settlement[i].getSettlementName();
-//				else if (j % temp[i].length == 1)
-//					temp[i][j] = m_settlement[i].getSettlementType();
-//				else if (j % temp[i].length == 2)
-//					temp[i][j] = m_settlement[i].getRamzorColor().toString();
-//				else if (j % temp[i].length == 3)
-//					temp[i][j] = String.valueOf(m_settlement[i].contagiousPercent());
-//				else if (j % temp[i].length == 4)
-//					temp[i][j] = m_settlement[i].getVaccineDoses() + "";
-//				else if (j % temp[i].length == 5)
-//					temp[i][j] = m_settlement[i].getNumOfDeceased() + "";
-//				else if (j % temp[i].length == 6)
-//					temp[i][j] = m_settlement[i].getNumOfPeople() + "";
-//			}
-//		}
-//		return temp;
-//	}
 
 	public void activateOnePercent(Object settName) {
 		findSettlementByName(settName.toString()).infectPercent(0.001);
@@ -160,6 +137,8 @@ public class Map {
 	 */
 	public void tryToTransfer() {
 		int ran;
+		if(m_settlement.length ==1)
+			return;
 		for (int i = 0; i < m_settlement.length; ++i) {
 			ran = (int) (Math.random() * m_settlement.length);
 			m_settlement[i].randomTransfer(m_settlement[ran]);
