@@ -13,6 +13,7 @@ import javax.swing.JLabel;
 import javax.swing.JMenu;
 import javax.swing.JMenuBar;
 import javax.swing.JMenuItem;
+import javax.swing.JOptionPane;
 import javax.swing.JPanel;
 import javax.swing.JSpinner;
 import javax.swing.SpinnerModel;
@@ -77,6 +78,7 @@ public class Menu extends JMenuBar {
 						myMapDraw.repaint();
 						map.intialization();// second stage
 						Main.setLoadFlag(true);
+						JOptionPane.showMessageDialog(load, "Simulation Started");
 
 //						StatisticsFile.exportToCSV(table, path);
 						
@@ -141,7 +143,14 @@ public class Menu extends JMenuBar {
 
 				@Override
 				public void actionPerformed(ActionEvent e) {
-					Main.setPlayFlag(true);
+					if (Main.getLoadFlag() == true) {
+						Main.setPlayFlag(true);
+						JOptionPane.showMessageDialog(play, "Simulation Resumed");
+					}
+					else
+						JOptionPane.showMessageDialog(play, "No file has been loaded", "Inane warning",
+							JOptionPane.WARNING_MESSAGE);
+
 				}
 			});
 
@@ -149,10 +158,15 @@ public class Menu extends JMenuBar {
 
 				@Override
 				public void actionPerformed(ActionEvent e) {
-					if (Main.getPlayFlag() == true) {
+					if (Main.getPlayFlag() == true && Main.getLoadFlag() == true) {
 						Main.setPlayFlag(false);
 						//countinue
+						JOptionPane.showMessageDialog(pause, "Simulation Paused");
 					}
+					else
+						JOptionPane.showMessageDialog(pause, "Not currently playing", "Inane warning",
+							JOptionPane.WARNING_MESSAGE);
+
 				}
 			});
 
@@ -163,8 +177,11 @@ public class Menu extends JMenuBar {
 					if (Main.getLoadFlag() == true) {
 						Main.setLoadFlag(false);
 						Main.setPlayFlag(false);
+						JOptionPane.showMessageDialog(stop, "Simulation Stopped \nPlease re-load in order to resume");
 					}
-					// stop simulation ????????????
+					else
+						JOptionPane.showMessageDialog(stop, "No file has been loaded", "Inane error",
+							JOptionPane.ERROR_MESSAGE);
 				}
 			});
 
