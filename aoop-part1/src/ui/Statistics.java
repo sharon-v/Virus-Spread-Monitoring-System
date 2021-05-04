@@ -51,6 +51,7 @@ public class Statistics extends JDialog {
 		lowerMenu.setLayout(new BoxLayout(lowerMenu, BoxLayout.LINE_AXIS));
 		
 		table.setRowSorter(sorter = new TableRowSorter<MyMapModel>(model1));
+		
 		String[] filterOptions = {"Settlement Name", "Settlement Type", "Ramzor Color"};
 		m_combo = new JComboBox<>(filterOptions);
 
