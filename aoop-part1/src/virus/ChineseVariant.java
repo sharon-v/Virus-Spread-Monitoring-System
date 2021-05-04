@@ -42,7 +42,7 @@ public class ChineseVariant implements IVirus {
 	public boolean tryToContagion(Person p1, Person p2){
 		double randonNumber = Math.random();
 		if (p1.healthCondition().equals("Sick"))
-			if (((Sick) p1).getContagiousTime() < 5)
+			if (Clock.calculateDays(((Sick) p1).getContagiousTime()) < 5)
 				return false;
 		if (!(p2.healthCondition().equals("Sick"))) {
 			double d = p1.distance(p2); // distance between 2 people

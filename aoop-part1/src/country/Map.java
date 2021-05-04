@@ -75,10 +75,8 @@ public class Map {
 	 * manages simulation sequence
 	 */
 	public void executeSimulation() throws Exception {
-		
-		
 		sampleTwentyPercent();
-		massRecovery();
+//		massRecovery();
 		tryToTransfer();
 		massVaccination();
 		

@@ -152,16 +152,20 @@ public abstract class Settlement {
 	 * @return true if the person already exists in the settlement
 	 */
 	private boolean findPerson(Person p) {
-		if(p.healthCondition().equals("Sick")) {
-			for (int i = 0; i < m_sickPeople.length; ++i) {
-				if (m_sickPeople[i].equals(p))
-					return true;
+		if(m_sickPeople.length != 0) {
+			if(p.healthCondition().equals("Sick")) {
+				for (int i = 0; i < m_sickPeople.length; ++i) {
+					if (m_sickPeople[i].equals(p))
+						return true;
+				}
 			}
 		}
 		else {
-			for (int i = 0; i < m_healthyPeople.length; ++i) {
-				if (m_healthyPeople[i].equals(p))
-					return true;
+			if(m_healthyPeople.length != 0) {
+				for (int i = 0; i < m_healthyPeople.length; ++i) {
+					if (m_healthyPeople[i].equals(p))
+						return true;
+				}
 			}
 		}
 		return false;
@@ -446,7 +450,6 @@ public abstract class Settlement {
 	 */
 	protected void setRamzorColor(RamzorColor r) {
 		m_ramzorColor = r;
-		System.out.println("settl: " + this.getSettlementName() + " color: " + r);
 	}
 
 	/**
