@@ -2,6 +2,7 @@ package simulation;
 
 import country.Map;
 import ui.MainWindow;
+import ui.MapDrawing;
 
 /**
  * 
@@ -12,28 +13,28 @@ public class Main {
 
 	public static void main(String[] args) {
 		Map map = new Map();// Map instance
-		
 		MainWindow theWindow = new MainWindow(map);
-		playSimu(map);
+		playSimu(map, theWindow.getMapDrawing());
 	}
 
 
 
-	private static void playSimu(Map myMap) {
+	private static void playSimu(Map myMap, MapDrawing draw) {
 		while (true) {
 			System.out.print("");
 			if (playFlag == true && loadFlag == true) {
-					try {
-						System.out.println("ticks : " + Clock.now());
-						myMap.executeSimulation(); // third stage
-						Clock.nextTick();
-						Thread.sleep(sleepTime * 1000);
-					} catch (Exception ex) {
-						System.out.println("an unexpected ERROR has occurred :(");
-						ex.printStackTrace();
-					}
+				try {
+					System.out.println("ticks : " + Clock.now());
+					myMap.executeSimulation(); // third stage
+					draw.repaint();
+					Clock.nextTick();
+					Thread.sleep(sleepTime * 1000);
+				} catch (Exception ex) {
+					System.out.println("an unexpected ERROR has occurred :(");
+					ex.printStackTrace();
 				}
 			}
+		}
 	}
 
 	public static void setPlayFlag(boolean val) {

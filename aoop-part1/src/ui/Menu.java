@@ -67,7 +67,7 @@ public class Menu extends JMenuBar {
 				public void actionPerformed(ActionEvent e) {
 
 					if (Main.getLoadFlag() == false) {// ?????? maybe check if initialized
-															// somehow----------->fixxxxxxxxxxxxxxxx
+						Clock.reset();// reset current time to 0 // somehow----------->fixxxxxxxxxxxxxxxx
 						// Create a file chooser
 						
 						FileDialog dialog = new FileDialog((JFrame)null, "Select File to Open");
@@ -143,8 +143,9 @@ public class Menu extends JMenuBar {
 
 				@Override
 				public void actionPerformed(ActionEvent e) {
-					if (Main.getLoadFlag() == true) {
+					if (Main.getLoadFlag() == true && Main.getPlayFlag() == false) {
 						Main.setPlayFlag(true);
+						myMapDraw.repaint();
 						JOptionPane.showMessageDialog(play, "Simulation Resumed");
 					}
 					else
@@ -176,7 +177,7 @@ public class Menu extends JMenuBar {
 				public void actionPerformed(ActionEvent e) {
 					if (Main.getLoadFlag() == true) {
 						Main.setLoadFlag(false);
-						Main.setPlayFlag(false);
+						Main.setPlayFlag(true);
 						JOptionPane.showMessageDialog(stop, "Simulation Stopped \nPlease re-load in order to resume");
 					}
 					else
@@ -194,8 +195,7 @@ public class Menu extends JMenuBar {
 					JPanel panel = new JPanel();
 					panel.setLayout(new FlowLayout());
 					JLabel lb = new JLabel("Set Ticks Per Day");
-					SpinnerModel model = new SpinnerNumberModel(Clock.getTicksPerDay(),
-							Clock.getTicksPerDay() - 1000 + 1,
+					SpinnerModel model = new SpinnerNumberModel(Clock.getTicksPerDay(), 0,
 							Clock.getTicksPerDay() + 1000, 1);
 					JLabel ticks = new JLabel("ticks per day is now = " + Clock.getTicksPerDay());
 					JSpinner spinner = new JSpinner(model);

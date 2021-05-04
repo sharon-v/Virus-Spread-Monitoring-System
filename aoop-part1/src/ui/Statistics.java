@@ -9,7 +9,6 @@ import javax.swing.BoxLayout;
 import javax.swing.JButton;
 import javax.swing.JComboBox;
 import javax.swing.JDialog;
-import javax.swing.JFileChooser;
 import javax.swing.JFrame;
 import javax.swing.JOptionPane;
 import javax.swing.JPanel;
@@ -76,21 +75,8 @@ public class Statistics extends JDialog {
 				FileDialog dialog = new FileDialog((JFrame)null, "Select File to Open");
 			    dialog.setMode(FileDialog.LOAD);
 			    dialog.setVisible(true);
-			    String path = dialog.getFile();
+				String path = dialog.getFile();
 				StatisticsFile.exportToCSV(table, path);
-
-				
-//				final JFileChooser fc = new JFileChooser();
-//
-//				// In response to a button click:
-//				int returnVal = fc.showOpenDialog(saveBt);
-//				fc.setDialogTitle("Choose Directory");
-//				fc.setFileSelectionMode(JFileChooser.DIRECTORIES_ONLY);
-//				if (returnVal == JFileChooser.APPROVE_OPTION) {
-//					String path = fc.getSelectedFile().getAbsolutePath();
-//					// This is where a real application would open the file.
-//					StatisticsFile.exportToCSV(table, path);
-//				}
 			}
 		});
 
@@ -191,7 +177,7 @@ public class Statistics extends JDialog {
 			case 1:
 				return settlement.getSettlementType();
 			case 2:
-				return settlement.getRamzorColor();// ???
+				return settlement.getRamzorColor();
 			case 3:
 				return settlement.contagiousPercent();
 			case 4:

@@ -106,6 +106,7 @@ public abstract class Settlement {
 			m_healthyPeople = temp;
 		}
 		p.setSettlement(this); // change Settlement
+		setRamzorColor(calculateRamzorGrade());
 		return true;
 	}
 
@@ -141,6 +142,7 @@ public abstract class Settlement {
 			}
 			m_healthyPeople = temp;
 		}
+		setRamzorColor(calculateRamzorGrade());
 		return true;
 	}
 
@@ -442,7 +444,10 @@ public abstract class Settlement {
 	 * set method
 	 * @param r - new RamzorColor of the settlement
 	 */
-	protected void setRamzorColor(RamzorColor r) {m_ramzorColor = r;}
+	protected void setRamzorColor(RamzorColor r) {
+		m_ramzorColor = r;
+		System.out.println("settl: " + this.getSettlementName() + " color: " + r);
+	}
 
 	/**
 	 * 

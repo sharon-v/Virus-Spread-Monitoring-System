@@ -24,6 +24,13 @@ public class Clock {
 	}
 	
 	/**
+	 * resets Clock to 0
+	 */
+	public static void reset() {
+		m_currentTime = 0;
+	}
+
+	/**
 	 * 
 	 * @param x - num of ticks in a single day
 	 */

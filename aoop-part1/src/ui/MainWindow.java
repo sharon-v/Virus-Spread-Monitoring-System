@@ -1,7 +1,10 @@
 package ui;
 
+import java.util.Hashtable;
+
 import javax.swing.BoxLayout;
 import javax.swing.JFrame;
+import javax.swing.JLabel;
 import javax.swing.JScrollPane;
 import javax.swing.JSlider;
 import javax.swing.event.ChangeEvent;
@@ -24,7 +27,10 @@ public class MainWindow extends JFrame {
 
 //		 add JSlider instance
 		slider = new JSlider(JSlider.HORIZONTAL, FPS_MIN, FPS_MAX, FPS_INIT);
-
+		Hashtable<Integer, JLabel> labelTable = new Hashtable<>();
+		labelTable.put(FPS_MIN, new JLabel("Fast"));
+		labelTable.put(FPS_MAX, new JLabel("Slow"));
+		slider.setLabelTable(labelTable);
 		slider.addChangeListener(new ChangeListener() {
 			
 			@Override
@@ -48,6 +54,10 @@ public class MainWindow extends JFrame {
 		this.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
 		this.setVisible(true);
 		
+	}
+
+	public MapDrawing getMapDrawing() {
+		return drawMap;
 	}
 
 	private final Menu menu;// Menu object for main window
