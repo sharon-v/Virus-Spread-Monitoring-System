@@ -137,7 +137,7 @@ public class Map {
 	 */
 	public void tryToTransfer() {
 		int ran;
-		if(m_settlement.length ==1)
+		if (m_settlement.length == 1)
 			return;
 		for (int i = 0; i < m_settlement.length; ++i) {
 			ran = (int) (Math.random() * m_settlement.length);
