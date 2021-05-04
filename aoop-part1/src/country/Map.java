@@ -78,7 +78,7 @@ public class Map {
 		
 		
 		sampleTwentyPercent();
-//		massRecovery();
+		massRecovery();
 		tryToTransfer();
 		massVaccination();
 		

@@ -47,8 +47,10 @@ public class Statistics extends JDialog {
 		table.setPreferredScrollableViewportSize(new Dimension(750, 200));
 		table.setFillsViewportHeight(true);
 
+		JLabel label = new JLabel("  Filter TextField: ");
 
-		upperMenu.setLayout(new BorderLayout());
+		
+		upperMenu.setLayout(new BoxLayout(upperMenu, BoxLayout.LINE_AXIS));
 		lowerMenu.setLayout(new BoxLayout(lowerMenu, BoxLayout.LINE_AXIS));
 		
 		table.setRowSorter(sorter = new TableRowSorter<MyMapModel>(model1));
@@ -56,14 +58,10 @@ public class Statistics extends JDialog {
 		String[] filterOptions = {"Settlement Name", "Settlement Type", "Ramzor Color"};
 		m_combo = new JComboBox<>(filterOptions);
 
-		JPanel textPanel = new JPanel(new BorderLayout());
-		JLabel label = new JLabel("  Filter TextField: ");
-		JTextField tbFilterText = new JTextField();
-		label.setLabelFor(tbFilterText);
-		textPanel.add(label, BorderLayout.WEST);
-		textPanel.add(tbFilterText, BorderLayout.CENTER);
-		upperMenu.add(m_combo, BorderLayout.WEST);
-		upperMenu.add(textPanel, BorderLayout.CENTER);
+		upperMenu.add(m_combo);
+		upperMenu.add(label);
+		upperMenu.add(tbFilterText = new JTextField());
+
 
 		tbFilterText.setToolTipText("Filter Name Column");
 		tbFilterText.getDocument().addDocumentListener(new DocumentListener() {
@@ -93,7 +91,8 @@ public class Statistics extends JDialog {
 			    dialog.setMode(FileDialog.LOAD);
 			    dialog.setVisible(true);
 				String path = dialog.getFile();
-				StatisticsFile.exportToCSV(table, path);
+				if(path != null)
+					StatisticsFile.exportToCSV(table, path);
 			}
 		});
 
@@ -168,8 +167,8 @@ public class Statistics extends JDialog {
 	
 	private class MyMapModel extends AbstractTableModel {
 		private Map data;
-		private final String[] colNames = { "settlement name", "settlement type", "ramzor color", "sick percentage",
-				"vaccine doses", "amount deceased", "population" };
+		private final String[] colNames = { "Settlement Name", "Settlement Type", "Ramzor Color", "Sick Percentage",
+				"Vaccine Doses", "Amount Deceased", "Population" };
 		
 		public MyMapModel(Map data) {
 			this.data = data;
