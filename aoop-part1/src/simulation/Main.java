@@ -25,8 +25,8 @@ public class Main {
 			if (playFlag == true && loadFlag == true) {
 				try {
 					System.out.println("ticks : " + Clock.now());
-					myMap.executeSimulation(); // third stage
 					draw.repaint();
+					myMap.executeSimulation(); // third stage
 					Clock.nextTick();
 					Thread.sleep(sleepTime * 1000);
 				} catch (Exception ex) {

@@ -74,12 +74,13 @@ public class Menu extends JMenuBar {
 					    dialog.setMode(FileDialog.LOAD);
 					    dialog.setVisible(true);
 					    String path = dialog.getFile();
-					    map.loadInfo(path);
-						myMapDraw.repaint();
-						map.intialization();// second stage
-						Main.setLoadFlag(true);
-						JOptionPane.showMessageDialog(load, "Simulation Started");
-
+						if (path != null) {
+							map.loadInfo(path);
+//							myMapDraw.repaint();
+							map.intialization();// second stage
+							Main.setLoadFlag(true);
+							JOptionPane.showMessageDialog(load, "Simulation Started");
+						}
 //						StatisticsFile.exportToCSV(table, path);
 						
 //						final JFileChooser fc = new JFileChooser();
@@ -145,7 +146,6 @@ public class Menu extends JMenuBar {
 				public void actionPerformed(ActionEvent e) {
 					if (Main.getLoadFlag() == true && Main.getPlayFlag() == false) {
 						Main.setPlayFlag(true);
-						myMapDraw.repaint();
 						JOptionPane.showMessageDialog(play, "Simulation Resumed");
 					}
 					else

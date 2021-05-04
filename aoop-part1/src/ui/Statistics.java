@@ -1,5 +1,6 @@
 package ui;
 
+import java.awt.BorderLayout;
 import java.awt.Dimension;
 import java.awt.FileDialog;
 import java.awt.event.ActionEvent;
@@ -10,6 +11,7 @@ import javax.swing.JButton;
 import javax.swing.JComboBox;
 import javax.swing.JDialog;
 import javax.swing.JFrame;
+import javax.swing.JLabel;
 import javax.swing.JOptionPane;
 import javax.swing.JPanel;
 import javax.swing.JScrollPane;
@@ -46,7 +48,7 @@ public class Statistics extends JDialog {
 		table.setFillsViewportHeight(true);
 
 
-		upperMenu.setLayout(new BoxLayout(upperMenu, BoxLayout.LINE_AXIS));
+		upperMenu.setLayout(new BorderLayout());
 		lowerMenu.setLayout(new BoxLayout(lowerMenu, BoxLayout.LINE_AXIS));
 		
 		table.setRowSorter(sorter = new TableRowSorter<MyMapModel>(model1));
@@ -54,8 +56,15 @@ public class Statistics extends JDialog {
 		String[] filterOptions = {"Settlement Name", "Settlement Type", "Ramzor Color"};
 		m_combo = new JComboBox<>(filterOptions);
 
-		upperMenu.add(m_combo);
-		upperMenu.add(tbFilterText = new JTextField());
+		JPanel textPanel = new JPanel(new BorderLayout());
+		JLabel label = new JLabel("  Filter TextField: ");
+		JTextField tbFilterText = new JTextField();
+		label.setLabelFor(tbFilterText);
+		textPanel.add(label, BorderLayout.WEST);
+		textPanel.add(tbFilterText, BorderLayout.CENTER);
+		upperMenu.add(m_combo, BorderLayout.WEST);
+		upperMenu.add(textPanel, BorderLayout.CENTER);
+
 		tbFilterText.setToolTipText("Filter Name Column");
 		tbFilterText.getDocument().addDocumentListener(new DocumentListener() {
 		public void insertUpdate(DocumentEvent e) { newFilter(m_combo.getSelectedIndex()); }
