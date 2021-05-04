@@ -76,7 +76,7 @@ public class Menu extends JMenuBar {
 					    String path = dialog.getFile();
 						if (path != null) {
 							map.loadInfo(path);
-//							myMapDraw.repaint();
+							myMapDraw.repaint();
 							map.intialization();// second stage
 							Main.setLoadFlag(true);
 							JOptionPane.showMessageDialog(load, "Simulation Started");

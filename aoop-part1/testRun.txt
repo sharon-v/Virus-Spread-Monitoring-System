@@ -1,5 +1,5 @@
 City;Ashdod;0;0;90;50;1000
-City;Beer-Sheva;220; 150;80;80;1000
+City;Beer-Sheva;240; 150;80;80;1000
 Moshav;Gevim;300;100;100 ; 20;1000
 Moshav ;Emonim; 150; 200;70;40;1000
 Kibbutz;Erez;300;300;50;30;1000
