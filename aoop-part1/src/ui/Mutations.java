@@ -43,6 +43,7 @@ public class Mutations extends JDialog {
 						SouthAfricanVariant.setPossibleVariants(variants);
 				}
 			}
+
 		});
 		panel.add(table);
 		panel.add(new RowedTableScroll(table, model.getColNames()));

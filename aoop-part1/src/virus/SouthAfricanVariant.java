@@ -1,6 +1,7 @@
 package virus;
 
 import java.util.ArrayList;
+import java.util.Random;
 
 import population.Person;
 import population.Sick;
@@ -53,7 +54,8 @@ public class SouthAfricanVariant implements IVirus {
 	
 	@Override
 	public boolean tryToKill(Sick s) {
-		double randonNumber = Math.random();
+		Random ran = new Random();
+		double randonNumber = ran.nextDouble();
 		double p ; //the probability to die according to age
 		if(s.getAge() <= 18)
 			p = deathProbTo18;

@@ -1,6 +1,7 @@
 package virus;
 
 import java.util.ArrayList;
+import java.util.Random;
 
 import population.Person;
 import population.Sick;
@@ -40,13 +41,14 @@ public class ChineseVariant implements IVirus {
 	
 	@Override
 	public boolean tryToContagion(Person p1, Person p2){
-		double randonNumber = Math.random();
+		Random ran = new Random();
+		double randonNumber = ran.nextDouble();
 		if (p1.healthCondition().equals("Sick"))
 			if (Clock.calculateDays(((Sick) p1).getContagiousTime()) < 5)
 				return false;
 		if (!(p2.healthCondition().equals("Sick"))) {
 			double d = p1.distance(p2); // distance between 2 people
-			if(contagionProbability(p2) * Math.min(1, 0.14 * Math.exp(2 - 0.25 * d)) > randonNumber)
+			if((contagionProbability(p2) * Math.min(1, 0.14 * Math.exp(2 - 0.25 * d))) > randonNumber)
 				return true; 
 			else 
 				return false;

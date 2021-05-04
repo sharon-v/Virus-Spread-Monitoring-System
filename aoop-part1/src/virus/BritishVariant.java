@@ -5,6 +5,7 @@ package virus;
 
 import java.awt.Color;
 import java.util.ArrayList;
+import java.util.Random;
 
 import population.Person;
 import population.Sick;
@@ -37,7 +38,8 @@ public class BritishVariant implements IVirus {
 	
 	@Override
 	public boolean tryToContagion(Person p1, Person p2){
-		double randonNumber = Math.random();
+		Random ran = new Random();
+		double randonNumber = ran.nextDouble();
 		if (p1.healthCondition().equals("Sick"))
 			if (Clock.calculateDays(((Sick) p1).getContagiousTime()) < 5)
 				return false;

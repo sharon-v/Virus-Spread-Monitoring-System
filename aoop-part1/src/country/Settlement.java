@@ -160,12 +160,10 @@ public abstract class Settlement {
 				}
 			}
 		}
-		else {
-			if(m_healthyPeople.length != 0) {
-				for (int i = 0; i < m_healthyPeople.length; ++i) {
-					if (m_healthyPeople[i].equals(p))
-						return true;
-				}
+		if(m_healthyPeople.length != 0) {
+			for (int i = 0; i < m_healthyPeople.length; ++i) {
+				if (m_healthyPeople[i].equals(p))
+					return true;
 			}
 		}
 		return false;
@@ -296,8 +294,10 @@ public abstract class Settlement {
 		for (int i = 0; i < 3; ++i) {
 			int randomIndex = (int) (Math.random() * (m_healthyPeople.length));
 			if (sickPerson.getVirusFromPerson().tryToContagion(sickPerson, m_healthyPeople[randomIndex])) {
-				if (sickPerson.getVirusFromPerson().getVars().size() != 0)
+				if (sickPerson.getVirusFromPerson().getVars().size() != 0) {
 					m_healthyPeople[randomIndex].contagionVariants(sickPerson.getVirusFromPerson().getVars());
+					System.out.println("contagion");
+				}
 			}
 		}
 	}
@@ -328,8 +328,11 @@ public abstract class Settlement {
 
 	public void sickToConvalescent() {
 		for (int i = 0; i < m_sickPeople.length; ++i) {
-			if (Clock.calculateDays(m_sickPeople[i].getContagiousTime()) > m_recoveryTime)
+			if (Clock.calculateDays(m_sickPeople[i].getContagiousTime()) > m_recoveryTime) {
 				m_sickPeople[i].recover();
+				System.out.println("recovery");
+			}
+
 		}
 	}
 

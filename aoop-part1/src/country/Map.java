@@ -79,15 +79,12 @@ public class Map {
 		massRecovery();
 		tryToTransfer();
 		massVaccination();
-		
-		
 	}
 	
 	public void sampleTwentyPercent() {
 		for (int i = 0; i < m_settlement.length; ++i) {
 			m_settlement[i].simulation();
 		}
-		
 	}
 
 	public void massRecovery() {
