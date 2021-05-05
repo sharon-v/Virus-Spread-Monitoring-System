@@ -1,5 +1,7 @@
 package country;
 
+import java.util.Random;
+
 import location.Location;
 import location.Point;
 import population.Healthy;
@@ -71,13 +73,15 @@ public abstract class Settlement {
 	 */
 	public Point randomLocation() {
 		int xMax, yMax, xMin, yMin;
+		Random ran = new Random();
 		xMin = m_location.getPoint().getX();
-		yMax = m_location.getPoint().getY();
+		yMin = m_location.getPoint().getY();
 		xMax = xMin + m_location.getSize().getWidth();
-		yMin = yMax + m_location.getSize().getHeith();
-		int randX = xMin + (int)(Math.random() * ((xMax - xMin) + 1));
-		int randY = yMin + (int)(Math.random() * ((yMax - yMin) + 1));
-		
+		yMax = yMin + m_location.getSize().getHeith();
+//		int randX = xMin + (int)(Math.random() * ((xMax - xMin) + 1));
+//		int randY = yMin + (int)(Math.random() * ((yMax - yMin) + 1));
+		int randX = ran.nextInt(xMax - xMin +1) + xMin;
+		int randY = ran.nextInt(yMax - yMin +1) + yMin;
 		return new Point(randX, randY);
 	}
 
@@ -190,13 +194,17 @@ public abstract class Settlement {
 	 * @return true if successfully transferred
 	 */
 	private boolean transferPerson(Person p, Settlement s) {
+		if(this.equals(s))
+			return false;
 		if (s.m_maxPopulation <= getNumOfPeople())
 			return false;
-		if ((getRamzorColor().getTransferProb() * s.getRamzorColor().getTransferProb()) > Math.random()) // [0, 1) 
+		Random ran = new Random();
+		if ((getRamzorColor().getTransferProb() * s.getRamzorColor().getTransferProb()) >= ran.nextDouble()) // [0, 1) 
 			return false;
 		if (removePerson(p)) {
 			s.addPerson(p);
 			p.setSettlement(s);
+			System.out.println("transfer");
 			return true; // for this part of the project
 		}
 		return false;
@@ -209,7 +217,7 @@ public abstract class Settlement {
 	 */
 	public void randomTransfer(Settlement randomSettlement) {
 		// try transfer 3% from settlement
-		int size = m_sickPeople.length + m_healthyPeople.length;
+		int size = getNumOfPeople();
 		Person[] temp = new Person[size];
 		for (int i = 0; i < m_healthyPeople.length; ++i) {
 			temp[i] = m_healthyPeople[i];
@@ -217,11 +225,12 @@ public abstract class Settlement {
 		for (int i = 0; i < m_sickPeople.length; ++i) {
 			temp[m_healthyPeople.length + i] = m_sickPeople[i];
 		}
-		int ran;
+		Random ran = new Random();
+		int random;
 		int threePercent = (int) (size * 0.03);
 		for (int i = 0; i < threePercent; ++i) {
-			ran = (int) (Math.random() * size);
-			transferPerson(temp[ran], randomSettlement);
+			random = ran.nextInt(size);
+			transferPerson(temp[random], randomSettlement);
 		}
 	}
 
@@ -239,12 +248,13 @@ public abstract class Settlement {
 	 * infects 1 percent of the population in each of the Settlements
 	 */
 	public void infectPercent(double num) {
-		int amount = (int) (m_healthyPeople.length * num);
+		int amountToInfect = (int) (m_healthyPeople.length * num);
 		int randomIndex;
+		Random ran = new Random();
 		IVirus virus;
-		for(int i = 0; i < amount; ++i) {
-			randomIndex = (int)(Math.random() * (m_healthyPeople.length));
-			if (randomIndex % 3 == 0)// variant screen ???????????????
+		for(int i = 0; i < amountToInfect; ++i) {
+			randomIndex = ran.nextInt(m_healthyPeople.length);
+			if (randomIndex % 3 == 0)
 				virus = new ChineseVariant();
 			else if (randomIndex % 3 == 1)
 				virus = new BritishVariant();
@@ -258,30 +268,26 @@ public abstract class Settlement {
 		}
 	}
 
-	// /**
-	// * one simulation operation
-	// */
-	// public void simulation() throws Exception {
-	// int[] tempIndex = new int[0];
-	// for (int j = 0; j < m_healthyPeople.length; ++j) {// run over the population
-	// of each settlement
-	// if (m_healthyPeople[j].healthCondition().equals("Sick")) {
-	// if(!(searchIndex(tempIndex, j))) {
-	// tempIndex = randomContagion(m_healthyPeople[j], tempIndex);
-	// }
-	// }
-	// }
-	// }
+	/**
+	 * 
+	 * @return a random Settlement from the Connections array
+	 */
+	public Settlement randomConnection() {
+		if (m_connectedSettlements.length == 0)
+			return null;
+		Random ran = new Random();
+		return m_connectedSettlements[ran.nextInt(m_connectedSettlements.length)];
 
+	}
 	/**
 	 * one simulation operation
 	 */
 	public void simulation() {
 		int tempIndex = (int) (m_sickPeople.length * 0.2);
-		int rand;
+		Random ran = new Random();
 		for (int j = 0; j < tempIndex; ++j) {// run over the population of each settlement
-			rand = (int) (Math.random() * tempIndex);
-			randomContagion(m_sickPeople[rand]);
+//			rand = ran.nextInt(tempIndex);
+			randomContagion(m_sickPeople[ran.nextInt(tempIndex)]);
 		}
 	}
 
@@ -296,7 +302,8 @@ public abstract class Settlement {
 		for (int i = 0; i < 3; ++i) {
 			if (m_healthyPeople.length == 0)
 				return;
-			int randomIndex = (int) (Math.random() * (m_healthyPeople.length));
+			Random ran = new Random();
+			int randomIndex = ran.nextInt(m_healthyPeople.length);
 			virus = sickPerson.getVirusFromPerson();
 			if (virus.getVars().size() != 0) {
 				virus = sickPerson.contagionVariants(virus.getVars());

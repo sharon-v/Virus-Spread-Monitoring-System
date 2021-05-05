@@ -44,7 +44,7 @@ public class MainWindow extends JFrame {
 			}
 		});
 		//Turn on labels at major tick marks.
-		slider.setMajorTickSpacing(2);
+		slider.setMajorTickSpacing(1);
 		slider.setMinorTickSpacing(1);
 		slider.setPaintTicks(true);
 		slider.setPaintLabels(true);
@@ -71,6 +71,6 @@ public class MainWindow extends JFrame {
 	
 	
 	static final int FPS_MIN = 0;
-	static final int FPS_MAX = 10;
+	static final int FPS_MAX = 15;
 	static final int FPS_INIT = 5;    //initial frames per second
 }

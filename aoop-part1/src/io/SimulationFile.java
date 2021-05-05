@@ -93,9 +93,10 @@ public class SimulationFile {
 			rng = ran.nextGaussian();
 		} while (rng < -1 || rng > 1);
 		x = (rng * standardDeviation + Mean); // random number for x by normal distribution
-		int yMin = 0;
-		int yMax = 4;
-		double y = Math.random() * (yMax - yMin + 1) + yMin; // random number for y
+//		int yMin = 0;
+//		int yMax = 4;
+//		double y = Math.random() * (yMax - yMin + 1) + yMin; // random number for y
+		int y = ran.nextInt(5);
 		return (int) ((5 * x) + y);
 	}
 

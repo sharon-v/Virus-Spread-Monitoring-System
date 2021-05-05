@@ -74,6 +74,7 @@ public class Sick extends Person {
 		Convalescent newConv = new Convalescent(getAge(), getLocation(), getSettelement(), m_virus);
 		getSettelement().removePerson(this);
 		getSettelement().addPerson(newConv);
+		System.out.println("recover");
 		return newConv;
 	}
 	

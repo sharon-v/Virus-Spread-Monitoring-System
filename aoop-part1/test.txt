@@ -1,0 +1,15 @@
+Moshav; Gevim; 20;100 ;40;40; 1000
+City;Ashdod; 0;0; 60;50; 2000
+#; Tel-Aviv;Nir-Galim
+#; Tel-Aviv;Gat
+City;Tel-Aviv;250;150;40;50; 3000
+#; Beer-Sheva;Gat
+City; Beer-Sheva; 150;0; 70;80; 1500
+# ; Gevim; Ashdod
+# ; Gevim; Gezer
+Kibbutz; Gat; 120;150 ;70;80; 2100
+#; Ashdod; Gat
+Moshav; Nir-Galim; 280;20 ;80;40; 1150
+# ; Gat; Gezer
+Kibbutz; Gezer; 50;250 ;110;80; 1470
+# ; Beer-Sheva;  Nir-Galim

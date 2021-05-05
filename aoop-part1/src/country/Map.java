@@ -130,15 +130,16 @@ public class Map {
 	}
 
 	/**
-	 * tries to transfer random 3% from each Settlement
+	 * calls a method that tries to transfer random 3% from each Settlement
 	 */
 	public void tryToTransfer() {
-		int ran;
 		if (m_settlement.length == 1)
 			return;
 		for (int i = 0; i < m_settlement.length; ++i) {
-			ran = (int) (Math.random() * m_settlement.length);
-			m_settlement[i].randomTransfer(m_settlement[ran]);
+			Settlement s = m_settlement[i].randomConnection();
+			if (s == null)
+				return;
+			m_settlement[i].randomTransfer(s);
 		}
 	}
 

@@ -1,6 +1,7 @@
 package population;
 
 import java.util.ArrayList;
+import java.util.Random;
 
 import country.Settlement;
 import location.Point;
@@ -75,7 +76,8 @@ public abstract class Person {
 
 	public IVirus contagionVariants(ArrayList<String> variants) {
 		IVirus virus;
-		int rand = (int) (Math.random() * variants.size());
+		Random ran = new Random();
+		int rand = ran.nextInt(variants.size());
 		if (variants.get(rand).equals("British Variant"))
 			virus = new BritishVariant();
 		else if (variants.get(rand).equals("Chinese Variant"))

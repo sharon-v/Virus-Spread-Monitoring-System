@@ -38,16 +38,14 @@ public class SouthAfricanVariant implements IVirus {
 	
 	@Override
 	public boolean tryToContagion(Person p1, Person p2){
-		double randonNumber = Math.random();
+		Random ran = new Random();
+		double randomNumber = ran.nextDouble(); // [0, 1)
 		if (p1.healthCondition().equals("Sick"))
 			if (Clock.calculateDays(((Sick) p1).getContagiousTime()) < 5)
 				return false;
 		if (!(p2.healthCondition().equals("Sick"))) {
 			double d = p1.distance(p2); // distance between 2 people
-			if(contagionProbability(p2) * Math.min(1, 0.14 * Math.exp(2 - 0.25 * d)) > randonNumber)
-				return true; 
-			else 
-				return false;
+			return (contagionProbability(p2) * Math.min(1, 0.14 * Math.exp(2 - 0.25 * d)) > randomNumber);
 		}
 		return false;
 	}
@@ -55,16 +53,14 @@ public class SouthAfricanVariant implements IVirus {
 	@Override
 	public boolean tryToKill(Sick s) {
 		Random ran = new Random();
-		double randonNumber = ran.nextDouble();
+		double randomNumber = ran.nextDouble();
 		double p ; //the probability to die according to age
 		if(s.getAge() <= 18)
 			p = deathProbTo18;
 		else
 			p= deathProb18Above;
 		long t = Clock.calculateDays(s.getContagiousTime()); // the time that passed since contagion
-		if(Math.max(0, p - 0.01 * p * Math.pow(t - 15, 2)) > randonNumber)
-			return true;
-		return false;
+		return Math.max(0, p - 0.01 * p * Math.pow(t - 15, 2)) >= randomNumber;
 	}
 
 	/**
