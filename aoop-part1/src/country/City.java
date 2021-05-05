@@ -19,12 +19,17 @@ public class City extends Settlement {
 		super(name, new Location(location), population);
 	}
 
-	// toString-optional
 
+	/**
+	 *  Return the type of the settlement
+	 */
 	public String getSettlementType() {
 		return "City";
 	}
-
+	
+	/**
+	 * return the new color of the settlement
+	 */
 	protected RamzorColor calculateRamzorGrade() {
 		double p = contagiousPercent();
 		double res = 0.2 * Math.pow(4, 1.25 * p);

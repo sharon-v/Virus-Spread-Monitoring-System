@@ -24,7 +24,6 @@ public class Map {
 		return "amount of settlements: " + m_settlement.length + "\n" + toStringSettlements();
 	}
 
-	// no need for equals()
 
 	/**
 	 * 
@@ -55,9 +54,6 @@ public class Map {
 	 * manages input of data from file
 	 */
 	public void loadInfo(String filePath) {
-//			Scanner sc = new Scanner(System.in);
-//			System.out.println("Please enter the file path: ");
-//			String filePath = sc.nextLine();
 		String[] connections = null;
 		try {
 			SimulationFile loadMap = new SimulationFile();
@@ -66,10 +62,7 @@ public class Map {
 		} catch (Exception e) {
 			System.out.println(e);
 		}
-//			} finally {
-//				sc.close();
-//			}
-		}
+	}
 
 	/**
 	 * manages simulation sequence
@@ -81,12 +74,18 @@ public class Map {
 		massVaccination();
 	}
 	
+	/**
+	 * Run over the settlements and trying to contagion 3 people for 20% from the sick persons
+	 */
 	public void sampleTwentyPercent() {
 		for (int i = 0; i < m_settlement.length; ++i) {
 			m_settlement[i].simulation();
 		}
 	}
 
+	/**
+	 * Run over the settlements and for each sick person that past 25 days since he got sick , turn his to convalescent
+	 */
 	public void massRecovery() {
 		for (int i = 0; i < m_settlement.length; ++i) {
 			m_settlement[i].sickToConvalescent();
@@ -103,11 +102,16 @@ public class Map {
 		}
 	}
 
-
+	/**
+	 * infect 1% people
+	 */
 	public void activateOnePercent(Object settName) {
 		findSettlementByName(settName.toString()).infectPercent(0.001);
 	}
-
+	
+	/**
+	 * find the settlement by its name and return 
+	 */
 	private Settlement findSettlementByName(String name) {
 		for (int i = 0; i < m_settlement.length; ++i) {
 			if (m_settlement[i].getSettlementName().equals(name))
@@ -115,7 +119,10 @@ public class Map {
 		}
 		return null;
 	}
-
+	
+	/**
+	 * 
+	 */
 	public void addVaccines(Object settName, int amount) {
 		findSettlementByName(settName.toString()).setVaccineDoses((int) amount);// ???????
 	}

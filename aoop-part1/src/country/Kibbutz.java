@@ -19,10 +19,16 @@ public class Kibbutz extends Settlement {
 		super(name, new Location(location), population);
 	}
 	
+	/**
+	 * Return the settlement type
+	 */
 	public String getSettlementType() {
 		return "Kibbutz";
 	}
 
+	/**
+	 * Return the new Color of the settlement
+	 */
 	protected RamzorColor calculateRamzorGrade() {
 		double p = contagiousPercent();
 		double c = getRamzorColor().getValue(); // ???
