@@ -42,18 +42,24 @@ import simulation.Main;
  */
 public class Menu extends JMenuBar {
 
-	public Menu(JFrame frame, Statistics st, MapDrawing draw, Map map) {
-
-		window = frame;
-		stat =st;
-		mutation = new Mutations(window);
+	/**
+	 * constructor
+	 * 
+	 * @param st   - Statistics window
+	 * @param draw - MapDrawing windoe
+	 * @param map  - Map Object
+	 */
+	public Menu(Statistics st, MapDrawing draw, Map map) {
+		// set fields
+		stat = st;
+		mutation = new Mutations();
 		this.map = map;
-//		m_slider = slider;
 		myMapDraw = draw;
-	
+
 		m_file = new File();
 		m_simulation = new Simulation();
 		m_help = new Help();
+
 		// add menu options to bar
 		this.add(m_file);
 		this.add(m_simulation);
@@ -61,9 +67,18 @@ public class Menu extends JMenuBar {
 
 	}
 
+	/**
+	 * 
+	 * inner Class for handling work with the File
+	 *
+	 */
 	private class File extends JMenu {
+
+		/**
+		 * constructor
+		 */
 		public File() {
-			super("File");
+			super("File");// call parent constructor
 			JMenuItem load = new JMenuItem("Load");
 			JMenuItem stats = new JMenuItem("Statistics");
 			JMenuItem edit = new JMenuItem("Edit Mutations");
@@ -74,16 +89,17 @@ public class Menu extends JMenuBar {
 			this.add(edit);
 			this.add(exit);
 
-			// add ActionListeners
+			/**
+			 * load menu option actions
+			 */
 			load.addActionListener(new ActionListener() {
 
 				@Override
 				public void actionPerformed(ActionEvent e) {
 
-					if (Main.getLoadFlag() == false) {// ?????? maybe check if initialized
-						Clock.reset();// reset current time to 0 // somehow----------->fixxxxxxxxxxxxxxxx
+					if (Main.getLoadFlag() == false) {
+						Clock.reset();// reset current time to 0
 						// Create a file chooser
-						
 						FileDialog dialog = new FileDialog((JFrame) null, "Select File to Open");
 						dialog.setMode(FileDialog.LOAD);
 						dialog.setVisible(true);
@@ -92,30 +108,18 @@ public class Menu extends JMenuBar {
 						String path = dialog.getFile();
 						if (path != null) {
 							map.loadInfo(path);
-//							stats.
 							map.intialization();// second stage
 							myMapDraw.repaint();
 							Main.setLoadFlag(true);
 
 						}
-//						
-//						final JFileChooser fc = new JFileChooser();
-//
-//						// In response to a button click:
-//						int returnVal = fc.showOpenDialog(load);
-//						fc.setDialogTitle("Choose Directory");
-//						if (returnVal == JFileChooser.APPROVE_OPTION) {
-//							String path = fc.getSelectedFile().getAbsolutePath();
-////							 This is where a real application would open the file.
-//							map.loadInfo(path);
-//							myMapDraw.repaint();
-//
-//							map.intialization();// second stage
-//						}
 					}
 				}
 			});
 
+			/**
+			 * statistics menu option actions
+			 */
 			stats.addActionListener(new ActionListener() {
 
 				@Override
@@ -124,6 +128,9 @@ public class Menu extends JMenuBar {
 				}
 			});
 
+			/**
+			 * edit mutations menu option actions
+			 */
 			edit.addActionListener(new ActionListener() {
 
 				@Override
@@ -132,20 +139,29 @@ public class Menu extends JMenuBar {
 				}
 			});
 
+			/**
+			 * exit menue option, closes the program
+			 */
 			exit.addActionListener(new ActionListener() {
 				public void actionPerformed(ActionEvent e) {
 					System.exit(0);
 				}
 			});
-
-
 		}
 	}
 
 
+	/**
+	 * 
+	 * inner class for handling Simulations
+	 *
+	 */
 	private class Simulation extends JMenu {
+		/**
+		 * constructor
+		 */
 		public Simulation() {
-			super("Simulation");
+			super("Simulation");// call the parent constructor
 			JMenuItem play = new JMenuItem("Play");
 			JMenuItem pause = new JMenuItem("Pause");
 			JMenuItem stop = new JMenuItem("Stop");
@@ -156,6 +172,9 @@ public class Menu extends JMenuBar {
 			this.add(stop);
 			this.add(setTicks);
 
+			/**
+			 * play menu option actions
+			 */
 			play.addActionListener(new ActionListener() {
 
 				@Override
@@ -163,30 +182,34 @@ public class Menu extends JMenuBar {
 					if (Main.getLoadFlag() == true && Main.getPlayFlag() == false) {
 						Main.setPlayFlag(true);
 						JOptionPane.showMessageDialog(play, "Simulation Resumed");
-					}
-					else
+					} else
 						JOptionPane.showMessageDialog(play, "No file has been loaded", "Inane warning",
-							JOptionPane.WARNING_MESSAGE);
+								JOptionPane.WARNING_MESSAGE);
 
 				}
 			});
 
+			/**
+			 * pause menu option actions
+			 */
 			pause.addActionListener(new ActionListener() {
 
 				@Override
 				public void actionPerformed(ActionEvent e) {
 					if (Main.getPlayFlag() == true && Main.getLoadFlag() == true) {
 						Main.setPlayFlag(false);
-						//countinue
+						// countinue
 						JOptionPane.showMessageDialog(pause, "Simulation Paused");
-					}
-					else
+					} else
 						JOptionPane.showMessageDialog(pause, "Not currently playing", "Inane warning",
-							JOptionPane.WARNING_MESSAGE);
+								JOptionPane.WARNING_MESSAGE);
 
 				}
 			});
 
+			/**
+			 * stop menu option actions
+			 */
 			stop.addActionListener(new ActionListener() {
 
 				@Override
@@ -195,14 +218,15 @@ public class Menu extends JMenuBar {
 						Main.setLoadFlag(false);
 						Main.setPlayFlag(true);
 						JOptionPane.showMessageDialog(stop, "Simulation Stopped \nPlease re-load in order to resume");
-					}
-					else
+					} else
 						JOptionPane.showMessageDialog(stop, "No file has been loaded", "Inane error",
-							JOptionPane.ERROR_MESSAGE);
+								JOptionPane.ERROR_MESSAGE);
 				}
 			});
 
-			// set ticks
+			/**
+			 * set ticks per day menu options actions
+			 */
 			setTicks.addActionListener(new ActionListener() {
 
 				@Override
@@ -224,6 +248,7 @@ public class Menu extends JMenuBar {
 
 						}
 					});
+
 					JComponent editor = new JSpinner.NumberEditor(spinner);
 					spinner.setEditor(editor);
 					spinner.setSize(70, 30);
@@ -233,27 +258,36 @@ public class Menu extends JMenuBar {
 					di.add(panel);
 					di.setSize(200, 150);
 					di.setVisible(true);
-					// "Set Ticks Per Day"
-
 				}
 			});
 		}
 	}
 
+	/**
+	 * 
+	 * inner Class for handling help menu
+	 *
+	 */
 	private class Help extends JMenu {
+		/**
+		 * constructor
+		 */
 		public Help() {
-			super("Help");
+			super("Help");// call parent constructor
 			JMenuItem help = new JMenuItem("Help");
 			JMenuItem about = new JMenuItem("About");
 			// add to file
 			this.add(help);
 			this.add(about);
 
+			/**
+			 * help menu option actions
+			 */
 			help.addActionListener(new ActionListener() {
 
 				@Override
 				public void actionPerformed(ActionEvent e) {
-					JDialog info = new JDialog(window, "Information", true);
+					JDialog info = new JDialog((JFrame) null, "Information", true);
 					String expl = "////////////////////////////////////\n" + "************\n"
 							+ "Background: \n************\n this program was developed in order to keep track of the developement of the Virus and it's mutations in our country.\n"
 							+ "************\n"
@@ -285,53 +319,48 @@ public class Menu extends JMenuBar {
 
 					info.setSize(600, 400);
 					info.setVisible(true);
-
 				}
 			});
 
+			/**
+			 * about menu option actions
+			 */
 			about.addActionListener(new ActionListener() {
 
 				@Override
 				public void actionPerformed(ActionEvent e) {
-					JDialog info = new JDialog(window, "About", false);
+					JDialog info = new JDialog((JFrame) null, "About", false);
 					JPanel panel = new JPanel(new GridLayout(4, 1));
-
+					// define labels
 					String expl = "Authors : Sharon Vazana, Yarden Hovav";
 					String expl1 = "Date : May 2021";
 					String expl2 = "Version : 1.2";
-					String expl3 = "Java SE 16";
+					String expl3 = "Platform : Java SE 16";
 					JLabel text = new JLabel(expl);
 					JLabel text1 = new JLabel(expl1);
 					JLabel text2 = new JLabel(expl2);
 					JLabel text3 = new JLabel(expl3);
-
+					// add text to panel
 					panel.add(text);
 					panel.add(text1);
 					panel.add(text2);
 					panel.add(text3);
-
+					// add panel and set view
 					info.add(panel);
 					info.setSize(300, 200);
 					info.setVisible(true);
 				}
 			});
-
 		}
-
 	}
 
-	private final File m_file;
-	private final Simulation m_simulation;
-	private final Help m_help;
-//	private final JMenu m_menu;
-	private MapDrawing myMapDraw;
-//	private final JSlider m_slider;
-	
-
-	private Map map;// maybe can be final????
-	private Statistics stat;
-	private Mutations mutation;
-	private final JFrame window;// hold frame
-
+	// fields
+	private final File m_file;// file menu
+	private final Simulation m_simulation;// simulation menu
+	private final Help m_help;// help menu
+	private MapDrawing myMapDraw;// map drawing panel
+	private Map map;// contains all Settlements information
+	private Statistics stat;// contains the statistic data
+	private Mutations mutation;// mutation info
 }
 

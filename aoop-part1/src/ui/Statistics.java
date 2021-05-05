@@ -38,8 +38,14 @@ public class Statistics extends JDialog {
 	 */
 	private static final long serialVersionUID = 1L;
 
-	public Statistics(Map map, JFrame f) {// change to panel
-		super(f, "Statistics Window", false);
+	/**
+	 * constructor
+	 * 
+	 * @param map - Map object containing all the Settlements information
+	 * @param f   - parent JFrame of this Class
+	 */
+	public Statistics(Map map) {// change to panel
+		super((JFrame) null, "Statistics Window", false);
 		JPanel panel = new JPanel();
 		panel.setLayout(new BoxLayout(panel, BoxLayout.PAGE_AXIS));// statistics window frame
 
@@ -47,26 +53,21 @@ public class Statistics extends JDialog {
 		JTable table = new JTable(model1);
 		JPanel upperMenu = new JPanel();
 		JPanel lowerMenu = new JPanel();
+		upperMenu.setLayout(new BoxLayout(upperMenu, BoxLayout.LINE_AXIS));
+		lowerMenu.setLayout(new BoxLayout(lowerMenu, BoxLayout.LINE_AXIS));
 		JLabel label = new JLabel("  Filter TextField: ");
 		table.setSelectionMode(ListSelectionModel.SINGLE_SELECTION);
 		table.setPreferredScrollableViewportSize(new Dimension(750, 200));
 		table.setFillsViewportHeight(true);
 		table.setRowSorter(sorter = new TableRowSorter<MyMapModel>(model1));
+		String[] filterOptions = { "Settlement Name", "Settlement Type", "Ramzor Color" };
 		m_table = table;
-
-
-		
-		upperMenu.setLayout(new BoxLayout(upperMenu, BoxLayout.LINE_AXIS));
-		lowerMenu.setLayout(new BoxLayout(lowerMenu, BoxLayout.LINE_AXIS));
-		
-		
-		String[] filterOptions = {"Settlement Name", "Settlement Type", "Ramzor Color"};
 		m_combo = new JComboBox<>(filterOptions);
 
+		// upper menu additions
 		upperMenu.add(m_combo);
 		upperMenu.add(label);
 		upperMenu.add(tbFilterText = new JTextField());
-
 
 		tbFilterText.setToolTipText("Filter Name Column");
 		tbFilterText.getDocument().addDocumentListener(new DocumentListener() {
@@ -134,27 +135,37 @@ public class Statistics extends JDialog {
 				return;
 			}
 		});
-		
+
+		// lower menu additions
 		lowerMenu.add(saveBt);
 		lowerMenu.add(addSickBt);
 		lowerMenu.add(addVaccineBt);
 		
-		
+		// add to JPanel
 		panel.add(upperMenu);
 		panel.add(table);
 		panel.add(new JScrollPane(table));
 		panel.add(lowerMenu);
+
+		// add JPanel to JDialoog
 		this.add(panel);
 
 		
 	}
 	
+	/**
+	 * opens the window
+	 */
 	public void showDialog() {
 		setLocationRelativeTo(getParent());
 		pack();
 		setVisible(true);
 	}
 
+	/**
+	 * 
+	 * @param index - index to filter by
+	 */
 	private void newFilter(int index) {
 		try {
 			sorter.setRowFilter(RowFilter.regexFilter(tbFilterText.getText(),index));
@@ -163,21 +174,29 @@ public class Statistics extends JDialog {
 		}
 	}
 	
-	
+	/**
+	 * 
+	 * @param index - index to sort by
+	 */
 	public void markLine(int index) {
 		m_table.addRowSelectionInterval(index, index); //can mark a selected line
 	}
 	
-//	public TableModel getMyTableModel() {
-//		return m_table.setModel();
-//
-//	}
-	
+	/**
+	 * 
+	 * inner class for the TableModel
+	 *
+	 */
 	private class MyMapModel extends AbstractTableModel {
 		private Map data;
 		private final String[] colNames = { "Settlement Name", "Settlement Type", "Ramzor Color", "Sick Percentage",
 				"Vaccine Doses", "Amount Deceased", "Population" };
 		
+		/**
+		 * constructor
+		 * 
+		 * @param data - Map object with all the Settlement
+		 */
 		public MyMapModel(Map data) {
 			this.data = data;
 		}
@@ -238,10 +257,19 @@ public class Statistics extends JDialog {
 			fireTableCellUpdated(row, col);
 		}
 
+		/**
+		 * 
+		 * @return array of column names
+		 */
 		public String[] getColNames() {
 			return colNames;
 		}
 
+		/**
+		 * 
+		 * @param name - column name
+		 * @return index if name is in the ComboBox filterOptions, if not -1
+		 */
 		public int getColIndexCombo(String name) {
 			for (int i = 0; i < colNames.length; ++i) {
 				if (colNames[i].equals(name))
@@ -249,30 +277,10 @@ public class Statistics extends JDialog {
 			}
 			return -1;
 		}
-
-
 	}
-
-//	private enum filterOptions {
-//		op0("filter by"),
-//		// settlement type options
-//		sop1("City"), sop2("Kibbutz"), sop3("Moshav"),
-//		// ramzor color options
-//		cop1("GREEN"), cop2("YELLOW"), cop3("ORANGE"), cop4("RED");
-//
-//		private final String opName;
-//
-//		private filterOptions(String name) {
-//			opName = name;
-//		}
-//
-//		public String toString() {
-//			return opName;
-//		}
-//	}
 	
-	private JTable m_table;////???? ask sharon
-	private JTextField tbFilterText;
-	private TableRowSorter<MyMapModel> sorter;
-	public final JComboBox<String> m_combo;// ?????
+	private JTable m_table;// reference to our JTable
+	private JTextField tbFilterText;// regular expression text filtering
+	private TableRowSorter<MyMapModel> sorter;// sorter Object
+	public final JComboBox<String> m_combo;// contains filter options
 }

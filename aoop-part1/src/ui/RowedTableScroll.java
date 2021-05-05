@@ -50,7 +50,6 @@ public class RowedTableScroll extends JScrollPane {
 		rowHeader.setFixedCellWidth(150);
 		rowHeader.setFixedCellHeight(table.getRowHeight());
 		rowHeader.setCellRenderer(new RowHeaderRenderer(table));
-//		table.setFillsViewportHeight(true);
 		this.setRowHeaderView(rowHeader);
 	}
 }

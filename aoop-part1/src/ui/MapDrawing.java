@@ -20,25 +20,33 @@ import location.Point;
  *
  */
 public class MapDrawing extends JPanel{
-	private Map map;
-	private final Statistics st;
-	
+	/**
+	 * constructor
+	 * 
+	 * @param myMap - MapDrawing Object
+	 * @param stat  - Statistics Object
+	 */
 	public MapDrawing(Map myMap, Statistics stat) {
 		map = myMap;
 		st = stat;
+
+		/**
+		 * actions for MapDrawing
+		 */
 		this.addMouseListener(new MouseAdapter() {
 			public void mouseClicked(MouseEvent e) {
 				int x = e.getX();
 			    int y = e.getY();
 				Location[] settlLocations = map.settlementsLocation();
-			    for(int i = 0; i < settlLocations.length ; ++i) {//run over the settlements and printing them by color
+				// run over the settlements and printing them by color
+				for (int i = 0; i < settlLocations.length; ++i) {
 			    	 int startX = settlLocations[i].getPoint().getX();
 			    	 int startY = settlLocations[i].getPoint().getY();
 			    	 int endX = settlLocations[i].getSize().getWidth() + startX;
 			    	 int endY = settlLocations[i].getSize().getHeith() + startY;
 			    	 if(x >= startX && x <= endX && y >= startY && y <= endY) {
-						st.markLine(i);
-						st.showDialog();
+						st.markLine(i);// mark the corresponding line in Statistics window
+						st.showDialog();// open Statistics window
 			    	 }
 			    }
 			}
@@ -73,7 +81,11 @@ public class MapDrawing extends JPanel{
 	
 	@Override
 	public Dimension getPreferredSize() {
-		return new Dimension(400, 400);////?????????????????????	
+		return new Dimension(400, 400);
 	}
+
+	// fields
+	private Map map;
+	private final Statistics st;
 }
 
