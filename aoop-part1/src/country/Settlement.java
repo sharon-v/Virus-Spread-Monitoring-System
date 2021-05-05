@@ -77,6 +77,7 @@ public abstract class Settlement {
 		yMin = yMax + m_location.getSize().getHeith();
 		int randX = xMin + (int)(Math.random() * ((xMax - xMin) + 1));
 		int randY = yMin + (int)(Math.random() * ((yMax - yMin) + 1));
+		
 		return new Point(randX, randY);
 	}
 
@@ -189,9 +190,9 @@ public abstract class Settlement {
 	 * @return true if successfully transferred
 	 */
 	private boolean transferPerson(Person p, Settlement s) {
-		if (s.m_maxPopulation == getNumOfPeople())
+		if (s.m_maxPopulation <= getNumOfPeople())
 			return false;
-		if (getRamzorColor().getTransferProb() * s.getRamzorColor().getTransferProb() < Math.random()) // [0, 1)
+		if ((getRamzorColor().getTransferProb() * s.getRamzorColor().getTransferProb()) > Math.random()) // [0, 1) 
 			return false;
 		if (removePerson(p)) {
 			s.addPerson(p);
@@ -301,7 +302,7 @@ public abstract class Settlement {
 				virus = sickPerson.contagionVariants(virus.getVars());
 				if (virus.tryToContagion(sickPerson, m_healthyPeople[randomIndex])) {
 					m_healthyPeople[randomIndex].contagion(virus);
-//					System.out.println("contagion");
+					System.out.println("contagion");
 				}
 			}
 		}
