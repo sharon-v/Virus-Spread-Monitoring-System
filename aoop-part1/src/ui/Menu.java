@@ -331,6 +331,7 @@ public class Menu extends JMenuBar {
 				public void actionPerformed(ActionEvent e) {
 					JDialog info = new JDialog((JFrame) null, "About", false);
 					JPanel panel = new JPanel(new GridLayout(4, 1));
+
 					// define labels
 					String expl = "Authors : Sharon Vazana, Yarden Hovav";
 					String expl1 = "Date : May 2021";
@@ -340,6 +341,12 @@ public class Menu extends JMenuBar {
 					JLabel text1 = new JLabel(expl1);
 					JLabel text2 = new JLabel(expl2);
 					JLabel text3 = new JLabel(expl3);
+					// align in center
+					text.setHorizontalAlignment(CENTER);
+					text1.setHorizontalAlignment(CENTER);
+					text2.setHorizontalAlignment(CENTER);
+					text3.setHorizontalAlignment(CENTER);
+
 					// add text to panel
 					panel.add(text);
 					panel.add(text1);
