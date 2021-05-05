@@ -23,6 +23,10 @@ public class Vaccinated extends Person {
 		m_vaccinationTime = Clock.now();
 	}
 	
+	/**
+	 * Copy constractor
+	 * @param v - Vaccinated object
+	 */
 	public Vaccinated(Vaccinated v) {
 		super(v);
 		m_vaccinationTime = v.getvaccinationTime();

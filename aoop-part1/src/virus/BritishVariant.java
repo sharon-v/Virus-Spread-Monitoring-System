@@ -89,6 +89,6 @@ public class BritishVariant implements IVirus {
 	private static final double deathProbTo18 = 0.01;// death probability up to 18
 	private static final double deathProb18Above = 0.1;// death probability above 18
 	private static final double contagionProb = 0.7;// contagion probability all ages
-	private static ArrayList<String> m_possibleVariants = new ArrayList<String>();
+	private static ArrayList<String> m_possibleVariants = new ArrayList<String>(); // Array list that contains the variants that the current variant can mutated to
 
 }

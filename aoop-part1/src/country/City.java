@@ -21,12 +21,12 @@ public class City extends Settlement {
 
 
 	/**
-	 *  Return the type of the settlement
+	 * return the settlement type
 	 */
 	public String getSettlementType() {
 		return "City";
 	}
-	
+
 	/**
 	 * return the new color of the settlement
 	 */

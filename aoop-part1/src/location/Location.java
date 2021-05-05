@@ -38,18 +38,18 @@ public class Location {
 		return m_point.equals(l.m_point) && m_size.equals(l.m_size);
 		}
 
-		/**
-		 * get method
-		 * 
-		 * @return copy of Point
-		 */
+	/**
+	* get method
+	* 
+	* @return copy of Point
+	*/
 	public Point getPoint() {return new Point(m_point);}
 
-		/**
-		 * get method
-		 * 
-		 * @return copy of Size
-		 */
+	/**
+	* get method
+	* 
+	* @return copy of Size
+	*/
 	public Size getSize() {return new Size(m_size);}
 	
 		private Point m_point;// Location's top left corner

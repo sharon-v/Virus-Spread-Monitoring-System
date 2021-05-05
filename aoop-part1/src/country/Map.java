@@ -121,10 +121,10 @@ public class Map {
 	}
 	
 	/**
-	 * 
+	 * adding vaccines to the settlement
 	 */
 	public void addVaccines(Object settName, int amount) {
-		findSettlementByName(settName.toString()).setVaccineDoses((int) amount);// ???????
+		findSettlementByName(settName.toString()).setVaccineDoses((int) amount);
 	}
 
 	/**
@@ -151,8 +151,8 @@ public class Map {
 	}
 
 	/**
-	 * 
-	 * @param arr
+	 * create the connections in the map foe each settlement
+	 * @param arr - list of string that describe the connections in the map
 	 */
 	private void makeConnections(String[] connections) {
 		String[] temp = null;
@@ -222,10 +222,10 @@ public class Map {
 	
 	/**
 	 * 
-	 * @param arr - - middle point of the connections settlement array 
+	 * @param arr - middle point of the connections settlement array 
 	 * @param newPoints - new points connection of settlement
 	 * @param settlPoint - middle point of settlement
-	 * @return
+	 * @return - the new connection array after adding a new connection
 	 */
 	private Point[] addConection(Point[] arr, Point[] newPoints, Point settlPoint) {
 		Point[] temp = arr;
@@ -260,50 +260,10 @@ public class Map {
 		return false;
 	}
 	
-
-//	public static String[][] filtering(String[][] data, String type) {
-//		if (type.equals("filter by"))
-//			return data;
-//
-//		String[][] temp = new String[0][];
-//		for (int i = 0; i < data.length; ++i) {
-//			for (int j = 0; j < data[i].length; ++j) {
-//				if (data[i][j].equals(type))
-//					temp = addData(temp, data[i]);
-//			}
-//		}
-//		return temp;
-//	}
-
-//	public static DefaultTableModel filtering(JTable statTable, String type) {
-//		DefaultTableModel model = (DefaultTableModel) statTable.getModel();
-//		if (type.equals("filter by"))
-//			return null;
-//		for (int i = 0; i < statTable.getRowCount(); ++i) {
-//			for (int j = 0; j < statTable.getColumnCount(); ++j) {
-//				if (statTable.getValueAt(i, j).equals(type))
-//					model.removeRow(i);
-////					statTable.remove(i);
-//
-//			}
-//		}
-//		return model;
-//	}
-
-//
-//	private static String[][] addData(String[][] arr, String[] newStr) {
-//		String[][] temp = new String[arr.length + 1][];
-//		for (int i = 0; i < arr.length; ++i) {
-//			temp[i] = arr[i];
-//		}
-//		temp[arr.length] = newStr;
-//		return temp;
-//	}
-
 	/**
 	 * 
-	 * @param s1
-	 * @param s2
+	 * @param s1 - the name of the first settlement in the connection
+	 * @param s2 - the name of the second settlement in the connection
 	 */
 	private void connectSettlements(String s1, String s2) {
 		Settlement settl1 = null, settl2 = null;
@@ -320,9 +280,19 @@ public class Map {
 
 	}
 	
+	/**
+	 * 
+	 * @return - the number of the settlement in the map
+	 */
 	public int getMapSize() {
 		return m_settlement.length;
 	}
+	
+	/**
+	 * 
+	 * @param rowIndex - the row index 
+	 * @return - the settlement in the index that sent
+	 */
 	public Settlement at(int rowIndex) {
 		if (rowIndex < getMapSize())
 			return m_settlement[rowIndex];

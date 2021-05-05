@@ -204,7 +204,6 @@ public abstract class Settlement {
 		if (removePerson(p)) {
 			s.addPerson(p);
 			p.setSettlement(s);
-			System.out.println("transfer");
 			return true; // for this part of the project
 		}
 		return false;
@@ -233,7 +232,11 @@ public abstract class Settlement {
 			transferPerson(temp[random], randomSettlement);
 		}
 	}
-
+	
+	
+	/**
+	 * vaccinate the population
+	 */
 	public void vaccineTime() {
 		if (getVaccineDoses() > 0 && m_healthyPeople.length > 0) {
 			for (int i = 0; i < Math.min(getVaccineDoses(), m_healthyPeople.length); ++i) {
@@ -244,6 +247,7 @@ public abstract class Settlement {
 			}
 		}
 	}
+	
 	/**
 	 * infects 1 percent of the population in each of the Settlements
 	 */
@@ -286,7 +290,6 @@ public abstract class Settlement {
 		int tempIndex = (int) (m_sickPeople.length * 0.2);
 		Random ran = new Random();
 		for (int j = 0; j < tempIndex; ++j) {// run over the population of each settlement
-//			rand = ran.nextInt(tempIndex);
 			randomContagion(m_sickPeople[ran.nextInt(tempIndex)]);
 		}
 	}
@@ -321,7 +324,7 @@ public abstract class Settlement {
 	 */
 	public Point middelOfSettlement() {
 		int x = (int)(m_location.getPoint().getX() + (m_location.getSize().getWidth()/ 2)) ;
-		int y = (int)(m_location.getPoint().getY() + (m_location.getSize().getHeith()/2)); //need to be minus(-)
+		int y = (int)(m_location.getPoint().getY() + (m_location.getSize().getHeith()/2)); 
 		return new Point(x, y);
 	}
 
@@ -339,72 +342,17 @@ public abstract class Settlement {
 		m_connectedSettlements = temp;
 	}
 
+	/**
+	 *  if past 25 days since the sick person got infected - recovery him
+	 */
 	public void sickToConvalescent() {
 		for (int i = 0; i < m_sickPeople.length; ++i) {
 			if (Clock.calculateDays(m_sickPeople[i].getContagiousTime()) > m_recoveryTime) {
 				m_sickPeople[i].recover();
-//				System.out.println("recovery");
 			}
 
 		}
 	}
-
-	// /**
-	// * updates array of new sick Persons indexes
-	// *
-	// * @param tempIndex
-	// * @param index
-	// */
-	// private int[] addTempIndex(int[] tempIndex, int index) {
-	// int[] temp = new int[tempIndex.length + 1];
-	// for(int i = 0; i < tempIndex.length; ++i)
-	// temp[i] = tempIndex[i];
-	// temp[tempIndex.length] = index;
-	// return temp;
-	// }
-
-	// /**
-	// * searches for a certain index in array
-	// *
-	// * @param tempIndex
-	// * @param index
-	// * @return
-	// */
-	// private boolean searchIndex(int[] tempIndex, int index) {
-	// for(int i = 0; i < tempIndex.length; ++i)
-	// if(tempIndex[i] == index)
-	// return true;
-	// return false;
-	// }
-
-	// /**
-	// * chooses randomly six people to try to infect for each sick Person currently
-	// * in the Settlement
-	// *
-	// * @param people - array of Persons
-	// * @param sickPerson - reference to a Sick Person
-	// * @param tempIndex - index of a new Sick Person
-	// * @throws Exception - thrown if we try to infect a Sick Person
-	// */
-	// private int[] randomContagion( Person sickPerson, int[] tempIndex) throws
-	// Exception {
-	// for (int i = 0; i < 6; ++i) {
-	// int randomIndex = (int)(Math.random() * (m_healthyPeople.length));
-	// if (sickPerson.getVirusFromPerson() == null)
-	// throw new Exception("this person isn't sick...");
-	// if (sickPerson.getVirusFromPerson().tryToContagion(sickPerson,
-	// m_healthyPeople[randomIndex])) {
-	// try {
-	// m_healthyPeople[randomIndex] =
-	// m_healthyPeople[randomIndex].contagion(sickPerson.getVirusFromPerson());
-	// tempIndex = addTempIndex(tempIndex, randomIndex);
-	// }catch(Exception e) {
-	// System.out.println(e);
-	// }
-	// }
-	// }
-	// return tempIndex;
-	// }
 
 	/**
 	 * 
@@ -473,29 +421,48 @@ public abstract class Settlement {
 	 * @return String of Settlement type
 	 */
 	public abstract String getSettlementType();
-
+	
+	/**
+	 * 
+	 * @return the number of the vaccines in the settlement
+	 */
 	public int getVaccineDoses() {
 		return m_vaccineDoses;
 	}
 
+	/**
+	 * set the number of the deceased
+	 */
 	public void setNumOfDeceased() {
 		++m_numOfDeceased;
 	}
-
+	
+	/**
+	 * 
+	 * @return the number of the deceased
+	 */
 	public int getNumOfDeceased() {
 		return m_numOfDeceased;
 	}
-
+	
+	/**
+	 * set the number of the vaccine doses
+	 * @param amount - the new number of the vaccine doses
+	 */
 	public void setVaccineDoses(int amount) {
 		if (amount >= 0)
 			m_vaccineDoses += amount;
 	}
-
-	public Location getLocation() { // ??????
+	
+	/**
+	 * 
+	 * @return the location of the settlement
+	 */
+	public Location getLocation() {
 		return new Location(m_location);
 	}
 
-	private static final int m_recoveryTime = 25;
+	private static final int m_recoveryTime = 25; //the number of days that after this the sick person recovery
 	private final String m_name;// Settlement's name
 	private final Location m_location;// Settlement's Location
 	private Person[] m_healthyPeople;// Settlement's healthy residents

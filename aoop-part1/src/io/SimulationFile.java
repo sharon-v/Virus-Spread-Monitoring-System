@@ -20,12 +20,20 @@ import population.Healthy;
  *
  */
 public class SimulationFile {
+	
+	/**
+	 * constractor
+	 */
 	public SimulationFile() {
 		m_connections = new String[0];
 	}
 
 	/**
-	 * reads from file
+	 * read from file
+	 * @param map - Map object
+	 * @param filePath - String object thet contain the path to the file
+	 * @return String array that contains the connections in the map
+	 * @throws Exception any type
 	 */
 	public String[] readFromFile(Map map, String filePath) throws Exception {
 		FileReader fr = null;
@@ -93,9 +101,6 @@ public class SimulationFile {
 			rng = ran.nextGaussian();
 		} while (rng < -1 || rng > 1);
 		x = (rng * standardDeviation + Mean); // random number for x by normal distribution
-//		int yMin = 0;
-//		int yMax = 4;
-//		double y = Math.random() * (yMax - yMin + 1) + yMin; // random number for y
 		int y = ran.nextInt(5);
 		return (int) ((5 * x) + y);
 	}
@@ -122,6 +127,6 @@ public class SimulationFile {
 		m_connections = temp;
 	}
 
-	private static final double CAPACITY = 1.3;
-	private String[] m_connections;
+	private static final double CAPACITY = 1.3; 
+	private String[] m_connections; // the connections in the map
 }

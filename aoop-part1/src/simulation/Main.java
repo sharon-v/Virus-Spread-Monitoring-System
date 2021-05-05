@@ -10,16 +10,18 @@ import ui.MapDrawing;
  *
  */
 public class Main {
-
+	
 	public static void main(String[] args) {
 		Map map = new Map();// Map instance
 		MainWindow theWindow = new MainWindow(map);
 		playSimu(map, theWindow.getMapDrawing());
 	}
-
-
-
 	
+	/**
+	 * 
+	 * @param myMap - Map object 
+	 * @param draw - MapDrawing object
+	 */
 	private static void playSimu(Map myMap, MapDrawing draw) {
 		while (true) {
 			System.out.print("");
@@ -27,10 +29,8 @@ public class Main {
 				try {
 					System.out.println("ticks : " + Clock.now());
 					draw.repaint();
-
 					myMap.executeSimulation(); // third stage
 					Clock.nextTick();
-//					draw.repaint();
 					Thread.sleep(sleepTime * 1000);
 				} catch (Exception ex) {
 					System.out.println("an unexpected ERROR has occurred :(");
@@ -40,29 +40,49 @@ public class Main {
 		}
 	}
 
+	/**
+	 * set the play flag
+	 * @param val - boolean object
+	 */
 	public static void setPlayFlag(boolean val) {
 		playFlag = val;
 	}
 
+	/**
+	 * set the load flag
+	 * @param val -boolean object
+	 */
 	public static void setLoadFlag(boolean val) {
 		loadFlag = val;
 	}
 
+	/**
+	 * get the play flag
+	 * @return the play flag boolean value
+	 */
 	public static boolean getPlayFlag() {
 		return playFlag;
 	}
-
+	
+	/**
+	 * get the load flag
+	 * @return the load flag boolean value
+	 */
 	public static boolean getLoadFlag() {
 		return loadFlag;
 	}
-
+	
+	/**
+	 * set the play flag
+	 * @param val - the new sleep time int value
+	 */
 	public static void setSleepTime(int val) {
 		sleepTime = val;
 	}
 
 
-	private static boolean playFlag = true;
-	private static boolean loadFlag = false;
-	private static int sleepTime = 1;
+	private static boolean playFlag = true; // flag to know if the simulation is play or pause
+	private static boolean loadFlag = false; // flag to know if file has been loaded or not
+	private static int sleepTime = 1; // the time between each simulation
 
 }

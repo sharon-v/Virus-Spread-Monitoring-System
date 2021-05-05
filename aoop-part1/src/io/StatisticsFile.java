@@ -14,6 +14,12 @@ import javax.swing.table.TableModel;
  */
 public class StatisticsFile {
 // write to file format csv
+	/**
+	 * 
+	 * @param tableToExport - JTable object - the table we want to save
+	 * @param pathToExportTo - String object that contains the path where we want to save the table
+	 * @return
+	 */
 	public static boolean exportToCSV(JTable tableToExport, String pathToExportTo) {
 		FileWriter csv = null;
 		try {

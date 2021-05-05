@@ -19,10 +19,16 @@ public class Moshav extends Settlement {
 		super(name, new Location(location), population);
 	}
 	
+	/**
+	 * return the type of the settlement
+	 */
 	public String getSettlementType() {
 		return "Moshav";
 	}
-
+	
+	/**
+	 * return the new Ramzoe Color of the settlement
+	 */
 	protected RamzorColor calculateRamzorGrade() {
 		// p - sick percentage , c - current color
 		double p = contagiousPercent();

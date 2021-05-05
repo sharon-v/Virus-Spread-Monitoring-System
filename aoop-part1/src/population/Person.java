@@ -73,7 +73,12 @@ public abstract class Person {
 		m_settlement.addPerson(newSick);
 		return newSick;
 	}
-
+	
+	/**
+	 * 
+	 * @param variants - Array list that contains the variant that the person can get infect with 
+	 * @return - IViruse object
+	 */
 	public IVirus contagionVariants(ArrayList<String> variants) {
 		IVirus virus;
 		Random ran = new Random();

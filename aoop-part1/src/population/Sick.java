@@ -25,6 +25,10 @@ public class Sick extends Person {
 		m_virus = virus;
 	}
 	
+	/**
+	 * Copy constractor
+	 * @param s - Sick object
+	 */
 	public Sick(Sick s) {
 		super(s);
 		m_contagiousTime = s.m_contagiousTime;

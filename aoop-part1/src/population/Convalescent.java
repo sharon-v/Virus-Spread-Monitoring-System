@@ -24,6 +24,10 @@ public class Convalescent extends Person {
 		m_virus = virus;
 	}
 	
+	/**
+	 * Copy constractor
+	 * @param c - Convalescent Object
+	 */
 	public Convalescent(Convalescent c) {
 		super(c);
 		m_virus = c.m_virus;

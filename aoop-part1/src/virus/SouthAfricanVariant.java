@@ -90,6 +90,6 @@ public class SouthAfricanVariant implements IVirus {
 	private static final double deathProb18Above = 0.08;// death probability above 18
 	private static final double contagionProbTo18 = 0.6;// contagion probability up to 18
 	private static final double contagionProb18Above = 0.5;// contagion probability above 18
-	private static ArrayList<String> m_possibleVariants = new ArrayList<String>();
+	private static ArrayList<String> m_possibleVariants = new ArrayList<String>(); // Array list that contains the variants that the current variant can mutated to
 
 }
