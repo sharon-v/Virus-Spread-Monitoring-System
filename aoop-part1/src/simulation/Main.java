@@ -2,8 +2,6 @@ package simulation;
 
 
 
-import javax.swing.Timer;
-
 import country.Map;
 import ui.MainWindow;
 import ui.MapDrawing;
@@ -30,7 +28,6 @@ public class Main {
 	private static void playSimu(Map myMap, MapDrawing draw) {
 		while (true) {
 			draw.repaint();
-			draw.updateStatWindow();
 			System.out.print("");
 			if (playFlag == true && loadFlag == true) {
 				try {
@@ -42,6 +39,7 @@ public class Main {
 					System.out.println("an unexpected ERROR has occurred :(");
 					ex.printStackTrace();
 				}
+				draw.updateStatWindow();
 			}
 		}
 	}

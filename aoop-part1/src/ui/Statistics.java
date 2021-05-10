@@ -18,7 +18,6 @@ import javax.swing.JTable;
 import javax.swing.JTextField;
 import javax.swing.ListSelectionModel;
 import javax.swing.RowFilter;
-import javax.swing.SwingUtilities;
 import javax.swing.event.DocumentEvent;
 import javax.swing.event.DocumentListener;
 import javax.swing.table.AbstractTableModel;
@@ -50,7 +49,7 @@ public class Statistics extends JDialog {
 		JPanel panel = new JPanel();
 		panel.setLayout(new BoxLayout(panel, BoxLayout.PAGE_AXIS));// statistics window frame
 
-		MyMapModel model1 = new MyMapModel(map);
+		model1 = new MyMapModel(map);
 		JTable table = new JTable(model1);
 		JPanel upperMenu = new JPanel();
 		JPanel lowerMenu = new JPanel();
@@ -107,9 +106,10 @@ public class Statistics extends JDialog {
 		addSickBt.addActionListener(new ActionListener() {
 			@Override
 			public void actionPerformed(ActionEvent e) {
-				int row = table.convertRowIndexToModel(table.getSelectedRow());
+				int row = table.getSelectedRow();
 				if(row == -1)
-					row = 0;
+					return;
+				row = table.convertRowIndexToModel(row);
 				map.activateOnePercent(table.getValueAt(row, 0));
 				table.updateUI();
 			}
@@ -119,9 +119,9 @@ public class Statistics extends JDialog {
 		addVaccineBt.addActionListener(new ActionListener() {
 			@Override
 			public void actionPerformed(ActionEvent e) {
-				int row = table.convertRowIndexToModel(table.getSelectedRow());
+				int row = table.getSelectedRow();
 				if(row == -1)
-					row = 0;
+					return;
 				int num;
 				String result = (String) JOptionPane.showInputDialog(table, "Enter amount of vaccine doses",
 										"Vaccine", JOptionPane.PLAIN_MESSAGE, null, null, "0");
@@ -182,6 +182,15 @@ public class Statistics extends JDialog {
 		System.out.print("");
 		m_table.updateUI();
 	}
+
+	public void updateTableModel() {
+		int row = m_table.getSelectedRow();
+		model1.fireModelChanged();
+		if (row == -1)
+			return;
+		markLine(row);
+	}
+
 	/**
 	 * 
 	 * @param index - index to sort by
@@ -283,10 +292,15 @@ public class Statistics extends JDialog {
 			}
 			return -1;
 		}
+
+		public void fireModelChanged() {
+			fireTableDataChanged();
+		}
 	}
 	
 	private JTable m_table;// reference to our JTable
 	private JTextField tbFilterText;// regular expression text filtering
 	private TableRowSorter<MyMapModel> sorter;// sorter Object
-	public final JComboBox<String> m_combo;// contains filter options
+	private final JComboBox<String> m_combo;// contains filter options
+	private MyMapModel model1;// AbstractTableModel
 }

@@ -109,7 +109,7 @@ public class Menu extends JMenuBar {
 							map.loadInfo(path);
 							map.intialization();// second stage
 							myMapDraw.repaint();
-//							myMapDraw.updateStatWindow();
+							myMapDraw.updateStatWindow();
 							Main.setLoadFlag(true);
 						}
 					}
