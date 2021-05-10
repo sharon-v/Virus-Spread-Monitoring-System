@@ -179,6 +179,7 @@ public class Statistics extends JDialog {
 	 * update statistics table
 	 */
 	public void updatStatistics() {
+		System.out.print("");
 		m_table.updateUI();
 	}
 	/**

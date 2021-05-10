@@ -58,6 +58,7 @@ public class MapDrawing extends JPanel{
 	 * update statistics window
 	 */
 	public void updateStatWindow() {
+		System.out.print("");
 		st.updatStatistics();
 	}
 	
