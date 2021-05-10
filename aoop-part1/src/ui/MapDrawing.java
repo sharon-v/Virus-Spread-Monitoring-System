@@ -54,6 +54,13 @@ public class MapDrawing extends JPanel{
 		
 	}
 	
+	/**
+	 * update statistics window
+	 */
+	public void updateStatWindow() {
+		st.updatStatistics();
+	}
+	
 	@Override
 	public void paintComponent(Graphics g) {
 		super.paintComponent(g);

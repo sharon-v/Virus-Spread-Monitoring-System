@@ -1,5 +1,9 @@
 package simulation;
 
+
+
+import javax.swing.Timer;
+
 import country.Map;
 import ui.MainWindow;
 import ui.MapDrawing;
@@ -16,6 +20,7 @@ public class Main {
 		MainWindow theWindow = new MainWindow(map);
 		playSimu(map, theWindow.getMapDrawing());
 	}
+
 	
 	/**
 	 * 
@@ -24,11 +29,12 @@ public class Main {
 	 */
 	private static void playSimu(Map myMap, MapDrawing draw) {
 		while (true) {
+			draw.repaint();
+			draw.updateStatWindow();
 			System.out.print("");
 			if (playFlag == true && loadFlag == true) {
 				try {
 					System.out.println("ticks : " + Clock.now());
-					draw.repaint();
 					myMap.executeSimulation(); // third stage
 					Clock.nextTick();
 					Thread.sleep(sleepTime * 1000);
@@ -84,5 +90,6 @@ public class Main {
 	private static boolean playFlag = true; // flag to know if the simulation is play or pause
 	private static boolean loadFlag = false; // flag to know if file has been loaded or not
 	private static int sleepTime = 1; // the time between each simulation
+//	private final Timer timer ; //????
 
 }

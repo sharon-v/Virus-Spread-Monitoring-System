@@ -18,6 +18,7 @@ import javax.swing.JTable;
 import javax.swing.JTextField;
 import javax.swing.ListSelectionModel;
 import javax.swing.RowFilter;
+import javax.swing.SwingUtilities;
 import javax.swing.event.DocumentEvent;
 import javax.swing.event.DocumentListener;
 import javax.swing.table.AbstractTableModel;
@@ -94,7 +95,7 @@ public class Statistics extends JDialog {
 				// Create a file chooser
 				
 				FileDialog dialog = new FileDialog((JFrame)null, "Select File to Open");
-			    dialog.setMode(FileDialog.LOAD);
+			    dialog.setMode(FileDialog.SAVE);
 			    dialog.setVisible(true);
 				String path = dialog.getFile();
 				if(path != null)
@@ -106,7 +107,7 @@ public class Statistics extends JDialog {
 		addSickBt.addActionListener(new ActionListener() {
 			@Override
 			public void actionPerformed(ActionEvent e) {
-				int row = table.getSelectedRow();
+				int row = table.convertRowIndexToModel(table.getSelectedRow());
 				if(row == -1)
 					row = 0;
 				map.activateOnePercent(table.getValueAt(row, 0));
@@ -118,7 +119,7 @@ public class Statistics extends JDialog {
 		addVaccineBt.addActionListener(new ActionListener() {
 			@Override
 			public void actionPerformed(ActionEvent e) {
-				int row = table.getSelectedRow();
+				int row = table.convertRowIndexToModel(table.getSelectedRow());
 				if(row == -1)
 					row = 0;
 				int num;
@@ -126,8 +127,8 @@ public class Statistics extends JDialog {
 										"Vaccine", JOptionPane.PLAIN_MESSAGE, null, null, "0");
 				try {
 					num = Integer.parseInt(result);
-				} catch (NumberFormatException ex) {
-					ex.printStackTrace();
+				} catch (NumberFormatException ex) {	
+					System.out.println("Non integer input");
 					return;
 				}
 				map.addVaccines(table.getValueAt(row, 0), num);
@@ -175,10 +176,17 @@ public class Statistics extends JDialog {
 	}
 	
 	/**
+	 * update statistics table
+	 */
+	public void updatStatistics() {
+		m_table.updateUI();
+	}
+	/**
 	 * 
 	 * @param index - index to sort by
 	 */
 	public void markLine(int index) {
+		index = m_table.getRowSorter().convertRowIndexToModel(index);
 		m_table.addRowSelectionInterval(index, index); //can mark a selected line
 	}
 	
@@ -251,9 +259,6 @@ public class Statistics extends JDialog {
 
 		@Override
 		public void setValueAt(Object aValue, int row, int col) {
-//			Settlement settlement = data.at(row);
-//			if (col == 2)
-
 			fireTableCellUpdated(row, col);
 		}
 

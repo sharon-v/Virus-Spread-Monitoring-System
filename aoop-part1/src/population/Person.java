@@ -141,7 +141,7 @@ public abstract class Person {
 	 * @return a copy of the current Person's Settlement
 	 */
 	protected Settlement getSettelement() {
-		return m_settlement; // ???
+		return m_settlement; 
 	}
 	
 	/**
@@ -151,6 +151,20 @@ public abstract class Person {
 	 */
 	public void setSettlement(Settlement s) {
 		m_settlement = s;
+	}
+	
+	/**
+	 * remove person from settlement
+	 */
+	protected void removeFromSettl() {
+		m_settlement.removePerson(this);
+	}
+	
+	/**
+	 * add person to settlement
+	 */
+	protected void addToSettl() {
+		m_settlement.addPerson(this);
 	}
 	
 

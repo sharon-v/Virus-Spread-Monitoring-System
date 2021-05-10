@@ -12,3 +12,7 @@ Moshav; Bitzaron;150;70;14;15;8000
 Moshav;Hagor;280;20 ;30;20;9000
 #;Tel-Aviv; Beer-Sheva
 #;Tel-Aviv;Eilat
+#;Ashdod;Emonim
+#;Ashdod;Eilat
+#;Gevim;Beer-Sheva
+Moshav; Nir-Galim;450;80;14;15;1000

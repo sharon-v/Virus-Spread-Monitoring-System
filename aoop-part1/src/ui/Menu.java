@@ -96,7 +96,6 @@ public class Menu extends JMenuBar {
 
 				@Override
 				public void actionPerformed(ActionEvent e) {
-
 					if (Main.getLoadFlag() == false) {
 						Clock.reset();// reset current time to 0
 						// Create a file chooser
@@ -110,8 +109,8 @@ public class Menu extends JMenuBar {
 							map.loadInfo(path);
 							map.intialization();// second stage
 							myMapDraw.repaint();
+//							myMapDraw.updateStatWindow();
 							Main.setLoadFlag(true);
-
 						}
 					}
 				}

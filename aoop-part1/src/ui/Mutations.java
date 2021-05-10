@@ -3,6 +3,8 @@ package ui;
 import java.awt.Dimension;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
+import java.awt.event.WindowAdapter;
+import java.awt.event.WindowEvent;
 import java.util.ArrayList;
 
 import javax.swing.BoxLayout;
@@ -34,16 +36,13 @@ public class Mutations extends JDialog {
 		JTable table = new JTable(model);
 		JPanel panel = new JPanel();
 		panel.setLayout(new BoxLayout(panel, BoxLayout.PAGE_AXIS));
-		JButton saveBtn = new JButton("Save");
-		saveBtn.setAlignmentX(JButton.CENTER_ALIGNMENT);
 
 		/**
 		 * saves the marked CheckBoxes to it's corresponding Variant
 		 */
-		saveBtn.addActionListener(new ActionListener() {
-
+		this.addWindowListener(new WindowAdapter() {
 			@Override
-			public void actionPerformed(ActionEvent e) {
+			public void windowClosing(WindowEvent e) {
 				for (int i = 0; i < table.getRowCount(); ++i) {
 					ArrayList<String> variants = new ArrayList<>();
 					for (int j = 0; j < table.getColumnCount(); ++j) {
@@ -57,11 +56,11 @@ public class Mutations extends JDialog {
 						ChineseVariant.setPossibleVariants(variants);
 					else
 						SouthAfricanVariant.setPossibleVariants(variants);
-					setVisible(false);
+
 				}
 			}
-
 		});
+
 		panel.add(table);
 
 		// JTable view settings
@@ -69,7 +68,6 @@ public class Mutations extends JDialog {
 		table.setPreferredScrollableViewportSize(new Dimension(500, 50));
 		table.setFillsViewportHeight(true);
 		panel.add(new RowedTableScroll(table, model.getColNames()));
-		panel.add(saveBtn);
 
 		// add JPanel to JDialog
 		this.add(panel);

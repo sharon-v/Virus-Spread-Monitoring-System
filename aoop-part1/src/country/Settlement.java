@@ -238,13 +238,13 @@ public abstract class Settlement {
 	 * vaccinate the population
 	 */
 	public void vaccineTime() {
-		if (getVaccineDoses() > 0 && m_healthyPeople.length > 0) {
-			for (int i = 0; i < Math.min(getVaccineDoses(), m_healthyPeople.length); ++i) {
-				if (m_healthyPeople[i].healthCondition().equals("Healthy")) {
-					m_healthyPeople[i] = ((Healthy) m_healthyPeople[i]).vaccinate();
-					--m_vaccineDoses;
-				}
+		int index = 0 ;
+		while(getVaccineDoses() > 0 && index != m_healthyPeople.length) {
+			if (m_healthyPeople[index].healthCondition().equals("Healthy")) {
+				((Healthy) m_healthyPeople[index]).vaccinate();
+				--m_vaccineDoses;
 			}
+			++index;
 		}
 	}
 	
@@ -312,7 +312,7 @@ public abstract class Settlement {
 				virus = sickPerson.contagionVariants(virus.getVars());
 				if (virus.tryToContagion(sickPerson, m_healthyPeople[randomIndex])) {
 					m_healthyPeople[randomIndex].contagion(virus);
-					System.out.println("contagion");
+//					System.out.println("contagion");
 				}
 			}
 		}

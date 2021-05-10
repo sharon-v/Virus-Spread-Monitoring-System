@@ -51,6 +51,9 @@ public class Healthy extends Person{
 	 * @return vaccinated object of the current Person
 	 */
 	public Person vaccinate() {
-		return new Vaccinated(getAge(), getLocation(), getSettelement());
+		Vaccinated newVaccinated = new Vaccinated(getAge(), getLocation(), getSettelement());
+		removeFromSettl();
+		newVaccinated.addToSettl();
+		return newVaccinated;
 	}
 }
