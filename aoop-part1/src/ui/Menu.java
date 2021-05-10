@@ -10,6 +10,7 @@ import java.awt.event.ActionListener;
 
 import javax.swing.JComponent;
 import javax.swing.JDialog;
+import javax.swing.JFileChooser;
 import javax.swing.JFrame;
 import javax.swing.JLabel;
 import javax.swing.JMenu;
@@ -32,6 +33,7 @@ import javax.swing.text.StyleContext;
 import javax.swing.text.StyledDocument;
 
 import country.Map;
+import io.StatisticsFile;
 import simulation.Clock;
 import simulation.Main;
 
@@ -82,11 +84,13 @@ public class Menu extends JMenuBar {
 			JMenuItem load = new JMenuItem("Load");
 			JMenuItem stats = new JMenuItem("Statistics");
 			JMenuItem edit = new JMenuItem("Edit Mutations");
+			JMenuItem log = new JMenuItem("Log File");
 			JMenuItem exit = new JMenuItem("Exit");
 			// add to file
 			this.add(load);
 			this.add(stats);
 			this.add(edit);
+			this.add(log);
 			this.add(exit);
 
 			/**
@@ -136,6 +140,28 @@ public class Menu extends JMenuBar {
 					mutation.showDialog();
 				}
 			});
+
+			/**
+			 * log file menu option actions
+			 */
+			log.addActionListener(new ActionListener() {
+
+				@Override
+				public void actionPerformed(ActionEvent e) {
+					// Create a file chooser
+					final JFileChooser fc = new JFileChooser();
+					// In response to a button click:
+					int returnVal = fc.showOpenDialog(log);
+					fc.setDialogTitle("Select File to Open");
+					if (returnVal == JFileChooser.APPROVE_OPTION) {
+						String path = fc.getSelectedFile().getAbsolutePath() + ".log";
+						
+						//what to do???????
+					}
+				}
+
+			});
+
 
 			/**
 			 * exit menue option, closes the program

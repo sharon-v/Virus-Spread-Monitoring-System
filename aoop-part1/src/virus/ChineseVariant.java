@@ -92,7 +92,7 @@ public class ChineseVariant implements IVirus {
 
 
 	// attributes
-	private static final double deathProbTo18 = 0.0001;// death probability up to 18
+	private static final double deathProbTo18 = 0.001;// death probability up to 18
 	private static final double deathProb18To55 = 0.05;// death probability 18 to 55
 	private static final double deathProb55Above = 0.1;// death probability above 55
 	private static final double contagionProbTo18 = 0.2;// contagion probability up to 18

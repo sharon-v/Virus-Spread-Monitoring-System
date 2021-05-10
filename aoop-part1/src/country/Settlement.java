@@ -173,6 +173,18 @@ public abstract class Settlement {
 		}
 		return false;
 	}
+	
+	/**
+	 * run over the sick people and try to kill them
+	 */
+	public void attemptedMurder() {
+		for(int i = 0; i<m_sickPeople.length;++i) {
+			if(m_sickPeople[i].getVirusFromPerson().tryToKill(m_sickPeople[i])) {
+				removePerson(m_sickPeople[i]);
+				++m_numOfDeceased;
+			}			
+		}
+	}
 
 	/**
 	 * calls toSting method for all Persons in Settlement

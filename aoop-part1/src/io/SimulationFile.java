@@ -38,6 +38,7 @@ public class SimulationFile {
 	public String[] readFromFile(Map map, String filePath) throws Exception {
 		FileReader fr = null;
 		BufferedReader br = null;
+		map.resetMap();
 		try {
 			fr = new FileReader(filePath);// need to receive path
 			br = new BufferedReader(fr);
