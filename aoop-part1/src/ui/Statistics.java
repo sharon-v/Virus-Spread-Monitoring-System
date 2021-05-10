@@ -1,7 +1,6 @@
 package ui;
 
 import java.awt.Dimension;
-import java.awt.FileDialog;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 
@@ -9,6 +8,7 @@ import javax.swing.BoxLayout;
 import javax.swing.JButton;
 import javax.swing.JComboBox;
 import javax.swing.JDialog;
+import javax.swing.JFileChooser;
 import javax.swing.JFrame;
 import javax.swing.JLabel;
 import javax.swing.JOptionPane;
@@ -92,13 +92,15 @@ public class Statistics extends JDialog {
 			@Override
 			public void actionPerformed(ActionEvent e) {
 				// Create a file chooser
-				
-				FileDialog dialog = new FileDialog((JFrame)null, "Select File to Open");
-			    dialog.setMode(FileDialog.SAVE);
-			    dialog.setVisible(true);
-				String path = dialog.getFile();
-				if(path != null)
+				final JFileChooser fc = new JFileChooser();
+				// In response to a button click:
+				int returnVal = fc.showOpenDialog(saveBt);
+				fc.setDialogTitle("Select File to Open");
+				if (returnVal == JFileChooser.APPROVE_OPTION) {
+					String path = fc.getSelectedFile().getAbsolutePath();
+					// This is where a real application would open the file.
 					StatisticsFile.exportToCSV(table, path);
+				}
 			}
 		});
 
