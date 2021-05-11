@@ -33,7 +33,6 @@ import javax.swing.text.StyleContext;
 import javax.swing.text.StyledDocument;
 
 import country.Map;
-import io.StatisticsFile;
 import simulation.Clock;
 import simulation.Main;
 
@@ -104,6 +103,7 @@ public class Menu extends JMenuBar {
 						Clock.reset();// reset current time to 0
 						// Create a file chooser
 						final JFileChooser fc = new JFileChooser();
+						// opens in current directory
 						File workingDirectory = new File(System.getProperty("user.dir"));
 						fc.setCurrentDirectory(workingDirectory);
 						// In response to a button click:
