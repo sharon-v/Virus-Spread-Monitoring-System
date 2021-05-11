@@ -277,7 +277,7 @@ public abstract class Settlement {
 			else
 				virus = new SouthAfricanVariant();
 			try {
-				m_healthyPeople[randomIndex] = m_healthyPeople[randomIndex].contagion(virus);
+				m_healthyPeople[randomIndex].contagion(virus);
 			} catch (Exception e) {
 				System.out.println(e);
 			}
@@ -293,8 +293,8 @@ public abstract class Settlement {
 			return null;
 		Random ran = new Random();
 		return m_connectedSettlements[ran.nextInt(m_connectedSettlements.length)];
-
 	}
+	
 	/**
 	 * one simulation operation
 	 */
@@ -324,7 +324,6 @@ public abstract class Settlement {
 				virus = sickPerson.contagionVariants(virus.getVars());
 				if (virus.tryToContagion(sickPerson, m_healthyPeople[randomIndex])) {
 					m_healthyPeople[randomIndex].contagion(virus);
-//					System.out.println("contagion");
 				}
 			}
 		}
