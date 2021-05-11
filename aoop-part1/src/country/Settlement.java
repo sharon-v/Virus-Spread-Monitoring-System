@@ -173,6 +173,18 @@ public abstract class Settlement {
 		}
 		return false;
 	}
+	
+	/**
+	 * run over the sick people and try to kill them
+	 */
+	public void attemptedMurder() {
+		for(int i = 0; i<m_sickPeople.length;++i) {
+			if(m_sickPeople[i].getVirusFromPerson().tryToKill(m_sickPeople[i])) {
+				removePerson(m_sickPeople[i]);
+				++m_numOfDeceased;
+			}			
+		}
+	}
 
 	/**
 	 * calls toSting method for all Persons in Settlement
@@ -265,7 +277,7 @@ public abstract class Settlement {
 			else
 				virus = new SouthAfricanVariant();
 			try {
-				m_healthyPeople[randomIndex] = m_healthyPeople[randomIndex].contagion(virus);
+				m_healthyPeople[randomIndex].contagion(virus);
 			} catch (Exception e) {
 				System.out.println(e);
 			}
@@ -281,8 +293,8 @@ public abstract class Settlement {
 			return null;
 		Random ran = new Random();
 		return m_connectedSettlements[ran.nextInt(m_connectedSettlements.length)];
-
 	}
+	
 	/**
 	 * one simulation operation
 	 */
@@ -312,7 +324,6 @@ public abstract class Settlement {
 				virus = sickPerson.contagionVariants(virus.getVars());
 				if (virus.tryToContagion(sickPerson, m_healthyPeople[randomIndex])) {
 					m_healthyPeople[randomIndex].contagion(virus);
-//					System.out.println("contagion");
 				}
 			}
 		}

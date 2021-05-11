@@ -16,9 +16,16 @@ public class Map {
 	 * constructor
 	 */
 	public Map() {
+		resetMap();
+	}
+	
+	/**
+	 * reset the map - delete the old map
+	 */
+	public void resetMap() {
 		m_settlement = new Settlement[0];
 	}
-
+	
 	@Override
 	public String toString() {
 		return "amount of settlements: " + m_settlement.length + "\n" + toStringSettlements();
@@ -72,6 +79,16 @@ public class Map {
 		massRecovery();
 		tryToTransfer();
 		massVaccination();
+		massMurder();
+	}
+	
+	/**
+	 * Run over the settlements and try to kill 
+	 */
+	public void massMurder(){
+		for (int i = 0; i < m_settlement.length; ++i) {
+			m_settlement[i].attemptedMurder();
+		}
 	}
 	
 	/**
@@ -259,6 +276,7 @@ public class Map {
 		}
 		return false;
 	}
+	
 	
 	/**
 	 * 

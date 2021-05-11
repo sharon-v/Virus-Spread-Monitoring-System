@@ -29,11 +29,11 @@ public class Kibbutz extends Settlement {
 	/**
 	 * Return the new Color of the settlement
 	 */
-	protected RamzorColor calculateRamzorGrade() {
+	protected RamzorColor calculateRamzorGrade() { 
 		double p = contagiousPercent();
-		double c = getRamzorColor().getValue(); // ???
+		double c = getRamzorColor().getValue(); 
 		double res = 0.45 + Math.pow(Math.pow(1.5, c) * (p - 0.4), 3);
-		return getRamzorColor().doubleToRamzorColor(res); // ???
+		return getRamzorColor().doubleToRamzorColor(res); 
 	}
 }
 
