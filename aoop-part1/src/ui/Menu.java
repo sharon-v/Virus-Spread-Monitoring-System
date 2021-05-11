@@ -2,14 +2,15 @@ package ui;
 
 
 import java.awt.BorderLayout;
-import java.awt.FileDialog;
 import java.awt.FlowLayout;
 import java.awt.GridLayout;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
+import java.io.File;
 
 import javax.swing.JComponent;
 import javax.swing.JDialog;
+import javax.swing.JFileChooser;
 import javax.swing.JFrame;
 import javax.swing.JLabel;
 import javax.swing.JMenu;
@@ -56,7 +57,7 @@ public class Menu extends JMenuBar {
 		this.map = map;
 		myMapDraw = draw;
 
-		m_file = new File();
+		m_file = new MFile();
 		m_simulation = new Simulation();
 		m_help = new Help();
 
@@ -72,12 +73,12 @@ public class Menu extends JMenuBar {
 	 * inner Class for handling work with the File
 	 *
 	 */
-	private class File extends JMenu {
+	private class MFile extends JMenu {
 
 		/**
 		 * constructor
 		 */
-		public File() {
+		public MFile() {
 			super("File");// call parent constructor
 			JMenuItem load = new JMenuItem("Load");
 			JMenuItem stats = new JMenuItem("Statistics");
@@ -99,12 +100,17 @@ public class Menu extends JMenuBar {
 					if (Main.getLoadFlag() == false) {
 						Clock.reset();// reset current time to 0
 						// Create a file chooser
-						FileDialog dialog = new FileDialog((JFrame) null, "Select File to Open");
-						dialog.setMode(FileDialog.LOAD);
-						dialog.setVisible(true);
-						dialog.setLocationRelativeTo(null);
+						final JFileChooser fc = new JFileChooser();
+						File workingDirectory = new File(System.getProperty("user.dir"));
+						fc.setCurrentDirectory(workingDirectory);
+						// In response to a button click:
+						int returnVal = fc.showOpenDialog(load);
+						fc.setDialogTitle("Select File to Open");
+						String path = null;
+						if (returnVal == JFileChooser.APPROVE_OPTION) {
+							path = fc.getSelectedFile().getAbsolutePath();
+						}
 
-						String path = dialog.getFile();
 						if (path != null) {
 							map.loadInfo(path);
 							map.intialization();// second stage
@@ -360,7 +366,7 @@ public class Menu extends JMenuBar {
 	}
 
 	// fields
-	private final File m_file;// file menu
+	private final MFile m_file;// file menu
 	private final Simulation m_simulation;// simulation menu
 	private final Help m_help;// help menu
 	private MapDrawing myMapDraw;// map drawing panel
