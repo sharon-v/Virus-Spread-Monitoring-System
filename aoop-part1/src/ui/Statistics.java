@@ -98,7 +98,6 @@ public class Statistics extends JDialog {
 				fc.setDialogTitle("Select File to Open");
 				if (returnVal == JFileChooser.APPROVE_OPTION) {
 					String path = fc.getSelectedFile().getAbsolutePath();
-					// This is where a real application would open the file.
 					StatisticsFile.exportToCSV(table, path);
 				}
 			}

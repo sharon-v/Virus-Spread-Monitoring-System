@@ -1,13 +1,18 @@
 package country;
 
+import java.time.LocalDateTime;
+import java.time.format.DateTimeFormatter;
 import java.util.Random;
+import java.util.Vector;
 
+import io.LogFile;
 import location.Location;
 import location.Point;
 import population.Healthy;
 import population.Person;
 import population.Sick;
 import simulation.Clock;
+import simulation.Main;
 import virus.BritishVariant;
 import virus.ChineseVariant;
 import virus.IVirus;
@@ -182,6 +187,8 @@ public abstract class Settlement {
 			if(m_sickPeople[i].getVirusFromPerson().tryToKill(m_sickPeople[i])) {
 				removePerson(m_sickPeople[i]);
 				++m_numOfDeceased;
+				if (isDeceasedOnePercent())
+					saveToLogFile();
 			}			
 		}
 	}
@@ -279,7 +286,7 @@ public abstract class Settlement {
 			try {
 				m_healthyPeople[randomIndex].contagion(virus);
 			} catch (Exception e) {
-				System.out.println(e);
+				e.printStackTrace();
 			}
 		}
 	}
@@ -473,6 +480,63 @@ public abstract class Settlement {
 		return new Location(m_location);
 	}
 
+	/**
+	 * 
+	 * @return percent of deceased in Settlement
+	 */
+	private double deceasedPercent() {
+		return m_numOfDeceased / (double) getNumOfPeople();
+	}
+
+	/**
+	 * 
+	 * @return true if deceased percent is 1% from the Population
+	 */
+	private boolean isDeceasedOnePercent() {
+		if (deceasedPercent() == 0.01)
+			return true;
+		return false;
+	}
+
+	/**
+	 * 
+	 * @return String of all log information
+	 */
+	private String getLogInfo() {
+		DateTimeFormatter dtf = DateTimeFormatter.ofPattern("dd/MM/yyyy HH:mm:ss");
+		String info = LocalDateTime.now().format(dtf) + "\n" + getSettlementName() + "\n" + m_sickPeople.length + "\n"
+				+ m_numOfDeceased + "\n";
+		return info;
+	}
+
+	/**
+	 * writes logInfo to file or to Vector
+	 */
+	private void saveToLogFile() {
+		if (Main.getLogFlag()) {
+			// call write string to logFile
+			LogFile.exportToLog(getLogInfo(), m_logPath);
+		}
+		// write to logInfo Vector
+		logInfo.add(getLogInfo());
+	}
+
+	/**
+	 * prints for the first time everything in logInfo to logFile
+	 * 
+	 * @param path - path to write to
+	 */
+	public static void initialLogEntry(String path) {
+		if (logInfo.size() != 0) {
+			for (int i = 0; i < logInfo.size(); ++i) {
+				// call write string to logFile
+				LogFile.exportToLog(logInfo.get(i), path);
+			}
+			logInfo.clear();// clear all previous log info
+			m_logPath = path;
+		}
+	}
+
 	private static final int m_recoveryTime = 25; //the number of days that after this the sick person recovery
 	private final String m_name;// Settlement's name
 	private final Location m_location;// Settlement's Location
@@ -483,4 +547,6 @@ public abstract class Settlement {
 	private Settlement[] m_connectedSettlements;// all the connections to current settlement
 	private Sick[] m_sickPeople;// Settlement's sick residents
 	private int m_numOfDeceased;// counts deaths in Settlement
+	private static final Vector<String> logInfo = new Vector<String>();// holds all log file info
+	private static String m_logPath;// logFile path
 }

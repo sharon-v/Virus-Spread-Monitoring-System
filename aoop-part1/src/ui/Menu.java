@@ -33,6 +33,7 @@ import javax.swing.text.StyleContext;
 import javax.swing.text.StyledDocument;
 
 import country.Map;
+import country.Settlement;
 import simulation.Clock;
 import simulation.Main;
 
@@ -131,6 +132,11 @@ public class Menu extends JMenuBar {
 
 				@Override
 				public void actionPerformed(ActionEvent e) {
+					if (Main.getLoadFlag() == false) {
+						JOptionPane.showMessageDialog(stat, "No file has been loaded", "Inane warning",
+								JOptionPane.WARNING_MESSAGE);
+						return;
+					}
 					stat.showDialog();
 				}
 			});
@@ -154,22 +160,27 @@ public class Menu extends JMenuBar {
 				@Override
 				public void actionPerformed(ActionEvent e) {
 					// Create a file chooser
-					final JFileChooser fc = new JFileChooser();
-					// In response to a button click:
-					int returnVal = fc.showOpenDialog(log);
-					fc.setDialogTitle("Select File to Open");
-					if (returnVal == JFileChooser.APPROVE_OPTION) {
-						String path = fc.getSelectedFile().getAbsolutePath() + ".log";
-						
-						//what to do???????
+					if (!Main.getLogFlag()) {
+						final JFileChooser fc = new JFileChooser();
+						// In response to a button click:
+						int returnVal = fc.showOpenDialog(log);
+						fc.setDialogTitle("Select File to Open");
+						if (returnVal == JFileChooser.APPROVE_OPTION) {
+							String path = fc.getSelectedFile().getAbsolutePath() + ".log";
+							Settlement.initialLogEntry(path);
+							Main.setLogFlag(true);
+						}
 					}
-				}
+					else
+						JOptionPane.showMessageDialog(log, "Log File Already Exists", "Inane warning",
+								JOptionPane.WARNING_MESSAGE);
 
+				}
 			});
 
 
 			/**
-			 * exit menue option, closes the program
+			 * exit menu option, closes the program
 			 */
 			exit.addActionListener(new ActionListener() {
 				public void actionPerformed(ActionEvent e) {

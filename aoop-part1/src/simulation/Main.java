@@ -84,10 +84,27 @@ public class Main {
 		sleepTime = val;
 	}
 
+	/**
+	 * get method
+	 * 
+	 * @return logFlag boolean value
+	 */
+	public static boolean getLogFlag() {
+		return logFlag;
+	}
+
+	/**
+	 * set method
+	 * 
+	 * @param val - new logFlag value
+	 */
+	public static void setLogFlag(boolean val) {
+		logFlag = val;
+	}
 
 	private static boolean playFlag = true; // flag to know if the simulation is play or pause
 	private static boolean loadFlag = false; // flag to know if file has been loaded or not
-	private static int sleepTime = 1; // the time between each simulation
-//	private final Timer timer ; //????
+	private static boolean logFlag = false;// flag to indicate if a logFile location was selected
+	private static int sleepTime = 1; // the time between each simulation// private final Timer timer ; //????
 
 }
