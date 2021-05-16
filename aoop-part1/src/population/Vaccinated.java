@@ -13,9 +13,10 @@ public class Vaccinated extends Person {
 	
 	/**
 	 * Constructor
-	 * @param age - age input 
-	 * @param location - location input
-	 * @param settlement - settlement input
+	 * 
+	 * @param age             - age input
+	 * @param location        - location input
+	 * @param settlement      - settlement input
 	 * @param vaccinationTime - vaccination time input
 	 */
 	public Vaccinated(int age, Point location, Settlement settlement) {
@@ -24,7 +25,8 @@ public class Vaccinated extends Person {
 	}
 	
 	/**
-	 * Copy constractor
+	 * Copy constructor
+	 * 
 	 * @param v - Vaccinated object
 	 */
 	public Vaccinated(Vaccinated v) {

@@ -26,7 +26,8 @@ public class Sick extends Person {
 	}
 	
 	/**
-	 * Copy constractor
+	 * Copy constructor
+	 * 
 	 * @param s - Sick object
 	 */
 	public Sick(Sick s) {

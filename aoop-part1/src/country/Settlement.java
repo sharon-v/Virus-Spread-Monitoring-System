@@ -44,8 +44,11 @@ public abstract class Settlement {
 
 	@Override
 	public String toString() {
+		// sync //
+		String s1 = getNumOfPeople() + "\nnum of sick: " + m_sickPeople.length + toStringPeople();
+		// sync //
 		return "settlement name: " + m_name + "\nlocation: " + m_location + "\ncolor grade: " + m_ramzorColor
-				+ "\nnum of people: " + getNumOfPeople() + "\nnum of sick: " + m_sickPeople.length + toStringPeople();
+				+ "\nnum of people: " + s1;
 	}
 
 	@Override
@@ -70,7 +73,7 @@ public abstract class Settlement {
 		if (getNumOfPeople() == 0)
 			return 0;
 		return (m_sickPeople.length / (double) getNumOfPeople());
-	}
+	}// sync this method //
 
 	/**
 	 * chooses randomly a Point in Settlement
@@ -83,8 +86,6 @@ public abstract class Settlement {
 		yMin = m_location.getPoint().getY();
 		xMax = xMin + m_location.getSize().getWidth();
 		yMax = yMin + m_location.getSize().getHeith();
-//		int randX = xMin + (int)(Math.random() * ((xMax - xMin) + 1));
-//		int randY = yMin + (int)(Math.random() * ((yMax - yMin) + 1));
 		int randX = ran.nextInt(xMax - xMin +1) + xMin;
 		int randY = ran.nextInt(yMax - yMin +1) + yMin;
 		return new Point(randX, randY);
@@ -118,7 +119,7 @@ public abstract class Settlement {
 		p.setSettlement(this); // change Settlement
 		setRamzorColor(calculateRamzorGrade());
 		return true;
-	}
+	}// sync this method //
 
 	/**
 	 * removes a dead Person from Settlement
@@ -154,7 +155,7 @@ public abstract class Settlement {
 		}
 		setRamzorColor(calculateRamzorGrade());
 		return true;
-	}
+	}// sync this method //
 
 	/**
 	 * checks if a certain Person is in Settlement
@@ -177,7 +178,7 @@ public abstract class Settlement {
 			}
 		}
 		return false;
-	}
+	}// sync this method //
 	
 	/**
 	 * run over the sick people and try to kill them
@@ -191,7 +192,7 @@ public abstract class Settlement {
 					saveToLogFile();
 			}			
 		}
-	}
+	}// sync this method //
 
 	/**
 	 * calls toSting method for all Persons in Settlement
@@ -199,10 +200,12 @@ public abstract class Settlement {
 	 */
 	private String toStringPeople() {
 		String str = "\n-- residents -- \n";
+		// sync //
 		for (int i = 0; i < m_healthyPeople.length; ++i)
 			str += m_healthyPeople[i].toString() + "\n";
 		for (int i = 0; i < m_sickPeople.length; ++i)
 			str += m_sickPeople[i].toString() + "\n";
+		// sync //
 		return str;
 	}
 
@@ -226,7 +229,7 @@ public abstract class Settlement {
 			return true; // for this part of the project
 		}
 		return false;
-	}
+	}// sync class with hashTable, deadlock //
 
 	/**
 	 * tries to transfer random 3% of the Settlement to a random Settlement
@@ -249,8 +252,9 @@ public abstract class Settlement {
 		for (int i = 0; i < threePercent; ++i) {
 			random = ran.nextInt(size);
 			transferPerson(temp[random], randomSettlement);
+
 		}
-	}
+	}// sync this method//
 	
 	
 	/**
@@ -258,6 +262,7 @@ public abstract class Settlement {
 	 */
 	public void vaccineTime() {
 		int index = 0 ;
+		// sync //
 		while(getVaccineDoses() > 0 && index != m_healthyPeople.length) {
 			if (m_healthyPeople[index].healthCondition().equals("Healthy")) {
 				((Healthy) m_healthyPeople[index]).vaccinate();
@@ -265,6 +270,7 @@ public abstract class Settlement {
 			}
 			++index;
 		}
+		// sync //
 	}
 	
 	/**
@@ -289,28 +295,32 @@ public abstract class Settlement {
 				e.printStackTrace();
 			}
 		}
-	}
+	} // sync this method//
 
 	/**
 	 * 
 	 * @return a random Settlement from the Connections array
 	 */
 	public Settlement randomConnection() {
+		Random ran = new Random();
+		// sync //
 		if (m_connectedSettlements.length == 0)
 			return null;
-		Random ran = new Random();
 		return m_connectedSettlements[ran.nextInt(m_connectedSettlements.length)];
+		// sync //
 	}
 	
 	/**
 	 * one simulation operation
 	 */
 	public void simulation() {
-		int tempIndex = (int) (m_sickPeople.length * 0.2);
 		Random ran = new Random();
+		// sync //
+		int tempIndex = (int) (m_sickPeople.length * 0.2);
 		for (int j = 0; j < tempIndex; ++j) {// run over the population of each settlement
 			randomContagion(m_sickPeople[ran.nextInt(tempIndex)]);
 		}
+		// sync //
 	}
 
 	/**
@@ -321,10 +331,11 @@ public abstract class Settlement {
 	 */
 	public void randomContagion(Person sickPerson) {
 		IVirus virus = null;
+		Random ran = new Random();
+		// sync //
 		for (int i = 0; i < 3; ++i) {
 			if (m_healthyPeople.length == 0)
 				return;
-			Random ran = new Random();
 			int randomIndex = ran.nextInt(m_healthyPeople.length);
 			virus = sickPerson.getVirusFromPerson();
 			if (virus.getVars().size() != 0) {
@@ -334,6 +345,7 @@ public abstract class Settlement {
 				}
 			}
 		}
+		// sync //
 	}
 
 	/**
@@ -341,8 +353,8 @@ public abstract class Settlement {
 	 * @return point of the middel of the settlements
 	 */
 	public Point middelOfSettlement() {
-		int x = (int)(m_location.getPoint().getX() + (m_location.getSize().getWidth()/ 2)) ;
-		int y = (int)(m_location.getPoint().getY() + (m_location.getSize().getHeith()/2)); 
+		int x = (int) (m_location.getPoint().getX() + (m_location.getSize().getWidth() / 2));
+		int y = (int) (m_location.getPoint().getY() + (m_location.getSize().getHeith() / 2));
 		return new Point(x, y);
 	}
 
@@ -358,7 +370,7 @@ public abstract class Settlement {
 		}
 		temp[m_connectedSettlements.length] = s;
 		m_connectedSettlements = temp;
-	}
+	} // sync this method//
 
 	/**
 	 *  if past 25 days since the sick person got infected - recovery him
@@ -368,9 +380,8 @@ public abstract class Settlement {
 			if (Clock.calculateDays(m_sickPeople[i].getContagiousTime()) > m_recoveryTime) {
 				m_sickPeople[i].recover();
 			}
-
 		}
-	}
+	} // sync //
 
 	/**
 	 * 
@@ -378,10 +389,12 @@ public abstract class Settlement {
 	 */
 	public Point[] conectionsPoints() {
 		Point[] settlPoints = new Point[0];
-		for(int i=0 ; i< m_connectedSettlements.length; ++i) {
+		// sync //
+		for (int i = 0; i < m_connectedSettlements.length; ++i) {
 			Point middel = m_connectedSettlements[i].middelOfSettlement();
 			settlPoints = addToConectionsPoints(settlPoints, middel);
 		}
+		// sync //
 		return settlPoints;
 	}
 
@@ -424,7 +437,7 @@ public abstract class Settlement {
 	 */
 	public int getNumOfPeople() {
 		return m_sickPeople.length + m_healthyPeople.length;
-	}
+	} // sync this method //
 
 	/**
 	 * set method
@@ -486,7 +499,7 @@ public abstract class Settlement {
 	 */
 	private double deceasedPercent() {
 		return m_numOfDeceased / (double) getNumOfPeople();
-	}
+	} // sync this method//
 
 	/**
 	 * 
@@ -504,7 +517,10 @@ public abstract class Settlement {
 	 */
 	private String getLogInfo() {
 		DateTimeFormatter dtf = DateTimeFormatter.ofPattern("dd/MM/yyyy HH:mm:ss");
-		String info = LocalDateTime.now().format(dtf) + "\n" + getSettlementName() + "\n" + m_sickPeople.length + "\n"
+		// sync //
+		String s1 = "\n" + m_sickPeople.length;
+		// sync //
+		String info = LocalDateTime.now().format(dtf) + "\n" + getSettlementName() + s1 + "\n"
 				+ m_numOfDeceased + "\n";
 		return info;
 	}
@@ -535,7 +551,7 @@ public abstract class Settlement {
 			logInfo.clear();// clear all previous log info
 			m_logPath = path;
 		}
-	}
+	}// sync class //
 
 	private static final int m_recoveryTime = 25; //the number of days that after this the sick person recovery
 	private final String m_name;// Settlement's name

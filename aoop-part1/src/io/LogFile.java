@@ -14,22 +14,6 @@ public class LogFile {
 	 * @return true if the writing succeeded
 	 */
 	public static boolean exportToLog(String infoToExport, String path) {
-//		Logger logger = Logger.getLogger("DeceasedLogDocumentation");
-//		FileHandler fh = null;
-//		try {
-//			fh = new FileHandler(path + ".log");
-//			logger.addHandler(fh);
-//			logger.info(infoToExport);
-//		} catch (SecurityException e) {
-//			e.printStackTrace();
-//			return false;
-//		} catch (IOException e) {
-//			e.printStackTrace();
-//			return false;
-//		} finally {
-//			fh.close();
-//		}
-//		return true;
 
 		// create a new file with specified file name
 		FileWriter logfw = null;
@@ -47,7 +31,6 @@ public class LogFile {
 			return false;
 		}
 		finally {
-			// don't forget to close the stream
 			try {
 				bw.close();
 			} catch (IOException e) {
@@ -56,4 +39,4 @@ public class LogFile {
 		}
 		return true;
 	}
-}
+}// sync class //

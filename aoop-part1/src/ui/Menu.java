@@ -48,7 +48,7 @@ public class Menu extends JMenuBar {
 	 * constructor
 	 * 
 	 * @param st   - Statistics window
-	 * @param draw - MapDrawing windoe
+	 * @param draw - MapDrawing window
 	 * @param map  - Map Object
 	 */
 	public Menu(Statistics st, MapDrawing draw, Map map) {
@@ -159,6 +159,11 @@ public class Menu extends JMenuBar {
 
 				@Override
 				public void actionPerformed(ActionEvent e) {
+					if (!Main.getLoadFlag()) {
+						JOptionPane.showMessageDialog(load, "No file has been loaded", "Inane warning",
+								JOptionPane.WARNING_MESSAGE);
+						return;
+					}
 					// Create a file chooser
 					if (!Main.getLogFlag()) {
 						final JFileChooser fc = new JFileChooser();

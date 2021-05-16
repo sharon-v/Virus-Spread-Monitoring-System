@@ -60,10 +60,6 @@ public class MapDrawing extends JPanel{
 	public void updateStatWindow() {
 		st.updateTableModel();
 	}
-//	public void updateStatWindow() {
-//		System.out.print("");
-//		st.updatStatistics();
-//	}
 	
 	@Override
 	public void paintComponent(Graphics g) {
