@@ -38,15 +38,13 @@ public class StatisticsFile {
 				for (int col = 0; col < tableToExport.getColumnCount(); ++col) {
 					csv.write(tableToExport.getModel().getValueAt(tableToExport.convertRowIndexToModel(row),
 							tableToExport.convertColumnIndexToModel(col)) + ",");
-
 				}
 				csv.write("\n");
 			}
-			csv.close();
 			return true;
 		} catch (IOException e) {
 			e.printStackTrace();
-
+		} finally {
 			try {
 				csv.close();
 			} catch (IOException ex) {
@@ -55,5 +53,4 @@ public class StatisticsFile {
 		}
 		return false;
 	}
-
 }

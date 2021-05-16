@@ -166,7 +166,7 @@ public class Menu extends JMenuBar {
 						int returnVal = fc.showOpenDialog(log);
 						fc.setDialogTitle("Select File to Open");
 						if (returnVal == JFileChooser.APPROVE_OPTION) {
-							String path = fc.getSelectedFile().getAbsolutePath() + ".log";
+							String path = fc.getSelectedFile().getAbsolutePath();
 							Settlement.initialLogEntry(path);
 							Main.setLogFlag(true);
 						}
