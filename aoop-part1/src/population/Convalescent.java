@@ -25,7 +25,8 @@ public class Convalescent extends Person {
 	}
 	
 	/**
-	 * Copy constractor
+	 * Copy constructor
+	 * 
 	 * @param c - Convalescent Object
 	 */
 	public Convalescent(Convalescent c) {

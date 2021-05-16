@@ -37,7 +37,7 @@ public class Healthy extends Person{
 		if(!(o instanceof Healthy))
 			return false;
 		Healthy h = (Healthy) o;
-		return super.equals(h); //????
+		return super.equals(h);
 	}
 	
 	@Override
