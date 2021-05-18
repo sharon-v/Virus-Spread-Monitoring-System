@@ -42,6 +42,7 @@ import javax.swing.text.Style;
 import javax.swing.text.StyleConstants;
 import javax.swing.text.StyleContext;
 import javax.swing.text.StyledDocument;
+
 import country.Map;
 import location.Location;
 import location.Point;
@@ -225,6 +226,8 @@ public class MainWindow extends JFrame {
 								map.setCyclic(temp);
 								map.createThreads();
 								map.intialization();// second stage
+								drawMap.repaint();
+								drawMap.updateStatWindow();
 								map.setLoadFlag(true);
 							}
 						}
