@@ -4,7 +4,6 @@ package simulation;
 
 import country.Map;
 import ui.MainWindow;
-import ui.MapDrawing;
 
 /**
  * 
@@ -16,7 +15,7 @@ public class Main {
 	public static void main(String[] args) {
 		Map map = new Map();// Map instance
 		MainWindow theWindow = new MainWindow(map);
-		playSimu(map, theWindow.getMapDrawing());
+		playSimu(map, theWindow);
 	}
 
 	
@@ -25,9 +24,10 @@ public class Main {
 	 * @param myMap - Map object 
 	 * @param draw - MapDrawing object
 	 */
-	private static void playSimu(Map myMap, MapDrawing draw) {
+	private static void playSimu(Map myMap, MainWindow a) {
 		while (true) {
-			draw.repaint();
+//			draw.repaint();
+			a.paint();
 			System.out.print("");
 			if (playFlag == true && loadFlag == true) {
 				try {
@@ -39,7 +39,7 @@ public class Main {
 					System.out.println("an unexpected ERROR has occurred :(");
 					ex.printStackTrace();
 				}
-				draw.updateStatWindow();
+				a.blala();
 			}
 		}
 	}

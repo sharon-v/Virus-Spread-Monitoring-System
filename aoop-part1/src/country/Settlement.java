@@ -555,7 +555,7 @@ public abstract class Settlement {
 		}
 	}// sync class //
 
-	private static final int m_recoveryTime = 25; //the number of days that after this the sick person recovery
+	private final int m_recoveryTime = 25; //the number of days that after this the sick person recovery
 	private final String m_name;// Settlement's name
 	private final Location m_location;// Settlement's Location
 	private Person[] m_healthyPeople;// Settlement's healthy residents
