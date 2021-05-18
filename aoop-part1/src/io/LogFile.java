@@ -1,7 +1,6 @@
 package io;
 
 import java.io.BufferedWriter;
-import java.io.File;
 import java.io.FileWriter;
 import java.io.IOException;
 
@@ -22,10 +21,10 @@ public class LogFile {
 		BufferedWriter bw = null;
 
 		try {
-			logfw = new FileWriter(new File(path + ".log"));
+			logfw = new FileWriter(path + ".log", true);
 			bw = new BufferedWriter(logfw);
 			// write a string into the IO stream
-			bw.write(infoToExport);
+			bw.append(infoToExport);
 		} catch (IOException e) {
 			e.printStackTrace();
 			return false;

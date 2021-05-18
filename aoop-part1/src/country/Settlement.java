@@ -506,7 +506,9 @@ public abstract class Settlement {
 	 * @return true if deceased percent is 1% from the Population
 	 */
 	private boolean isDeceasedOnePercent() {
-		if (deceasedPercent() == 0.01)
+		double epsilon = 0.001;
+		double amountDead = deceasedPercent();
+		if (amountDead >= 0.01 - epsilon && amountDead <= 0.01 + epsilon)
 			return true;
 		return false;
 	}
@@ -534,7 +536,7 @@ public abstract class Settlement {
 			LogFile.exportToLog(getLogInfo(), m_logPath);
 		}
 		// write to logInfo Vector
-		logInfo.add(getLogInfo());
+		logInfo.addElement(getLogInfo());
 	}
 
 	/**
@@ -546,7 +548,7 @@ public abstract class Settlement {
 		if (logInfo.size() != 0) {
 			for (int i = 0; i < logInfo.size(); ++i) {
 				// call write string to logFile
-				LogFile.exportToLog(logInfo.get(i), path);
+				LogFile.exportToLog(logInfo.elementAt(i), path);
 			}
 			logInfo.clear();// clear all previous log info
 			m_logPath = path;
