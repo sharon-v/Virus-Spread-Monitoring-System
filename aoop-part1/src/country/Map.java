@@ -71,43 +71,43 @@ public class Map {
 		}
 	}
 
-	/**
-	 * manages simulation sequence
-	 */
-	public void executeSimulation() throws Exception {
-		sampleTwentyPercent();
-		massRecovery();
-		tryToTransfer();
-		massVaccination();
-		massMurder();
-	}
+//	/**
+//	 * manages simulation sequence
+//	 */
+//	public void executeSimulation() throws Exception {
+//		sampleTwentyPercent();
+//		massRecovery();
+//		tryToTransfer();
+//		massVaccination();
+//		massMurder();
+//	}
 	
-	/**
-	 * Run over the settlements and try to kill 
-	 */
-	public void massMurder(){
-		for (int i = 0; i < m_settlement.length; ++i) {
-			m_settlement[i].attemptedMurder();
-		}
-	}
+//	/**
+//	 * Run over the settlements and try to kill 
+//	 */
+//	public void massMurder(){
+//		for (int i = 0; i < m_settlement.length; ++i) {
+//			m_settlement[i].attemptedMurder();
+//		}
+//	}
 	
-	/**
-	 * Run over the settlements and trying to contagion 3 people for 20% from the sick persons
-	 */
-	public void sampleTwentyPercent() {
-		for (int i = 0; i < m_settlement.length; ++i) {
-			m_settlement[i].simulation();
-		}
-	}
+//	/**
+//	 * Run over the settlements and trying to contagion 3 people for 20% from the sick persons
+//	 */
+//	public void sampleTwentyPercent() {
+//		for (int i = 0; i < m_settlement.length; ++i) {
+//			m_settlement[i].simulation();
+//		}
+//	}
 
-	/**
-	 * Run over the settlements and for each sick person that past 25 days since he got sick , turn his to convalescent
-	 */
-	public void massRecovery() {
-		for (int i = 0; i < m_settlement.length; ++i) {
-			m_settlement[i].sickToConvalescent();
-		}
-	}
+//	/**
+//	 * Run over the settlements and for each sick person that past 25 days since he got sick , turn his to convalescent
+//	 */
+//	public void massRecovery() {
+//		for (int i = 0; i < m_settlement.length; ++i) {
+//			m_settlement[i].sickToConvalescent();
+//		}
+//	}
 
 	
 	/**
@@ -144,28 +144,28 @@ public class Map {
 		findSettlementByName(settName.toString()).setVaccineDoses((int) amount);
 	}
 
-	/**
-	 * vaccinates Healthy People if there are enough vaccines foe each Settlement
-	 */
-	public void massVaccination() {
-		for (int i = 0; i < m_settlement.length; ++i) {
-			m_settlement[i].vaccineTime();
-		}
-	}
+//	/**
+//	 * vaccinates Healthy People if there are enough vaccines foe each Settlement
+//	 */
+//	public void massVaccination() {
+//		for (int i = 0; i < m_settlement.length; ++i) {
+//			m_settlement[i].vaccineTime();
+//		}
+//	}
 
-	/**
-	 * calls a method that tries to transfer random 3% from each Settlement
-	 */
-	public void tryToTransfer() {
-		if (m_settlement.length == 1)
-			return;
-		for (int i = 0; i < m_settlement.length; ++i) {
-			Settlement s = m_settlement[i].randomConnection();
-			if (s == null)
-				return;
-			m_settlement[i].randomTransfer(s);
-		}
-	}
+//	/**
+//	 * calls a method that tries to transfer random 3% from each Settlement
+//	 */
+//	public void tryToTransfer() {
+//		if (m_settlement.length == 1)
+//			return;
+//		for (int i = 0; i < m_settlement.length; ++i) {
+//			Settlement s = m_settlement[i].randomConnection();
+//			if (s == null)
+//				return;
+//			m_settlement[i].randomTransfer(s);
+//		}
+//	}
 
 	/**
 	 * create the connections in the map foe each settlement

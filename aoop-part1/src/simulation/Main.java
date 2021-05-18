@@ -2,6 +2,8 @@ package simulation;
 
 
 
+import java.util.concurrent.CyclicBarrier;
+
 import country.Map;
 import ui.MainWindow;
 import ui.MapDrawing;
@@ -12,37 +14,63 @@ import ui.MapDrawing;
  *
  */
 public class Main {
-	
+
 	public static void main(String[] args) {
 		Map map = new Map();// Map instance
 		MainWindow theWindow = new MainWindow(map);
 		playSimu(map, theWindow.getMapDrawing());
 	}
 
-	
 	/**
 	 * 
 	 * @param myMap - Map object 
 	 * @param draw - MapDrawing object
 	 */
 	private static void playSimu(Map myMap, MapDrawing draw) {
-		while (true) {
-			draw.repaint();
-			System.out.print("");
-			if (playFlag == true && loadFlag == true) {
-				try {
+		final CyclicBarrier cb = new CyclicBarrier(myMap.getMapSize(), new Runnable(){
+			@Override
+			public void run(){
+				draw.repaint();
+				System.out.print("");
+				if (playFlag == true && loadFlag == true) {
 					System.out.println("ticks : " + Clock.now());
-					myMap.executeSimulation(); // third stage
 					Clock.nextTick();
-					Thread.sleep(sleepTime * 1000);
-				} catch (Exception ex) {
-					System.out.println("an unexpected ERROR has occurred :(");
-					ex.printStackTrace();
+					try {
+						Thread.sleep(sleepTime * 1000);
+					} catch (Exception ex) {
+						System.out.println("an unexpected ERROR has occurred :(");
+						ex.printStackTrace();
+					}
+					draw.updateStatWindow();
 				}
-				draw.updateStatWindow();
 			}
-		}
+		});
 	}
+
+
+	//	/**
+	//	 * 
+	//	 * @param myMap - Map object 
+	//	 * @param draw - MapDrawing object
+	//	 */
+	//	private static void playSimu(Map myMap, MapDrawing draw) {
+	//		while (true) {
+	//			draw.repaint();
+	//			System.out.print("");
+	//			if (playFlag == true && loadFlag == true) {
+	//				try {
+	//					System.out.println("ticks : " + Clock.now());
+	//					myMap.executeSimulation(); // third stage
+	//					Clock.nextTick();
+	//					Thread.sleep(sleepTime * 1000);
+	//				} catch (Exception ex) {
+	//					System.out.println("an unexpected ERROR has occurred :(");
+	//					ex.printStackTrace();
+	//				}
+	//				draw.updateStatWindow();
+	//			}
+	//		}
+	//	}
 
 	/**
 	 * set the play flag
@@ -67,7 +95,7 @@ public class Main {
 	public static boolean getPlayFlag() {
 		return playFlag;
 	}
-	
+
 	/**
 	 * get the load flag
 	 * @return the load flag boolean value
@@ -75,7 +103,7 @@ public class Main {
 	public static boolean getLoadFlag() {
 		return loadFlag;
 	}
-	
+
 	/**
 	 * set the play flag
 	 * @param val - the new sleep time int value

@@ -4,6 +4,8 @@ import java.time.LocalDateTime;
 import java.time.format.DateTimeFormatter;
 import java.util.Random;
 import java.util.Vector;
+import java.util.concurrent.BrokenBarrierException;
+import java.util.concurrent.CyclicBarrier;
 
 import io.LogFile;
 import location.Location;
@@ -23,14 +25,14 @@ import virus.SouthAfricanVariant;
  * @author Yarden Hovav, Sharon Vazana
  *
  */
-public abstract class Settlement {
+public abstract class Settlement implements Runnable{
 	/**
 	 * 
 	 * @param name - name of the Settlement
 	 * @param location - Location of the Settlement
 	 * @param people - Person array of residents in Settlement
 	 */
-	public Settlement(String name, Location location, int population) {
+	public Settlement(String name, Location location, int population, CyclicBarrier cb) {
 		m_name = name;
 		m_location = new Location(location);
 		m_healthyPeople = new Person[0];
@@ -40,8 +42,32 @@ public abstract class Settlement {
 		m_connectedSettlements = new Settlement[0];
 		m_sickPeople = new Sick[0];
 		m_numOfDeceased = 0;
+		m_cyclicBarrier = cb; 
 	}
-
+	
+	@Override
+	public void run() {
+		simulation();
+		sickToConvalescent();
+		transfer();
+		vaccineTime();
+		attemptedMurder();
+		try {
+			m_cyclicBarrier.await();
+		}catch(InterruptedException ex) {ex.printStackTrace();}
+		catch(BrokenBarrierException e) {e.printStackTrace();}
+	}
+	
+	/**
+	 * transfer person to a random connected settlement
+	 */
+	private void transfer(){
+		Settlement s =randomConnection();
+		if (s == null)
+			return;
+		randomTransfer(s);
+	}
+	
 	@Override
 	public String toString() {
 		// sync //
@@ -567,4 +593,5 @@ public abstract class Settlement {
 	private int m_numOfDeceased;// counts deaths in Settlement
 	private static final Vector<String> logInfo = new Vector<String>();// holds all log file info
 	private static String m_logPath;// logFile path
+	private CyclicBarrier m_cyclicBarrier;
 }
