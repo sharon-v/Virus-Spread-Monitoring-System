@@ -264,7 +264,6 @@ public class Statistics extends JDialog {
 
 		@Override
 		public boolean isCellEditable(int rowIndex, int columnIndex) {
-//			return columnIndex > 0;
 			return false;
 		}
 
@@ -273,13 +272,6 @@ public class Statistics extends JDialog {
 			fireTableCellUpdated(row, col);
 		}
 
-		/**
-		 * 
-		 * @return array of column names
-		 */
-		public String[] getColNames() {
-			return colNames;
-		}
 
 		/**
 		 * 

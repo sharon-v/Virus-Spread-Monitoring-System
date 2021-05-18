@@ -3,8 +3,6 @@ package country;
 import java.time.LocalDateTime;
 import java.time.format.DateTimeFormatter;
 import java.util.Random;
-import java.util.Vector;
-
 import io.LogFile;
 import location.Location;
 import location.Point;
@@ -12,7 +10,6 @@ import population.Healthy;
 import population.Person;
 import population.Sick;
 import simulation.Clock;
-import simulation.Main;
 import virus.BritishVariant;
 import virus.ChineseVariant;
 import virus.IVirus;
@@ -23,14 +20,14 @@ import virus.SouthAfricanVariant;
  * @author Yarden Hovav, Sharon Vazana
  *
  */
-public abstract class Settlement {
+public abstract class Settlement implements Runnable{
 	/**
 	 * 
 	 * @param name - name of the Settlement
 	 * @param location - Location of the Settlement
 	 * @param people - Person array of residents in Settlement
 	 */
-	public Settlement(String name, Location location, int population) {
+	public Settlement(String name, Location location, int population, Map map) {
 		m_name = name;
 		m_location = new Location(location);
 		m_healthyPeople = new Person[0];
@@ -40,7 +37,43 @@ public abstract class Settlement {
 		m_connectedSettlements = new Settlement[0];
 		m_sickPeople = new Sick[0];
 		m_numOfDeceased = 0;
+		m_map = map;
 	}
+
+	@Override
+	public void run() {
+		while(m_map.getLoadFlag()) {
+			synchronized(m_map) {
+				while(!(m_map.getPlayFlag())) {
+					try {
+						m_map.wait();
+					}catch( InterruptedException e) {e.printStackTrace();}
+				}
+			}
+			simulation();
+			sickToConvalescent();
+			transfer();
+			vaccineTime();
+			double oldPercent = deceasedPercent();
+			attemptedMurder();
+			if (isDeceasedOnePercent(oldPercent))
+				saveToLogFile();
+			m_map.cyclicAwait();
+			
+		}
+		return;
+	}
+
+	/**
+	 * transfer person to a random connected settlement
+	 */
+	private synchronized void transfer(){
+		Settlement s = randomConnection();
+		if (s == null)
+			return;
+		randomTransfer(s);
+	}
+
 
 	@Override
 	public String toString() {
@@ -96,7 +129,7 @@ public abstract class Settlement {
 	 * @param p - new person to add
 	 * @return true if Person added successfully to settlement
 	 */
-	public boolean addPerson(Person p) {
+	public synchronized boolean addPerson(Person p) {
 		// use equals no 2 people the same
 		if(findPerson(p))
 			return false;	// person is already in settlement
@@ -119,7 +152,7 @@ public abstract class Settlement {
 		p.setSettlement(this); // change Settlement
 		setRamzorColor(calculateRamzorGrade());
 		return true;
-	}// sync this method //
+	}
 
 	/**
 	 * removes a dead Person from Settlement
@@ -127,7 +160,7 @@ public abstract class Settlement {
 	 * @param p - Person to delete
 	 * @return true if Person deleted successfully
 	 */
-	public boolean removePerson(Person p) {
+	public synchronized boolean removePerson(Person p) {
 		if (!findPerson(p))
 			return false; // person is not in settlement
 		if (p.healthCondition().equals("Sick")) {
@@ -155,7 +188,7 @@ public abstract class Settlement {
 		}
 		setRamzorColor(calculateRamzorGrade());
 		return true;
-	}// sync this method //
+	}
 
 	/**
 	 * checks if a certain Person is in Settlement
@@ -179,20 +212,18 @@ public abstract class Settlement {
 		}
 		return false;
 	}// sync this method //
-	
+
 	/**
 	 * run over the sick people and try to kill them
 	 */
-	public void attemptedMurder() {
+	private synchronized void attemptedMurder() {
 		for(int i = 0; i<m_sickPeople.length;++i) {
 			if(m_sickPeople[i].getVirusFromPerson().tryToKill(m_sickPeople[i])) {
 				removePerson(m_sickPeople[i]);
 				++m_numOfDeceased;
-				if (isDeceasedOnePercent())
-					saveToLogFile();
 			}			
 		}
-	}// sync this method //
+	}
 
 	/**
 	 * calls toSting method for all Persons in Settlement
@@ -216,27 +247,40 @@ public abstract class Settlement {
 	 * @return true if successfully transferred
 	 */
 	private boolean transferPerson(Person p, Settlement s) {
-		if(this.equals(s))
-			return false;
-		if (s.m_maxPopulation <= getNumOfPeople())
-			return false;
-		Random ran = new Random();
-		if ((getRamzorColor().getTransferProb() * s.getRamzorColor().getTransferProb()) >= ran.nextDouble()) // [0, 1) 
-			return false;
-		if (removePerson(p)) {
-			s.addPerson(p);
-			p.setSettlement(s);
-			return true; // for this part of the project
+		Settlement s1, s2;
+		if(System.identityHashCode(this) < System.identityHashCode(s)) {
+			s1 = this;
+			s2 = s;
 		}
-		return false;
-	}// sync class with hashTable, deadlock //
+		else {
+			s1 = s;
+			s2 = this;
+		}
+		synchronized (s1) {
+			synchronized (s2) {
+				if(this.equals(s))
+					return false;
+				if (s.m_maxPopulation <= getNumOfPeople())
+					return false;
+				Random ran = new Random();
+				if ((getRamzorColor().getTransferProb() * s.getRamzorColor().getTransferProb()) >= ran.nextDouble()) // [0, 1) 
+					return false;
+				if (removePerson(p)) {
+					s.addPerson(p);
+					p.setSettlement(s);
+					return true; 
+				}
+				return false;
+			}
+		}
+	}
 
 	/**
 	 * tries to transfer random 3% of the Settlement to a random Settlement
 	 * 
 	 * @param randomSettlement - random Settlement to transfer to
 	 */
-	public void randomTransfer(Settlement randomSettlement) {
+	private void randomTransfer(Settlement randomSettlement) {
 		// try transfer 3% from settlement
 		int size = getNumOfPeople();
 		Person[] temp = new Person[size];
@@ -254,15 +298,14 @@ public abstract class Settlement {
 			transferPerson(temp[random], randomSettlement);
 
 		}
-	}// sync this method//
-	
-	
+	}
+
+
 	/**
 	 * vaccinate the population
 	 */
-	public void vaccineTime() {
+	private synchronized void vaccineTime() {
 		int index = 0 ;
-		// sync //
 		while(getVaccineDoses() > 0 && index != m_healthyPeople.length) {
 			if (m_healthyPeople[index].healthCondition().equals("Healthy")) {
 				((Healthy) m_healthyPeople[index]).vaccinate();
@@ -270,9 +313,8 @@ public abstract class Settlement {
 			}
 			++index;
 		}
-		// sync //
 	}
-	
+
 	/**
 	 * infects 1 percent of the population in each of the Settlements
 	 */
@@ -295,13 +337,13 @@ public abstract class Settlement {
 				e.printStackTrace();
 			}
 		}
-	} // sync this method//
+	} 
 
 	/**
 	 * 
 	 * @return a random Settlement from the Connections array
 	 */
-	public Settlement randomConnection() {
+	private Settlement randomConnection() {
 		Random ran = new Random();
 		// sync //
 		if (m_connectedSettlements.length == 0)
@@ -309,18 +351,16 @@ public abstract class Settlement {
 		return m_connectedSettlements[ran.nextInt(m_connectedSettlements.length)];
 		// sync //
 	}
-	
+
 	/**
 	 * one simulation operation
 	 */
-	public void simulation() {
+	private synchronized void simulation() {
 		Random ran = new Random();
-		// sync //
 		int tempIndex = (int) (m_sickPeople.length * 0.2);
 		for (int j = 0; j < tempIndex; ++j) {// run over the population of each settlement
 			randomContagion(m_sickPeople[ran.nextInt(tempIndex)]);
 		}
-		// sync //
 	}
 
 	/**
@@ -329,7 +369,7 @@ public abstract class Settlement {
 	 * 
 	 * @param sickPerson - array of sick people
 	 */
-	public void randomContagion(Person sickPerson) {
+	private void randomContagion(Person sickPerson) {
 		IVirus virus = null;
 		Random ran = new Random();
 		// sync //
@@ -375,13 +415,13 @@ public abstract class Settlement {
 	/**
 	 *  if past 25 days since the sick person got infected - recovery him
 	 */
-	public void sickToConvalescent() {
+	private synchronized void sickToConvalescent() {
 		for (int i = 0; i < m_sickPeople.length; ++i) {
 			if (Clock.calculateDays(m_sickPeople[i].getContagiousTime()) > m_recoveryTime) {
 				m_sickPeople[i].recover();
 			}
 		}
-	} // sync //
+	} 
 
 	/**
 	 * 
@@ -452,7 +492,7 @@ public abstract class Settlement {
 	 * @return String of Settlement type
 	 */
 	public abstract String getSettlementType();
-	
+
 	/**
 	 * 
 	 * @return the number of the vaccines in the settlement
@@ -467,7 +507,7 @@ public abstract class Settlement {
 	public void setNumOfDeceased() {
 		++m_numOfDeceased;
 	}
-	
+
 	/**
 	 * 
 	 * @return the number of the deceased
@@ -475,7 +515,7 @@ public abstract class Settlement {
 	public int getNumOfDeceased() {
 		return m_numOfDeceased;
 	}
-	
+
 	/**
 	 * set the number of the vaccine doses
 	 * @param amount - the new number of the vaccine doses
@@ -484,7 +524,7 @@ public abstract class Settlement {
 		if (amount >= 0)
 			m_vaccineDoses += amount;
 	}
-	
+
 	/**
 	 * 
 	 * @return the location of the settlement
@@ -503,12 +543,12 @@ public abstract class Settlement {
 
 	/**
 	 * 
+	 * @param oldPercent - the amount of deceased before attempted murder
 	 * @return true if deceased percent is 1% from the Population
 	 */
-	private boolean isDeceasedOnePercent() {
-		double epsilon = 0.001;
-		double amountDead = deceasedPercent();
-		if (amountDead >= 0.01 - epsilon && amountDead <= 0.01 + epsilon)
+	private boolean isDeceasedOnePercent(double oldPercent) {
+		double amountDead = deceasedPercent() - oldPercent;
+		if (amountDead >= 0.01 )
 			return true;
 		return false;
 	}
@@ -531,29 +571,12 @@ public abstract class Settlement {
 	 * writes logInfo to file or to Vector
 	 */
 	private void saveToLogFile() {
-		if (Main.getLogFlag()) {
+		if (m_map.getLogFlag()) {
 			// call write string to logFile
-			LogFile.exportToLog(getLogInfo(), m_logPath);
+			LogFile.exportToLog(getLogInfo(),m_map.getLogPath());
 		}
-		// write to logInfo Vector
-		logInfo.addElement(getLogInfo());
 	}
 
-	/**
-	 * prints for the first time everything in logInfo to logFile
-	 * 
-	 * @param path - path to write to
-	 */
-	public static void initialLogEntry(String path) {
-		if (logInfo.size() != 0) {
-			for (int i = 0; i < logInfo.size(); ++i) {
-				// call write string to logFile
-				LogFile.exportToLog(logInfo.elementAt(i), path);
-			}
-			logInfo.clear();// clear all previous log info
-			m_logPath = path;
-		}
-	}// sync class //
 
 	private final int m_recoveryTime = 25; //the number of days that after this the sick person recovery
 	private final String m_name;// Settlement's name
@@ -565,6 +588,5 @@ public abstract class Settlement {
 	private Settlement[] m_connectedSettlements;// all the connections to current settlement
 	private Sick[] m_sickPeople;// Settlement's sick residents
 	private int m_numOfDeceased;// counts deaths in Settlement
-	private static final Vector<String> logInfo = new Vector<String>();// holds all log file info
-	private static String m_logPath;// logFile path
+	private Map m_map;
 }

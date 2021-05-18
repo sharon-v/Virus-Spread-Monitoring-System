@@ -53,19 +53,19 @@ public class SimulationFile {
 					Point settlementPoint = new Point(Integer.parseInt(settlDeteails[2]),
 						Integer.parseInt(settlDeteails[3]));// convert
 					Size settlementSize = new Size(Integer.parseInt(settlDeteails[4]), Integer.parseInt(settlDeteails[5]));
-					Location settlementLocation = new Location(settlementPoint, settlementSize); // ??
+					Location settlementLocation = new Location(settlementPoint, settlementSize);
 					int settlementPopulationAmount = Integer.parseInt(settlDeteails[6]);
 
 					Settlement mySettlement;
 					if (settlementType.equals("City"))
 						mySettlement = new City(settlemntName, settlementLocation,
-								calculateMaxCapacity(settlementPopulationAmount));
+								calculateMaxCapacity(settlementPopulationAmount), map);
 					else if (settlementType.equals("Moshav"))
 						mySettlement = new Moshav(settlemntName, settlementLocation,
-								calculateMaxCapacity(settlementPopulationAmount));
+								calculateMaxCapacity(settlementPopulationAmount), map);
 					else if (settlementType.equals("Kibbutz")) 
 						mySettlement = new Kibbutz(settlemntName, settlementLocation,
-								calculateMaxCapacity(settlementPopulationAmount));
+								calculateMaxCapacity(settlementPopulationAmount), map);
 					else
 						throw new Exception("No such settlement !");
 					map.addSettlement(mySettlement);

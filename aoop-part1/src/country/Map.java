@@ -1,6 +1,9 @@
 package country;
 
 import java.awt.Color;
+import java.util.concurrent.BrokenBarrierException;
+import java.util.concurrent.CyclicBarrier;
+import java.util.concurrent.atomic.AtomicBoolean;
 
 import io.SimulationFile;
 import location.Location;
@@ -18,14 +21,14 @@ public class Map {
 	public Map() {
 		resetMap();
 	}
-	
+
 	/**
 	 * reset the map - delete the old map
 	 */
 	public void resetMap() {
 		m_settlement = new Settlement[0];
 	}
-	
+
 	@Override
 	public String toString() {
 		return "amount of settlements: " + m_settlement.length + "\n" + toStringSettlements();
@@ -38,14 +41,14 @@ public class Map {
 	 */
 	public void addSettlement(Settlement s) {
 		Settlement[] temp = new Settlement[m_settlement.length + 1];
-		
+
 		for(int i = 0; i < m_settlement.length; ++i) {
 			temp[i] = m_settlement[i];
 		}
 		temp[m_settlement.length] = s;
 		m_settlement = temp;
 	}
-	
+
 	/**
 	 * 
 	 * @return toString of all the Settlement in the Map
@@ -71,45 +74,45 @@ public class Map {
 		}
 	}
 
-	/**
-	 * manages simulation sequence
-	 */
-	public void executeSimulation() throws Exception {
-		sampleTwentyPercent();
-		massRecovery();
-		tryToTransfer();
-		massVaccination();
-		massMurder();
-	}
-	
-	/**
-	 * Run over the settlements and try to kill 
-	 */
-	public void massMurder(){
-		for (int i = 0; i < m_settlement.length; ++i) {
-			m_settlement[i].attemptedMurder();
-		}
-	}
-	
-	/**
-	 * Run over the settlements and trying to contagion 3 people for 20% from the sick persons
-	 */
-	public void sampleTwentyPercent() {
-		for (int i = 0; i < m_settlement.length; ++i) {
-			m_settlement[i].simulation();
-		}
-	}
+//	/**
+//	 * manages simulation sequence
+//	 */
+//	public void executeSimulation() throws Exception {
+//		sampleTwentyPercent();
+//		massRecovery();
+//		tryToTransfer();
+//		massVaccination();
+//		massMurder();
+//	}
 
-	/**
-	 * Run over the settlements and for each sick person that past 25 days since he got sick , turn his to convalescent
-	 */
-	public void massRecovery() {
-		for (int i = 0; i < m_settlement.length; ++i) {
-			m_settlement[i].sickToConvalescent();
-		}
-	}
+//	/**
+//	 * Run over the settlements and try to kill 
+//	 */
+//	public void massMurder(){
+//		for (int i = 0; i < m_settlement.length; ++i) {
+//			m_settlement[i].attemptedMurder();
+//		}
+//	}
 
-	
+//	/**
+//	 * Run over the settlements and trying to contagion 3 people for 20% from the sick persons
+//	 */
+//	public void sampleTwentyPercent() {
+//		for (int i = 0; i < m_settlement.length; ++i) {
+//			m_settlement[i].simulation();
+//		}
+//	}
+
+//	/**
+//	 * Run over the settlements and for each sick person that past 25 days since he got sick , turn his to convalescent
+//	 */
+//	public void massRecovery() {
+//		for (int i = 0; i < m_settlement.length; ++i) {
+//			m_settlement[i].sickToConvalescent();
+//		}
+//	}
+
+
 	/**
 	 * initializes the Settlements with sick people
 	 */
@@ -122,10 +125,10 @@ public class Map {
 	/**
 	 * infect 1% people
 	 */
-	public void activateOnePercent(Object settName) {
+	public synchronized void activateOnePercent(Object settName) {
 		findSettlementByName(settName.toString()).infectPercent(0.001);
 	}
-	
+
 	/**
 	 * find the settlement by its name and return 
 	 */
@@ -136,36 +139,36 @@ public class Map {
 		}
 		return null;
 	}
-	
+
 	/**
 	 * adding vaccines to the settlement
 	 */
-	public void addVaccines(Object settName, int amount) {
+	public synchronized void addVaccines(Object settName, int amount) {
 		findSettlementByName(settName.toString()).setVaccineDoses((int) amount);
 	}
 
-	/**
-	 * vaccinates Healthy People if there are enough vaccines foe each Settlement
-	 */
-	public void massVaccination() {
-		for (int i = 0; i < m_settlement.length; ++i) {
-			m_settlement[i].vaccineTime();
-		}
-	}
+//	/**
+//	 * vaccinates Healthy People if there are enough vaccines foe each Settlement
+//	 */
+//	public void massVaccination() {
+//		for (int i = 0; i < m_settlement.length; ++i) {
+//			m_settlement[i].vaccineTime();
+//		}
+//	}
 
-	/**
-	 * calls a method that tries to transfer random 3% from each Settlement
-	 */
-	public void tryToTransfer() {
-		if (m_settlement.length == 1)
-			return;
-		for (int i = 0; i < m_settlement.length; ++i) {
-			Settlement s = m_settlement[i].randomConnection();
-			if (s == null)
-				return;
-			m_settlement[i].randomTransfer(s);
-		}
-	}
+//	/**
+//	 * calls a method that tries to transfer random 3% from each Settlement
+//	 */
+//	public void tryToTransfer() {
+//		if (m_settlement.length == 1)
+//			return;
+//		for (int i = 0; i < m_settlement.length; ++i) {
+//			Settlement s = m_settlement[i].randomConnection();
+//			if (s == null)
+//				return;
+//			m_settlement[i].randomTransfer(s);
+//		}
+//	}
 
 	/**
 	 * create the connections in the map foe each settlement
@@ -178,7 +181,7 @@ public class Map {
 			connectSettlements(temp[1], temp[2]);
 		}
 	}
-	
+
 	/**
 	 * 
 	 * @return Color array of all the settlements ramzor color
@@ -189,7 +192,7 @@ public class Map {
 			settlColor[i] = m_settlement[i].getRamzorColor().getColor();
 		return settlColor;
 	}
-	
+
 	/**
 	 * 
 	 * @return Location array of all the settlements location
@@ -200,7 +203,7 @@ public class Map {
 			settlPoints[i] = new Location(m_settlement[i].getLocation());
 		return settlPoints;
 	}
-	
+
 	/**
 	 * 
 	 * @return String array of all the settlements name
@@ -211,7 +214,7 @@ public class Map {
 			settlNames[i] = m_settlement[i].getSettlementName();
 		return settlNames;
 	}
-	
+
 	/**
 	 * 
 	 * @return Point array of all the settlements middle point
@@ -222,7 +225,7 @@ public class Map {
 			settlPoints[i] = new Point(m_settlement[i].middelOfSettlement());
 		return settlPoints;
 	}
-	
+
 	/**
 	 * 
 	 * @return all the connections in the map
@@ -236,7 +239,7 @@ public class Map {
 		}
 		return Connections;
 	}
-	
+
 	/**
 	 * 
 	 * @param arr - middle point of the connections settlement array 
@@ -257,7 +260,7 @@ public class Map {
 		}
 		return temp;
 	}
-	
+
 	/**
 	 * 
 	 * @param PointsConnection - middle point of the connections settlement array
@@ -276,8 +279,8 @@ public class Map {
 		}
 		return false;
 	}
-	
-	
+
+
 	/**
 	 * 
 	 * @param s1 - the name of the first settlement in the connection
@@ -297,7 +300,24 @@ public class Map {
 		}
 
 	}
-	
+
+	/**
+	 * set the cyclic barrier
+	 */
+	public void setCyclic(CyclicBarrier myCyclic) {
+		m_cyclic = myCyclic;
+
+	}
+
+	/**
+	 * create and run all the threads
+	 */
+	public void createThreads() {
+		for (Settlement s : m_settlement) {
+			new Thread(s).start();
+		}
+	}
+
 	/**
 	 * 
 	 * @return - the number of the settlement in the map
@@ -305,7 +325,7 @@ public class Map {
 	public int getMapSize() {
 		return m_settlement.length;
 	}
-	
+
 	/**
 	 * 
 	 * @param rowIndex - the row index 
@@ -317,6 +337,92 @@ public class Map {
 		return null;
 	}
 
+	/**
+	 * 
+	 * @param newPath - the path for the log file
+	 */
+	public void setLogPath(String newPath) {
+		if(m_path == null) {
+			m_path = newPath ;
+			setLogFlag(true);
+		}
+	}
+
+	/**
+	 * 
+	 * @return the path of the log file
+	 */
+	public String getLogPath() {
+		return m_path;
+	}
+
+	/**
+	 * applies wait to cyclic barrier
+	 */
+	public void cyclicAwait() {
+		try {
+			m_cyclic.await();
+		}catch(InterruptedException ex) {ex.printStackTrace();}
+		catch(BrokenBarrierException e) {e.printStackTrace();}
+	}
+
+
+	/**
+	 * set the play flag
+	 * @param val - boolean object
+	 */
+	public void setPlayFlag(boolean val) {
+		playFlag.set(val);
+	}
+
+	/**
+	 * set the load flag
+	 * @param val -boolean object
+	 */
+	public void setLoadFlag(boolean val) {
+		loadFlag.set(val);
+	}
+
+	/**
+	 * get the play flag
+	 * @return the play flag boolean value
+	 */
+	public boolean getPlayFlag() {
+		return playFlag.get();
+	}
+
+	/**
+	 * get the load flag
+	 * @return the load flag boolean value
+	 */
+	public boolean getLoadFlag() {
+		return loadFlag.get();
+	}
+
+	/**
+	 * get method
+	 * 
+	 * @return logFlag boolean value
+	 */
+	public boolean getLogFlag() {
+		return logFlag.get();
+	}
+
+	/**
+	 * set method
+	 * 
+	 * @param val - new logFlag value
+	 */
+	public void setLogFlag(boolean val) {
+		logFlag.set(val);
+	}
+
+
+	private AtomicBoolean playFlag = new AtomicBoolean(true); // flag to know if the simulation is play or pause
+	private AtomicBoolean loadFlag = new AtomicBoolean(); // initialized false, flag to know if file has been loaded or not
+	private AtomicBoolean logFlag = new AtomicBoolean();// initialized false, flag to indicate if a logFile location was selected
+	private CyclicBarrier m_cyclic ;
+	private String m_path;
 	private Settlement[] m_settlement;// array of Settlements
 
 }

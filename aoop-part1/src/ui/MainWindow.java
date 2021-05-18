@@ -14,6 +14,7 @@ import java.awt.event.MouseAdapter;
 import java.awt.event.MouseEvent;
 import java.io.File;
 import java.util.Hashtable;
+import java.util.concurrent.CyclicBarrier;
 
 import javax.swing.BoxLayout;
 import javax.swing.JComponent;
@@ -32,6 +33,7 @@ import javax.swing.JSpinner;
 import javax.swing.JTextPane;
 import javax.swing.SpinnerModel;
 import javax.swing.SpinnerNumberModel;
+import javax.swing.SwingUtilities;
 import javax.swing.event.ChangeEvent;
 import javax.swing.event.ChangeListener;
 import javax.swing.text.BadLocationException;
@@ -40,13 +42,10 @@ import javax.swing.text.Style;
 import javax.swing.text.StyleConstants;
 import javax.swing.text.StyleContext;
 import javax.swing.text.StyledDocument;
-
 import country.Map;
-import country.Settlement;
 import location.Location;
 import location.Point;
 import simulation.Clock;
-import simulation.Main;
 
 /**
  * 
@@ -54,7 +53,7 @@ import simulation.Main;
  *
  */
 public class MainWindow extends JFrame {
-
+	
 	/**
 	 * constructor
 	 * 
@@ -67,7 +66,7 @@ public class MainWindow extends JFrame {
 
 		// add statistic instance
 		stat = new Statistics(map);
-		
+
 		// add MapDrawing instance
 		drawMap = new MapDrawing();
 
@@ -83,10 +82,11 @@ public class MainWindow extends JFrame {
 		 * Slider actions
 		 */
 		slider.addChangeListener(new ChangeListener() {
-			
+
 			@Override
 			public void stateChanged(ChangeEvent e) {
-				Main.setSleepTime(slider.getValue());
+				setSleepTime(slider.getValue());
+				
 			}
 		});
 
@@ -106,18 +106,27 @@ public class MainWindow extends JFrame {
 		this.pack();
 		this.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
 		this.setVisible(true);
-		
-	}
 
-	/**
-	 * get method
-	 * 
-	 * @return MapDrawing object
-	 */
-	public MapDrawing getMapDrawing() {
-		return drawMap;
 	}
 	
+
+	/**
+	 * set the play flag
+	 * @param val - the new sleep time int value
+	 */
+	public static void setSleepTime(int val) {
+		sleepTime = val;
+	}
+
+//	/**
+//	 * get method
+//	 * 
+//	 * @return MapDrawing object
+//	 */
+//	public MapDrawing getMapDrawing() {
+//		return drawMap;
+//	}
+
 	//===============================================
 	//private class menu
 	private class Menu extends JMenuBar {
@@ -175,7 +184,7 @@ public class MainWindow extends JFrame {
 
 					@Override
 					public void actionPerformed(ActionEvent e) {
-						if (Main.getLoadFlag() == false) {
+						if (map.getLoadFlag() == false) {
 							Clock.reset();// reset current time to 0
 							// Create a file chooser
 							final JFileChooser fc = new JFileChooser();
@@ -192,9 +201,31 @@ public class MainWindow extends JFrame {
 
 							if (path != null) {
 								map.loadInfo(path);
+								CyclicBarrier temp = new CyclicBarrier(map.getMapSize(), new Runnable(){
+									@Override
+									public void run(){
+										SwingUtilities.invokeLater(new Runnable() {
+										    public void run() {
+										    	drawMap.repaint();
+												drawMap.updateStatWindow();
+										    }
+										  });
+										System.out.println("ticks : " + Clock.now());
+										Clock.nextTick();
+										try {
+											Thread.sleep(sleepTime * 1000);
+										} catch (InterruptedException ex) {
+											System.out.println("an unexpected ERROR has occurred :(");
+											ex.printStackTrace();
+										}
+									}
+
+								});
+								
+								map.setCyclic(temp);
+								map.createThreads();
 								map.intialization();// second stage
-								drawMap.repaint();
-								Main.setLoadFlag(true);
+								map.setLoadFlag(true);
 							}
 						}
 					}
@@ -207,7 +238,7 @@ public class MainWindow extends JFrame {
 
 					@Override
 					public void actionPerformed(ActionEvent e) {
-						if (Main.getLoadFlag() == false) {
+						if (map.getLoadFlag() == false) {
 							JOptionPane.showMessageDialog(stat, "No file has been loaded", "Inane warning",
 									JOptionPane.WARNING_MESSAGE);
 							return;
@@ -234,21 +265,22 @@ public class MainWindow extends JFrame {
 
 					@Override
 					public void actionPerformed(ActionEvent e) {
-						if (!Main.getLoadFlag()) {
+						if (!map.getLoadFlag()) {
 							JOptionPane.showMessageDialog(load, "No file has been loaded", "Inane warning",
 									JOptionPane.WARNING_MESSAGE);
 							return;
 						}
 						// Create a file chooser
-						if (!Main.getLogFlag()) {
+						if (!map.getLogFlag()) {
 							final JFileChooser fc = new JFileChooser();
 							// In response to a button click:
 							int returnVal = fc.showOpenDialog(log);
 							fc.setDialogTitle("Select File to Open");
 							if (returnVal == JFileChooser.APPROVE_OPTION) {
 								String path = fc.getSelectedFile().getAbsolutePath();
-								Settlement.initialLogEntry(path);
-								Main.setLogFlag(true);
+								map.setLogPath(path);
+								//								Settlement.initialLogEntry(path);
+								map.setLogFlag(true);
 							}
 						}
 						else
@@ -299,8 +331,11 @@ public class MainWindow extends JFrame {
 
 					@Override
 					public void actionPerformed(ActionEvent e) {
-						if (Main.getLoadFlag() == true && Main.getPlayFlag() == false) {
-							Main.setPlayFlag(true);
+						if (map.getLoadFlag() == true && map.getPlayFlag() == false) {
+							synchronized (map) {
+								map.setPlayFlag(true);
+								map.notifyAll();
+							}
 							JOptionPane.showMessageDialog(play, "Simulation Resumed");
 						} else
 							JOptionPane.showMessageDialog(play, "No file has been loaded", "Inane warning",
@@ -316,8 +351,10 @@ public class MainWindow extends JFrame {
 
 					@Override
 					public void actionPerformed(ActionEvent e) {
-						if (Main.getPlayFlag() == true && Main.getLoadFlag() == true) {
-							Main.setPlayFlag(false);
+						if (map.getPlayFlag() == true && map.getLoadFlag() == true) {
+							synchronized (map) {
+								map.setPlayFlag(false);
+							}
 							// countinue
 							JOptionPane.showMessageDialog(pause, "Simulation Paused");
 						} else
@@ -334,9 +371,11 @@ public class MainWindow extends JFrame {
 
 					@Override
 					public void actionPerformed(ActionEvent e) {
-						if (Main.getLoadFlag() == true) {
-							Main.setLoadFlag(false);
-							Main.setPlayFlag(true);
+						if (map.getLoadFlag() == true) {
+							synchronized (map) {
+								map.setLoadFlag(false);
+								map.setPlayFlag(true);
+							}
 							JOptionPane.showMessageDialog(stop, "Simulation Stopped \nPlease re-load in order to resume");
 						} else
 							JOptionPane.showMessageDialog(stop, "No file has been loaded", "Inane error",
@@ -486,14 +525,14 @@ public class MainWindow extends JFrame {
 		private final Simulation m_simulation;// simulation menu
 		private final Help m_help;// help menu
 		private Mutations mutation;// mutation info
-		
+
 	}//end private class menu
 	//===============================================
-	
-	
+
+
 	//===============================================
 	//private class MapDrawing
-	
+
 	private class MapDrawing extends JPanel{
 		/**
 		 * constructor
@@ -509,37 +548,37 @@ public class MainWindow extends JFrame {
 			this.addMouseListener(new MouseAdapter() {
 				public void mouseClicked(MouseEvent e) {
 					int x = e.getX();
-				    int y = e.getY();
+					int y = e.getY();
 					Location[] settlLocations = map.settlementsLocation();
 					// run over the settlements and printing them by color
 					for (int i = 0; i < settlLocations.length; ++i) {
-				    	 int startX = settlLocations[i].getPoint().getX();
-				    	 int startY = settlLocations[i].getPoint().getY();
-				    	 int endX = settlLocations[i].getSize().getWidth() + startX;
-				    	 int endY = settlLocations[i].getSize().getHeith() + startY;
-				    	 if(x >= startX && x <= endX && y >= startY && y <= endY) {
-				    		stat.markLine(i);// mark the corresponding line in Statistics window
-				    		stat.showDialog();// open Statistics window
-				    	 }
-				    }
+						int startX = settlLocations[i].getPoint().getX();
+						int startY = settlLocations[i].getPoint().getY();
+						int endX = settlLocations[i].getSize().getWidth() + startX;
+						int endY = settlLocations[i].getSize().getHeith() + startY;
+						if(x >= startX && x <= endX && y >= startY && y <= endY) {
+							stat.markLine(i);// mark the corresponding line in Statistics window
+							stat.showDialog();// open Statistics window
+						}
+					}
 				}
 			});
-			
+
 		}
-		
+
 		/**
 		 * update statistics window
 		 */
 		public void updateStatWindow() {
 			stat.updateTableModel();
 		}
-		
+
 		@Override
 		public void paintComponent(Graphics g) {
 			super.paintComponent(g);
 			Graphics2D gr = (Graphics2D) g; //for better looking
 			gr.setRenderingHint(RenderingHints.KEY_ANTIALIASING, RenderingHints.VALUE_ANTIALIAS_ON);
-			
+
 			Point[] theConnections = map.middelPoints();
 			for(int i = 0; i<theConnections.length - 1 ; i+=2) {
 				g.drawLine(theConnections[i].getX(), theConnections[i].getY(), theConnections[i+1].getX(), theConnections[i+1].getY());
@@ -556,22 +595,15 @@ public class MainWindow extends JFrame {
 				g.setColor(Color.BLACK);
 				g.drawString(settleNames[i], settlLocations[i].getPoint().getX()+5, settlementsMiddlePoints[i].getY()+5);
 			}		
-			
+
 		}
-		
+
 		@Override
 		public Dimension getPreferredSize() {
 			return new Dimension(400, 400);
 		}
 	}//end private class MapDrawing
 	//===============================================
-
-	public void paint() {
-		drawMap.repaint();
-	}
-	public void blala() {
-		drawMap.updateStatWindow();
-	}
 
 
 	// fields
@@ -582,9 +614,10 @@ public class MainWindow extends JFrame {
 	private Statistics stat;// contains the statistic data
 
 
-	
 	// slider parameters
 	static final int FPS_MIN = 0;
 	static final int FPS_MAX = 15;
 	static final int FPS_INIT = 5;    //initial frames per second
+	private static int sleepTime = 1; // the time between each simulation// private final Timer timer ; //????
+
 }
