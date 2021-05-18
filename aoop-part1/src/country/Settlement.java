@@ -42,14 +42,15 @@ public abstract class Settlement implements Runnable{
 
 	@Override
 	public void run() {
-		while(m_map.getLoadFlag()) {
+		while(m_map.getLoadFlag() == true) {
 			synchronized(m_map) {
-				while(!(m_map.getPlayFlag())) {
+				while(m_map.getPlayFlag() == false) {
 					try {
 						m_map.wait();
 					}catch( InterruptedException e) {e.printStackTrace();}
 				}
 			}
+
 			simulation();
 			sickToConvalescent();
 			transfer();
@@ -59,7 +60,6 @@ public abstract class Settlement implements Runnable{
 			if (isDeceasedOnePercent(oldPercent))
 				saveToLogFile();
 			m_map.cyclicAwait();
-			
 		}
 		return;
 	}
@@ -67,19 +67,19 @@ public abstract class Settlement implements Runnable{
 	/**
 	 * transfer person to a random connected settlement
 	 */
-	private synchronized void transfer(){
+	private void transfer(){
 		Settlement s = randomConnection();
 		if (s == null)
 			return;
-		randomTransfer(s);
+		Person[] persons = randomTransfer(s); 
+		for(int i = 0 ; i < persons.length ; ++i)
+			transferPerson(persons[i], s);
 	}
 
 
 	@Override
 	public String toString() {
-		// sync //
 		String s1 = getNumOfPeople() + "\nnum of sick: " + m_sickPeople.length + toStringPeople();
-		// sync //
 		return "settlement name: " + m_name + "\nlocation: " + m_location + "\ncolor grade: " + m_ramzorColor
 				+ "\nnum of people: " + s1;
 	}
@@ -280,8 +280,9 @@ public abstract class Settlement implements Runnable{
 	 * 
 	 * @param randomSettlement - random Settlement to transfer to
 	 */
-	private void randomTransfer(Settlement randomSettlement) {
+	private synchronized Person[] randomTransfer(Settlement randomSettlement) { 
 		// try transfer 3% from settlement
+		
 		int size = getNumOfPeople();
 		Person[] temp = new Person[size];
 		for (int i = 0; i < m_healthyPeople.length; ++i) {
@@ -293,11 +294,12 @@ public abstract class Settlement implements Runnable{
 		Random ran = new Random();
 		int random;
 		int threePercent = (int) (size * 0.03);
+		Person[] persons = new Person[threePercent];
 		for (int i = 0; i < threePercent; ++i) {
 			random = ran.nextInt(size);
-			transferPerson(temp[random], randomSettlement);
-
+			persons[i] = temp[random];
 		}
+		return persons;
 	}
 
 
@@ -323,6 +325,7 @@ public abstract class Settlement implements Runnable{
 		int randomIndex;
 		Random ran = new Random();
 		IVirus virus;
+
 		for(int i = 0; i < amountToInfect; ++i) {
 			randomIndex = ran.nextInt(m_healthyPeople.length);
 			if (randomIndex % 3 == 0)
@@ -428,13 +431,11 @@ public abstract class Settlement implements Runnable{
 	 * @return middle Points connections of a settlement array 
 	 */
 	public Point[] conectionsPoints() {
-		Point[] settlPoints = new Point[0];
-		// sync //
+		Point[] settlPoints = new Point[0];	
 		for (int i = 0; i < m_connectedSettlements.length; ++i) {
 			Point middel = m_connectedSettlements[i].middelOfSettlement();
 			settlPoints = addToConectionsPoints(settlPoints, middel);
 		}
-		// sync //
 		return settlPoints;
 	}
 
@@ -446,7 +447,7 @@ public abstract class Settlement implements Runnable{
 	 */
 	private Point[] addToConectionsPoints(Point[] arr, Point p) {
 		Point[] temp = new Point[arr.length + 1];
-		for(int i=0 ; i<arr.length;++i) 
+		for(int i=0 ; i < arr.length ; ++i) 
 			temp[i] = arr[i];
 		temp[arr.length] = p;
 		return temp;

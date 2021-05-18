@@ -2,6 +2,7 @@ package ui;
 
 import java.awt.BorderLayout;
 import java.awt.Color;
+import java.awt.ComponentOrientation;
 import java.awt.Dimension;
 import java.awt.FlowLayout;
 import java.awt.Graphics;
@@ -16,6 +17,7 @@ import java.io.File;
 import java.util.Hashtable;
 import java.util.concurrent.CyclicBarrier;
 
+import javax.swing.Box;
 import javax.swing.BoxLayout;
 import javax.swing.JComponent;
 import javax.swing.JDialog;
@@ -142,6 +144,8 @@ public class MainWindow extends JFrame {
 		public Menu() {
 			// set fields
 			mutation = new Mutations();
+			ticks = new JLabel("Ticks: " + Clock.now() + "         ");
+			ticks.setComponentOrientation(ComponentOrientation.RIGHT_TO_LEFT);
 
 			m_file = new MFile();
 			m_simulation = new Simulation();
@@ -151,9 +155,14 @@ public class MainWindow extends JFrame {
 			this.add(m_file);
 			this.add(m_simulation);
 			this.add(m_help);
+			add(Box.createHorizontalGlue());
+			this.add(ticks);
 
 		}
-
+		
+		public void updateTicksLable() {
+			ticks.setText("Ticks: " + Clock.now() +  "         " );
+		}
 		/**
 		 * 
 		 * inner Class for handling work with the File
@@ -201,7 +210,11 @@ public class MainWindow extends JFrame {
 							}
 
 							if (path != null) {
+								map.setLoadFlag(true);
 								map.loadInfo(path);
+								map.intialization();// second stage
+								drawMap.repaint();
+								drawMap.updateStatWindow();
 								CyclicBarrier temp = new CyclicBarrier(map.getMapSize(), new Runnable(){
 									@Override
 									public void run(){
@@ -212,6 +225,7 @@ public class MainWindow extends JFrame {
 										    }
 										  });
 										System.out.println("ticks : " + Clock.now());
+										updateTicksLable();
 										Clock.nextTick();
 										try {
 											Thread.sleep(sleepTime * 1000);
@@ -222,13 +236,8 @@ public class MainWindow extends JFrame {
 									}
 
 								});
-								
 								map.setCyclic(temp);
 								map.createThreads();
-								map.intialization();// second stage
-								drawMap.repaint();
-								drawMap.updateStatWindow();
-								map.setLoadFlag(true);
 							}
 						}
 					}
@@ -378,6 +387,7 @@ public class MainWindow extends JFrame {
 							synchronized (map) {
 								map.setLoadFlag(false);
 								map.setPlayFlag(true);
+								map.resetMap();
 							}
 							JOptionPane.showMessageDialog(stop, "Simulation Stopped \nPlease re-load in order to resume");
 						} else
@@ -524,9 +534,11 @@ public class MainWindow extends JFrame {
 		}
 
 		// fields
+		
 		private final MFile m_file;// file menu
 		private final Simulation m_simulation;// simulation menu
 		private final Help m_help;// help menu
+		private JLabel ticks;
 		private Mutations mutation;// mutation info
 
 	}//end private class menu

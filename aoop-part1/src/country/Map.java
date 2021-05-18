@@ -249,14 +249,15 @@ public class Map {
 	 */
 	private Point[] addConection(Point[] arr, Point[] newPoints, Point settlPoint) {
 		Point[] temp = arr;
-		for(int j = 0; j< newPoints.length ; ++j) {
+		for(int j = 0; j < newPoints.length ; ++j) {
 			if(!checkIfConnectionExist(arr, newPoints[j], settlPoint)) {
 				temp = new Point[arr.length + 2];
-				for(int i=0 ; i< arr.length;++i) 
+				for(int i = 0 ; i < arr.length;++i) 
 					temp[i] = arr[i];
 				temp[arr.length] = settlPoint;
 				temp[arr.length + 1] = newPoints[j];
 			}
+			arr = temp;
 		}
 		return temp;
 	}
