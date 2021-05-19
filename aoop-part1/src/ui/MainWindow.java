@@ -5,6 +5,7 @@ import java.awt.Color;
 import java.awt.ComponentOrientation;
 import java.awt.Dimension;
 import java.awt.FlowLayout;
+import java.awt.Font;
 import java.awt.Graphics;
 import java.awt.Graphics2D;
 import java.awt.GridLayout;
@@ -78,6 +79,7 @@ public class MainWindow extends JFrame {
 		Hashtable<Integer, JLabel> labelTable = new Hashtable<>();
 		// Slider labels
 		labelTable.put(FPS_MIN, new JLabel("Fast"));
+		labelTable.put(7, new JLabel("Simulation Speed"));
 		labelTable.put(FPS_MAX, new JLabel("Slow"));
 		slider.setLabelTable(labelTable);
 
@@ -98,12 +100,11 @@ public class MainWindow extends JFrame {
 		slider.setMinorTickSpacing(1);
 		slider.setPaintTicks(true);
 		slider.setPaintLabels(true);
-		slider.setName("sleep time");
 		menu = new Menu();// create a Menu object
 
 		// add to Frame
 		this.add(menu);
-		this.add(drawMap);
+//		this.add(drawMap);
 		this.add(new JScrollPane(drawMap));
 		this.add(slider);
 		this.pack();
@@ -121,15 +122,6 @@ public class MainWindow extends JFrame {
 		sleepTime = val;
 	}
 
-//	/**
-//	 * get method
-//	 * 
-//	 * @return MapDrawing object
-//	 */
-//	public MapDrawing getMapDrawing() {
-//		return drawMap;
-//	}
-
 	//===============================================
 	//private class menu
 	private class Menu extends JMenuBar {
@@ -146,6 +138,8 @@ public class MainWindow extends JFrame {
 			mutation = new Mutations();
 			ticks = new JLabel("Ticks: " + Clock.now() + "         ");
 			ticks.setComponentOrientation(ComponentOrientation.RIGHT_TO_LEFT);
+			ticks.setFont(new Font("", Font.BOLD, 15));
+			ticks.setForeground(Color.CYAN.darker());
 
 			m_file = new MFile();
 			m_simulation = new Simulation();

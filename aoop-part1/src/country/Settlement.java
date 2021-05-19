@@ -3,6 +3,7 @@ package country;
 import java.time.LocalDateTime;
 import java.time.format.DateTimeFormatter;
 import java.util.Random;
+
 import io.LogFile;
 import location.Location;
 import location.Point;
