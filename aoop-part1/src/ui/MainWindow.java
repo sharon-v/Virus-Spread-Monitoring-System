@@ -63,10 +63,10 @@ public class MainWindow extends JFrame {
 	 * 
 	 * @param map - Map object for Settlements information
 	 */
-	public MainWindow(Map map) {
+	public MainWindow() {
 		super("Main Window");// call parent constructor
+		map = new Map();// Map instance
 		this.setLayout(new BoxLayout(this.getContentPane(), BoxLayout.PAGE_AXIS));
-		this.map = map;
 
 		// add statistic instance
 		stat = new Statistics(map);
@@ -83,17 +83,6 @@ public class MainWindow extends JFrame {
 		labelTable.put(FPS_MAX, new JLabel("Slow"));
 		slider.setLabelTable(labelTable);
 
-		/**
-		 * Slider actions
-		 */
-		slider.addChangeListener(new ChangeListener() {
-
-			@Override
-			public void stateChanged(ChangeEvent e) {
-				setSleepTime(slider.getValue());
-				
-			}
-		});
 
 		// labels and tick markings
 		slider.setMajorTickSpacing(1);
@@ -101,11 +90,10 @@ public class MainWindow extends JFrame {
 		slider.setPaintTicks(true);
 		slider.setPaintLabels(true);
 		menu = new Menu();// create a Menu object
-
+		JScrollPane scroll = new JScrollPane(drawMap);
 		// add to Frame
 		this.add(menu);
-//		this.add(drawMap);
-		this.add(new JScrollPane(drawMap));
+		this.add(scroll);
 		this.add(slider);
 		this.pack();
 		this.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
@@ -113,14 +101,6 @@ public class MainWindow extends JFrame {
 
 	}
 	
-
-	/**
-	 * set the play flag
-	 * @param val - the new sleep time int value
-	 */
-	public static void setSleepTime(int val) {
-		sleepTime = val;
-	}
 
 	//===============================================
 	//private class menu
@@ -222,7 +202,7 @@ public class MainWindow extends JFrame {
 										updateTicksLable();
 										Clock.nextTick();
 										try {
-											Thread.sleep(sleepTime * 1000);
+											Thread.sleep(slider.getValue() * 1000);
 										} catch (InterruptedException ex) {
 											System.out.println("an unexpected ERROR has occurred :(");
 											ex.printStackTrace();
@@ -550,7 +530,7 @@ public class MainWindow extends JFrame {
 		 * @param stat  - Statistics Object
 		 */
 		public MapDrawing() {
-
+						
 			/**
 			 * actions for MapDrawing
 			 */
@@ -606,11 +586,13 @@ public class MainWindow extends JFrame {
 			}		
 
 		}
+		
 
 		@Override
 		public Dimension getPreferredSize() {
 			return new Dimension(400, 400);
 		}
+		
 	}//end private class MapDrawing
 	//===============================================
 
@@ -627,6 +609,4 @@ public class MainWindow extends JFrame {
 	static final int FPS_MIN = 0;
 	static final int FPS_MAX = 15;
 	static final int FPS_INIT = 5;    //initial frames per second
-	private static int sleepTime = 1; // the time between each simulation// private final Timer timer ; //????
-
 }

@@ -1,8 +1,5 @@
 package simulation;
 
-
-
-import country.Map;
 import ui.MainWindow;
 
 /**
@@ -13,7 +10,6 @@ import ui.MainWindow;
 public class Main {
 	
 	public static void main(String[] args) {
-		Map map = new Map();// Map instance
-		MainWindow theWindow = new MainWindow(map);
+		new MainWindow();
 	}
 }

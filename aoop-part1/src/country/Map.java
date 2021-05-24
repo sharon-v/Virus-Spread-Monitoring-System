@@ -280,6 +280,38 @@ public class Map {
 		}
 		return false;
 	}
+	
+//	/**
+//	 * 
+//	 * @return the maximum X in map
+//	 */
+//	public int getMaxXPointAtMap() {
+//		int Xmax = -1 ;
+//		int Xwidth = -1;
+//		for(int i = 0; i< m_settlement.length ; ++i) {
+//			if(m_settlement[i].getLocation().getPoint().getX() > Xmax) {
+//				Xmax = m_settlement[i].getLocation().getPoint().getX();
+//				Xwidth = m_settlement[i].getLocation().getSize().getWidth();
+//			}
+//		}
+//		return Xmax + Xwidth;
+//	}
+//	
+//	/**
+//	 * 
+//	 * @return the maximum Y in map
+//	 */
+//	public int getMaxYPointAtMap() {
+//		int Ymax = -1;
+//		int Yheight = -1;
+//		for(int i = 0; i< m_settlement.length ; ++i) {
+//			if(m_settlement[i].getLocation().getPoint().getX() > Ymax) {
+//				Ymax = m_settlement[i].getLocation().getPoint().getY();
+//				Yheight = m_settlement[i].getLocation().getSize().getHeith();
+//			}
+//		}
+//		return Ymax + Yheight;
+//	}
 
 
 	/**
