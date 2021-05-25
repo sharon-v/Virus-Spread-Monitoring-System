@@ -56,9 +56,8 @@ public abstract class Settlement implements Runnable{
 			sickToConvalescent();
 			transfer();
 			vaccineTime();
-			double oldPercent = deceasedPercent();
 			attemptedMurder();
-			if (isDeceasedOnePercent(oldPercent))
+			if (isDeceasedOnePercent())
 				saveToLogFile();
 			m_map.cyclicAwait();
 		}
@@ -548,10 +547,11 @@ public abstract class Settlement implements Runnable{
 	 * @param oldPercent - the amount of deceased before attempted murder
 	 * @return true if deceased percent is 1% from the Population
 	 */
-	private boolean isDeceasedOnePercent(double oldPercent) {
-		double amountDead = deceasedPercent() - oldPercent;
-		if (amountDead >= 0.01 )
+	private boolean isDeceasedOnePercent() {
+		if (deceasedPercent() >= m_lastLog + 0.01 ) {
+			m_lastLog += 0.01;
 			return true;
+		}
 		return false;
 	}
 
@@ -591,4 +591,5 @@ public abstract class Settlement implements Runnable{
 	private Sick[] m_sickPeople;// Settlement's sick residents
 	private int m_numOfDeceased;// counts deaths in Settlement
 	private Map m_map;
+	private double m_lastLog = 0;
 }

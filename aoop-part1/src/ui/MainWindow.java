@@ -119,7 +119,7 @@ public class MainWindow extends JFrame {
 			ticks = new JLabel("Ticks: " + Clock.now() + "         ");
 			ticks.setComponentOrientation(ComponentOrientation.RIGHT_TO_LEFT);
 			ticks.setFont(new Font("", Font.BOLD, 15));
-			ticks.setForeground(Color.CYAN.darker());
+			ticks.setForeground(Color.MAGENTA.brighter());
 
 			m_file = new MFile();
 			m_simulation = new Simulation();
@@ -541,10 +541,10 @@ public class MainWindow extends JFrame {
 					Location[] settlLocations = map.settlementsLocation();
 					// run over the settlements and printing them by color
 					for (int i = 0; i < settlLocations.length; ++i) {
-						int startX = settlLocations[i].getPoint().getX();
-						int startY = settlLocations[i].getPoint().getY();
-						int endX = settlLocations[i].getSize().getWidth() + startX;
-						int endY = settlLocations[i].getSize().getHeith() + startY;
+						int startX = (int) (settlLocations[i].getPoint().getX()*scale());
+						int startY = (int)(settlLocations[i].getPoint().getY()*scale());
+						int endX = (int)(settlLocations[i].getSize().getWidth()*scale()) + startX;
+						int endY = (int)(settlLocations[i].getSize().getHeith()*scale()) + startY;
 						if(x >= startX && x <= endX && y >= startY && y <= endY) {
 							stat.markLine(i);// mark the corresponding line in Statistics window
 							stat.showDialog();// open Statistics window
@@ -562,6 +562,7 @@ public class MainWindow extends JFrame {
 			stat.updateTableModel();
 		}
 
+		
 		@Override
 		public void paintComponent(Graphics g) {
 			super.paintComponent(g);
@@ -570,7 +571,7 @@ public class MainWindow extends JFrame {
 
 			Point[] theConnections = map.middelPoints();
 			for(int i = 0; i<theConnections.length - 1 ; i+=2) {
-				g.drawLine(theConnections[i].getX(), theConnections[i].getY(), theConnections[i+1].getX(), theConnections[i+1].getY());
+				g.drawLine((int)(theConnections[i].getX()*scale()), (int)(theConnections[i].getY()*scale()), (int)(theConnections[i+1].getX()*scale()), (int)(theConnections[i+1].getY()*scale()));
 			}
 
 			Color[] settlColors = map.settlementsColors();
@@ -579,14 +580,42 @@ public class MainWindow extends JFrame {
 			String[] settleNames = map.settlementsNames();
 			for(int i=0; i< settlColors.length ; ++i) {
 				g.setColor(settlColors[i]);
-				g.fillRect(settlLocations[i].getPoint().getX(), settlLocations[i].getPoint().getY(),
-						settlLocations[i].getSize().getWidth(), settlLocations[i].getSize().getHeith());
+				g.fillRect((int)(settlLocations[i].getPoint().getX()*scale()), (int)(settlLocations[i].getPoint().getY()*scale()),
+						(int)(settlLocations[i].getSize().getWidth()*scale()), (int)(settlLocations[i].getSize().getHeith()*scale()));
 				g.setColor(Color.BLACK);
-				g.drawString(settleNames[i], settlLocations[i].getPoint().getX()+5, settlementsMiddlePoints[i].getY()+5);
+				g.drawString(settleNames[i], (int)((settlLocations[i].getPoint().getX()+5)*scale()), (int)((settlementsMiddlePoints[i].getY()+5)*scale()));
 			}		
 
 		}
 		
+		/**
+		 * 
+		 * @return the scale of map
+		 */
+		public double scale(){
+			//Every x coordinate multiply by (getWidth() / getMaxXPointAtMap())
+			int xx = getMaxXPointAtMap()+50;
+			int yy = getMaxYPointAtMap();
+			if(xx > yy) 
+				return (yy/(double)xx) * (getHeight() / (double)yy);
+			return (xx/(double)yy) * (getWidth() / (double)xx) ;
+		}
+		
+		/**
+		 * 
+		 * @return the maximum x coordinate
+		 */
+		public int getMaxXPointAtMap() {
+			return map.getMaxXPointAtMap();
+		}
+		
+		/**
+		 * 
+		 * @return the maximum y coordinate
+		 */
+		public int getMaxYPointAtMap() {
+			return map.getMaxYPointAtMap();
+		}
 
 		@Override
 		public Dimension getPreferredSize() {
