@@ -137,6 +137,7 @@ public class MainWindow extends JFrame {
 		public void updateTicksLable() {
 			ticks.setText("Ticks: " + Clock.now() +  "         " );
 		}
+
 		/**
 		 * 
 		 * inner Class for handling work with the File
@@ -601,35 +602,20 @@ public class MainWindow extends JFrame {
 
 		}
 		
-//		/**
-//		 * 
-//		 * @return the scale of map
-//		 */
-//		public double scale(){
-//			//Every x coordinate multiply by (getWidth() / getMaxXPointAtMap())
-//			int xx = getMaxXPointAtMap()+50;
-//			int yy = getMaxYPointAtMap();
-//			if(xx > yy) 
-//				return (yy/(double)xx) * (getHeight() / (double)yy);
-//			return (xx/(double)yy) * (getWidth() / (double)xx) ;
-//		}
-
 		/**
 		 * 
-		 * @return the scale of map
+		 * @return the X scale of map
 		 */
 		public double scaleX() {
-			//Every x coordinate multiply by (getWidth() / getMaxXPointAtMap())
 			double xx = getMaxXPointAtMap() + 1;
 			return (getWidth() / xx);
 		}
 		
 		/**
 		 * 
-		 * @return the scale of map
+		 * @return the Y scale of map
 		 */
 		public double scaleY() {
-			// Every x coordinate multiply by (getWidth() / getMaxXPointAtMap())
 			double yy = getMaxYPointAtMap() + 1;
 			return (getHeight() / yy);
 		}

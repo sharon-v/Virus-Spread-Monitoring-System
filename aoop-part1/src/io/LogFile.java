@@ -4,6 +4,11 @@ import java.io.BufferedWriter;
 import java.io.FileWriter;
 import java.io.IOException;
 
+/**
+ * 
+ * @author Yarden Hovav, Sharon Vazana
+ *
+ */
 public class LogFile {
 	/**
 	 * 
