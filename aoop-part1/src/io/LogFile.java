@@ -21,7 +21,7 @@ public class LogFile {
 		BufferedWriter bw = null;
 
 		try {
-			logfw = new FileWriter(path + ".log", true);
+			logfw = new FileWriter(path, true);
 			bw = new BufferedWriter(logfw);
 			// write a string into the IO stream
 			bw.append(infoToExport);

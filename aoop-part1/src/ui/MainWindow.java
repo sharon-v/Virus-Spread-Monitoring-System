@@ -15,6 +15,7 @@ import java.awt.event.ActionListener;
 import java.awt.event.MouseAdapter;
 import java.awt.event.MouseEvent;
 import java.io.File;
+import java.io.IOException;
 import java.util.Hashtable;
 import java.util.concurrent.CyclicBarrier;
 
@@ -263,9 +264,17 @@ public class MainWindow extends JFrame {
 							int returnVal = fc.showOpenDialog(log);
 							fc.setDialogTitle("Select File to Open");
 							if (returnVal == JFileChooser.APPROVE_OPTION) {
-								String path = fc.getSelectedFile().getAbsolutePath();
+								String path = fc.getSelectedFile().getAbsolutePath() + ".log";
+								// create the empty file
+								File file = new File(path);
+								try {
+									file.createNewFile();
+								} catch (IOException e1) {
+									e1.printStackTrace();
+								} catch (SecurityException e2) {
+									e2.printStackTrace();
+								}
 								map.setLogPath(path);
-								//								Settlement.initialLogEntry(path);
 								map.setLogFlag(true);
 							}
 						}
