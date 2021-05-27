@@ -20,7 +20,6 @@ import java.util.Hashtable;
 import java.util.concurrent.CyclicBarrier;
 
 import javax.swing.Box;
-import javax.swing.BoxLayout;
 import javax.swing.JComponent;
 import javax.swing.JDialog;
 import javax.swing.JFileChooser;
@@ -67,7 +66,7 @@ public class MainWindow extends JFrame {
 	public MainWindow() {
 		super("Main Window");// call parent constructor
 		map = new Map();// Map instance
-		this.setLayout(new BoxLayout(this.getContentPane(), BoxLayout.PAGE_AXIS));
+		this.setLayout(new BorderLayout(10, 0));
 
 		// add statistic instance
 		stat = new Statistics(map);
@@ -93,9 +92,9 @@ public class MainWindow extends JFrame {
 		menu = new Menu();// create a Menu object
 		JScrollPane scroll = new JScrollPane(drawMap);
 		// add to Frame
-		this.add(menu);
-		this.add(scroll);
-		this.add(slider);
+		this.add(menu, BorderLayout.NORTH);
+		this.add(scroll, BorderLayout.CENTER);
+		this.add(slider, BorderLayout.SOUTH);
 		this.pack();
 		this.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
 		this.setVisible(true);
@@ -550,10 +549,10 @@ public class MainWindow extends JFrame {
 					Location[] settlLocations = map.settlementsLocation();
 					// run over the settlements and printing them by color
 					for (int i = 0; i < settlLocations.length; ++i) {
-						int startX = (int) (settlLocations[i].getPoint().getX()*scale());
-						int startY = (int)(settlLocations[i].getPoint().getY()*scale());
-						int endX = (int)(settlLocations[i].getSize().getWidth()*scale()) + startX;
-						int endY = (int)(settlLocations[i].getSize().getHeith()*scale()) + startY;
+						int startX = (int) (settlLocations[i].getPoint().getX() * scaleX());
+						int startY = (int) (settlLocations[i].getPoint().getY() * scaleY());
+						int endX = (int) (settlLocations[i].getSize().getWidth() * scaleX()) + startX;
+						int endY = (int) (settlLocations[i].getSize().getHeith() * scaleY()) + startY;
 						if(x >= startX && x <= endX && y >= startY && y <= endY) {
 							stat.markLine(i);// mark the corresponding line in Statistics window
 							stat.showDialog();// open Statistics window
@@ -580,7 +579,9 @@ public class MainWindow extends JFrame {
 
 			Point[] theConnections = map.middelPoints();
 			for(int i = 0; i<theConnections.length - 1 ; i+=2) {
-				g.drawLine((int)(theConnections[i].getX()*scale()), (int)(theConnections[i].getY()*scale()), (int)(theConnections[i+1].getX()*scale()), (int)(theConnections[i+1].getY()*scale()));
+				g.drawLine((int) (theConnections[i].getX() * scaleX()), (int) (theConnections[i].getY() * scaleY()),
+						(int) (theConnections[i + 1].getX() * scaleX()),
+						(int) (theConnections[i + 1].getY() * scaleY()));
 			}
 
 			Color[] settlColors = map.settlementsColors();
@@ -589,27 +590,50 @@ public class MainWindow extends JFrame {
 			String[] settleNames = map.settlementsNames();
 			for(int i=0; i< settlColors.length ; ++i) {
 				g.setColor(settlColors[i]);
-				g.fillRect((int)(settlLocations[i].getPoint().getX()*scale()), (int)(settlLocations[i].getPoint().getY()*scale()),
-						(int)(settlLocations[i].getSize().getWidth()*scale()), (int)(settlLocations[i].getSize().getHeith()*scale()));
+				g.fillRect((int) (settlLocations[i].getPoint().getX() * scaleX()),
+						(int) (settlLocations[i].getPoint().getY() * scaleY()),
+						(int) (settlLocations[i].getSize().getWidth() * scaleX()),
+						(int) (settlLocations[i].getSize().getHeith() * scaleY()));
 				g.setColor(Color.BLACK);
-				g.drawString(settleNames[i], (int)((settlLocations[i].getPoint().getX()+5)*scale()), (int)((settlementsMiddlePoints[i].getY()+5)*scale()));
+				g.drawString(settleNames[i], (int) ((settlLocations[i].getPoint().getX() + 5) * scaleX()),
+						(int) ((settlementsMiddlePoints[i].getY() + 5) * scaleY()));
 			}		
 
+		}
+		
+//		/**
+//		 * 
+//		 * @return the scale of map
+//		 */
+//		public double scale(){
+//			//Every x coordinate multiply by (getWidth() / getMaxXPointAtMap())
+//			int xx = getMaxXPointAtMap()+50;
+//			int yy = getMaxYPointAtMap();
+//			if(xx > yy) 
+//				return (yy/(double)xx) * (getHeight() / (double)yy);
+//			return (xx/(double)yy) * (getWidth() / (double)xx) ;
+//		}
+
+		/**
+		 * 
+		 * @return the scale of map
+		 */
+		public double scaleX() {
+			//Every x coordinate multiply by (getWidth() / getMaxXPointAtMap())
+			double xx = getMaxXPointAtMap() + 1;
+			return (getWidth() / xx);
 		}
 		
 		/**
 		 * 
 		 * @return the scale of map
 		 */
-		public double scale(){
-			//Every x coordinate multiply by (getWidth() / getMaxXPointAtMap())
-			int xx = getMaxXPointAtMap()+50;
-			int yy = getMaxYPointAtMap();
-			if(xx > yy) 
-				return (yy/(double)xx) * (getHeight() / (double)yy);
-			return (xx/(double)yy) * (getWidth() / (double)xx) ;
+		public double scaleY() {
+			// Every x coordinate multiply by (getWidth() / getMaxXPointAtMap())
+			double yy = getMaxYPointAtMap() + 1;
+			return (getHeight() / yy);
 		}
-		
+
 		/**
 		 * 
 		 * @return the maximum x coordinate

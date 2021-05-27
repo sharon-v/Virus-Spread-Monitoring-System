@@ -243,7 +243,7 @@ public class Map {
 		int Ymax = -1;
 		int Yheight = -1;
 		for(int i = 0; i< m_settlement.length ; ++i) {
-			if(m_settlement[i].getLocation().getPoint().getX() > Ymax) {
+			if (m_settlement[i].getLocation().getPoint().getY() > Ymax) {
 				Ymax = m_settlement[i].getLocation().getPoint().getY();
 				Yheight = m_settlement[i].getLocation().getSize().getHeith();
 			}
