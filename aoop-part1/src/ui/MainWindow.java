@@ -653,7 +653,7 @@ public class MainWindow extends JFrame {
 
 
 	// slider parameters
-	static final int FPS_MIN = 0;
-	static final int FPS_MAX = 15;
-	static final int FPS_INIT = 5;    //initial frames per second
+	private final int FPS_MIN = 0;
+	private final int FPS_MAX = 15;
+	private final int FPS_INIT = 5;    //initial frames per second
 }

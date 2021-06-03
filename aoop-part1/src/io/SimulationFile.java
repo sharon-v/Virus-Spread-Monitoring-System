@@ -128,6 +128,6 @@ public class SimulationFile {
 		m_connections = temp;
 	}
 
-	private static final double CAPACITY = 1.3; 
+	private final double CAPACITY = 1.3; 
 	private String[] m_connections; // the connections in the map
 }
