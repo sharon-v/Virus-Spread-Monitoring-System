@@ -90,10 +90,9 @@ public class MainWindow extends JFrame {
 		slider.setPaintTicks(true);
 		slider.setPaintLabels(true);
 		menu = new Menu();// create a Menu object
-		JScrollPane scroll = new JScrollPane(drawMap);
 		// add to Frame
 		this.add(menu, BorderLayout.NORTH);
-		this.add(scroll, BorderLayout.CENTER);
+		this.add(drawMap, BorderLayout.CENTER);
 		this.add(slider, BorderLayout.SOUTH);
 		this.pack();
 		this.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
