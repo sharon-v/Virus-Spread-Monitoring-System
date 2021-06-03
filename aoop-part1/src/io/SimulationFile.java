@@ -20,7 +20,7 @@ import population.Healthy;
  *
  */
 public class SimulationFile {
-	
+
 	/**
 	 * constractor
 	 */
@@ -51,24 +51,14 @@ public class SimulationFile {
 					String settlementType = settlDeteails[0];
 					String settlemntName = settlDeteails[1];
 					Point settlementPoint = new Point(Integer.parseInt(settlDeteails[2]),
-						Integer.parseInt(settlDeteails[3]));// convert
+							Integer.parseInt(settlDeteails[3]));// convert
 					Size settlementSize = new Size(Integer.parseInt(settlDeteails[4]), Integer.parseInt(settlDeteails[5]));
 					Location settlementLocation = new Location(settlementPoint, settlementSize);
 					int settlementPopulationAmount = Integer.parseInt(settlDeteails[6]);
-					
+
 					SettlementFactory factory = new SettlementFactory();
-					Settlement mySettlement = factory.createSettlement(settlementType, settlemntName, settlementLocation, calculateMaxCapacity(settlementPopulationAmount), map);
-//					if (settlementType.equals("City"))
-//						mySettlement = new City(settlemntName, settlementLocation,
-//								calculateMaxCapacity(settlementPopulationAmount), map);
-//					else if (settlementType.equals("Moshav"))
-//						mySettlement = new Moshav(settlemntName, settlementLocation,
-//								calculateMaxCapacity(settlementPopulationAmount), map);
-//					else if (settlementType.equals("Kibbutz")) 
-//						mySettlement = new Kibbutz(settlemntName, settlementLocation,
-//								calculateMaxCapacity(settlementPopulationAmount), map);
-//					else
-//						throw new Exception("No such settlement !");
+					Settlement mySettlement = factory.createSettlement(settlementType, settlemntName, settlementLocation,
+							calculateMaxCapacity(settlementPopulationAmount), map);
 					if(mySettlement != null)
 						map.addSettlement(mySettlement);
 
@@ -128,11 +118,11 @@ public class SimulationFile {
 		temp[m_connections.length] = s;
 		m_connections = temp;
 	}
-	
+
 	//===============================================
 	//private class SettlementFactory
 	private class SettlementFactory{
-		
+
 		/**
 		 * 
 		 * @param type - String of the requested object to create
@@ -155,8 +145,8 @@ public class SimulationFile {
 		}
 	}//end SettlementFactory class
 	//===============================================
-	
-	
+
+
 	private final double CAPACITY = 1.3; 
 	private String[] m_connections; // the connections in the map
 }
