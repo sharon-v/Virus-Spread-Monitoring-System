@@ -55,20 +55,22 @@ public class SimulationFile {
 					Size settlementSize = new Size(Integer.parseInt(settlDeteails[4]), Integer.parseInt(settlDeteails[5]));
 					Location settlementLocation = new Location(settlementPoint, settlementSize);
 					int settlementPopulationAmount = Integer.parseInt(settlDeteails[6]);
-
-					Settlement mySettlement;
-					if (settlementType.equals("City"))
-						mySettlement = new City(settlemntName, settlementLocation,
-								calculateMaxCapacity(settlementPopulationAmount), map);
-					else if (settlementType.equals("Moshav"))
-						mySettlement = new Moshav(settlemntName, settlementLocation,
-								calculateMaxCapacity(settlementPopulationAmount), map);
-					else if (settlementType.equals("Kibbutz")) 
-						mySettlement = new Kibbutz(settlemntName, settlementLocation,
-								calculateMaxCapacity(settlementPopulationAmount), map);
-					else
-						throw new Exception("No such settlement !");
-					map.addSettlement(mySettlement);
+					
+					SettlementFactory factory = new SettlementFactory();
+					Settlement mySettlement = factory.createSettlement(settlementType, settlemntName, settlementLocation, calculateMaxCapacity(settlementPopulationAmount), map);
+//					if (settlementType.equals("City"))
+//						mySettlement = new City(settlemntName, settlementLocation,
+//								calculateMaxCapacity(settlementPopulationAmount), map);
+//					else if (settlementType.equals("Moshav"))
+//						mySettlement = new Moshav(settlemntName, settlementLocation,
+//								calculateMaxCapacity(settlementPopulationAmount), map);
+//					else if (settlementType.equals("Kibbutz")) 
+//						mySettlement = new Kibbutz(settlemntName, settlementLocation,
+//								calculateMaxCapacity(settlementPopulationAmount), map);
+//					else
+//						throw new Exception("No such settlement !");
+					if(mySettlement != null)
+						map.addSettlement(mySettlement);
 
 					for (int i = 0; i < settlementPopulationAmount; ++i)
 						if(!mySettlement.addPerson(new Healthy(randomAge(), mySettlement.randomLocation(), mySettlement)))
@@ -84,7 +86,6 @@ public class SimulationFile {
 		} // EXCEPTION
 		return m_connections;
 	}
-
 
 	/**
 	 * chooses a random age
@@ -127,7 +128,35 @@ public class SimulationFile {
 		temp[m_connections.length] = s;
 		m_connections = temp;
 	}
-
+	
+	//===============================================
+	//private class SettlementFactory
+	private class SettlementFactory{
+		
+		/**
+		 * 
+		 * @param type - String of the requested object to create
+		 * @param name - settlement name
+		 * @param location - settlement location
+		 * @param population - settlement amount of population
+		 * @param map - map that contains the settlement
+		 * @return new descendant of settlement   
+		 */
+		public Settlement createSettlement(String type, String name, Location location, int population, Map map) {
+			if(type == null)
+				return null;
+			if(type.equalsIgnoreCase("City"))
+				return new City(name, location, population, map);
+			else if(type.equalsIgnoreCase("Moshav"))
+				return new Moshav(name, location, population, map);
+			else if(type.equalsIgnoreCase("Kibbutz"))
+				return new Kibbutz(name, location, population, map);
+			return null;
+		}
+	}//end SettlementFactory class
+	//===============================================
+	
+	
 	private final double CAPACITY = 1.3; 
 	private String[] m_connections; // the connections in the map
 }

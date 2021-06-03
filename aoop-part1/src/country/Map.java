@@ -1,6 +1,8 @@
 package country;
 
 import java.awt.Color;
+import java.util.Iterator;
+import java.util.NoSuchElementException;
 import java.util.concurrent.BrokenBarrierException;
 import java.util.concurrent.CyclicBarrier;
 import java.util.concurrent.atomic.AtomicBoolean;
@@ -14,7 +16,7 @@ import location.Point;
  * @author Yarden Hovav, Sharon Vazana
  *
  */
-public class Map {
+public class Map implements Iterable{
 	/**
 	 * constructor
 	 */
@@ -33,7 +35,11 @@ public class Map {
 	public String toString() {
 		return "amount of settlements: " + m_settlement.length + "\n" + toStringSettlements();
 	}
-
+	
+	@Override
+	public Iterator iterator() {
+		return new MapIterator();
+	}
 
 	/**
 	 * 
@@ -41,7 +47,7 @@ public class Map {
 	 */
 	public void addSettlement(Settlement s) {
 		Settlement[] temp = new Settlement[m_settlement.length + 1];
-
+		
 		for(int i = 0; i < m_settlement.length; ++i) {
 			temp[i] = m_settlement[i];
 		}
@@ -387,6 +393,39 @@ public class Map {
 	public void setLogFlag(boolean val) {
 		logFlag.set(val);
 	}
+	
+	//===============================================
+	//private class menu
+	private class MapIterator implements Iterator {
+		
+		/**
+		 * Constructor
+		 */
+		public MapIterator() {
+			size = m_settlement.length;
+			nextI = 0;
+		}
+
+		@Override
+		public boolean hasNext() {
+			return nextI < size;
+		}
+
+		@Override
+		public Object next() {
+			if(!hasNext())
+				throw new NoSuchElementException();
+			++nextI;
+			return m_settlement[nextI - 1];
+		}
+		
+		private int nextI ;
+		private int size;
+		
+		
+	}// end MapIterator class
+	//===============================================
+
 
 
 	private AtomicBoolean playFlag = new AtomicBoolean(true); // flag to know if the simulation is play or pause
