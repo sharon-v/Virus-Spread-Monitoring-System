@@ -119,34 +119,6 @@ public class SimulationFile {
 		m_connections = temp;
 	}
 
-	//===============================================
-	//private class SettlementFactory
-	private class SettlementFactory{
-
-		/**
-		 * 
-		 * @param type - String of the requested object to create
-		 * @param name - settlement name
-		 * @param location - settlement location
-		 * @param population - settlement amount of population
-		 * @param map - map that contains the settlement
-		 * @return new descendant of settlement   
-		 */
-		public Settlement createSettlement(String type, String name, Location location, int population, Map map) {
-			if(type == null)
-				return null;
-			if(type.equalsIgnoreCase("City"))
-				return new City(name, location, population, map);
-			else if(type.equalsIgnoreCase("Moshav"))
-				return new Moshav(name, location, population, map);
-			else if(type.equalsIgnoreCase("Kibbutz"))
-				return new Kibbutz(name, location, population, map);
-			return null;
-		}
-	}//end SettlementFactory class
-	//===============================================
-
-
 	private final double CAPACITY = 1.3; 
 	private String[] m_connections; // the connections in the map
 }
