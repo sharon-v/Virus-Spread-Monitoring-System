@@ -36,17 +36,18 @@ public class MapDrawing extends JPanel{
 			public void mouseClicked(MouseEvent e) {
 				int x = e.getX();
 				int y = e.getY();
-				Location[] settlLocations = map.settlementsLocation();
-				// run over the settlements and printing them by color
-				for (int i = 0; i < settlLocations.length; ++i) {
-					int startX = (int) (settlLocations[i].getPoint().getX() * scaleX());
-					int startY = (int) (settlLocations[i].getPoint().getY() * scaleY());
-					int endX = (int) (settlLocations[i].getSize().getWidth() * scaleX()) + startX;
-					int endY = (int) (settlLocations[i].getSize().getHeith() * scaleY()) + startY;
+				
+				int i=0;
+				for (Settlement s : map) {
+					int startX = (int) (s.getLocation().getPoint().getX() * scaleX());
+					int startY = (int) (s.getLocation().getPoint().getY() * scaleY());
+					int endX = (int) (s.getLocation().getSize().getWidth() * scaleX()) + startX;
+					int endY = (int) (s.getLocation().getSize().getHeith() * scaleY()) + startY;
 					if(x >= startX && x <= endX && y >= startY && y <= endY) {
 						stat.markLine(i);// mark the corresponding line in Statistics window
 						stat.showDialog();// open Statistics window
 					}
+					++i;
 				}
 			}
 		});

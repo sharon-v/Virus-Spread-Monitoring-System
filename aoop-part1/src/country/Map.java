@@ -128,64 +128,6 @@ public class Map implements Iterable<Settlement>{
 
 	/**
 	 * 
-	 * @return Color array of all the settlements ramzor color
-	 */
-	public Color[] settlementsColors() {
-		Color[] settlColor = new Color[m_settlement.length];
-		for(int i= 0 ;i< m_settlement.length;++i) 
-			settlColor[i] = m_settlement[i].getRamzorColor().getColor();
-		return settlColor;
-	}
-
-	/**
-	 * 
-	 * @return Location array of all the settlements location
-	 */
-	public Location[] settlementsLocation() {
-		Location[] settlPoints = new Location[m_settlement.length];
-		for(int i= 0 ;i< m_settlement.length;++i) 
-			settlPoints[i] = new Location(m_settlement[i].getLocation());
-		return settlPoints;
-	}
-
-	/**
-	 * 
-	 * @return String array of all the settlements name
-	 */
-	public String[] settlementsNames() {
-		String[] settlNames = new String[m_settlement.length];
-		for(int i= 0 ;i< m_settlement.length;++i) 
-			settlNames[i] = m_settlement[i].getSettlementName();
-		return settlNames;
-	}
-
-	/**
-	 * 
-	 * @return Point array of all the settlements middle point
-	 */
-	public Point[] settlementPoints() {
-		Point[] settlPoints = new Point[m_settlement.length];
-		for(int i= 0 ;i< m_settlement.length;++i) 
-			settlPoints[i] = new Point(m_settlement[i].middelOfSettlement());
-		return settlPoints;
-	}
-
-	/**
-	 * 
-	 * @return all the connections in the map
-	 */
-	public Point[] middelPoints() {
-		Point[] Connections = new Point[0];
-		for(int i=0 ; i< m_settlement.length;++i){
-			Point[] connectionsMid = m_settlement[i].conectionsPoints();
-			Point settleMiddle = m_settlement[i].middelOfSettlement();
-			Connections = addConection(Connections, connectionsMid, settleMiddle);
-		}
-		return Connections;
-	}
-
-	/**
-	 * 
 	 * @param arr - middle point of the connections settlement array 
 	 * @param newPoints - new points connection of settlement
 	 * @param settlPoint - middle point of settlement
