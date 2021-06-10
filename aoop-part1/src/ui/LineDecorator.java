@@ -2,10 +2,13 @@ package ui;
 
 import java.awt.Graphics;
 
-import country.RamzorColor;
 import country.Settlement;
-import location.Point;
 
+/**
+ * 
+ * @author Yarden Hovav, Sharon Vazana
+ *
+ */
 public abstract class LineDecorator {
 	
 	public LineDecorator(MapDrawing draw) {

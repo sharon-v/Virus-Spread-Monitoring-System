@@ -5,6 +5,11 @@ import java.util.Vector;
 
 import javax.swing.JTable;
 
+/**
+ * 
+ * @author Yarden Hovav, Sharon Vazana
+ *
+ */
 public class VirusManager {
 	
 	public static VirusManager SingeltonVirusManager() {

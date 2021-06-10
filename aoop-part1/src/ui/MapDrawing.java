@@ -13,9 +13,12 @@ import javax.swing.JPanel;
 
 import country.Map;
 import country.Settlement;
-import location.Location;
-import location.Point;
 
+/**
+ * 
+ * @author Yarden Hovav, Sharon Vazana
+ *
+ */
 public class MapDrawing extends JPanel{
 	/**
 	 * constructor

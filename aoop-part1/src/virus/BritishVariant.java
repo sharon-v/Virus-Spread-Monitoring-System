@@ -65,6 +65,6 @@ public class BritishVariant implements IVirus {
 	// attributes
 	private final double deathProbTo18 = 0.01;// death probability up to 18
 	private final double deathProb18Above = 0.1;// death probability above 18
-	private static final double contagionProb = 0.7;// contagion probability all ages
+	private final double contagionProb = 0.7;// contagion probability all ages
 
 }

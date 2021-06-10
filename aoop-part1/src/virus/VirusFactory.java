@@ -1,6 +1,10 @@
 package virus;
 
-
+/**
+ * 
+ * @author Yarden Hovav, Sharon Vazana
+ *
+ */
 public class VirusFactory {
 	
 	/**

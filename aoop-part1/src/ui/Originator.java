@@ -1,5 +1,10 @@
 package ui;
 
+/**
+ * 
+ * @author Yarden Hovav, Sharon Vazana
+ *
+ */
 public class Originator {
 
 	/**

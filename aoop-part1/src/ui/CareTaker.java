@@ -2,6 +2,11 @@ package ui;
 
 import java.util.Stack;
 
+/**
+ * 
+ * @author Yarden Hovav, Sharon Vazana
+ *
+ */
 public class CareTaker {
 
 	/**

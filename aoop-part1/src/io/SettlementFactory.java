@@ -1,5 +1,10 @@
-package country;
+package io;
 
+import country.City;
+import country.Kibbutz;
+import country.Map;
+import country.Moshav;
+import country.Settlement;
 import location.Location;
 
 /**

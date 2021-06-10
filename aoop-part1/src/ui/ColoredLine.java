@@ -1,10 +1,16 @@
 package ui;
 
 import java.awt.Graphics;
+
 import country.RamzorColor;
 import country.Settlement;
 import location.Point;
 
+/**
+ * 
+ * @author Yarden Hovav, Sharon Vazana
+ *
+ */
 public class ColoredLine extends LineDecorator {
 	
 	public ColoredLine(MapDrawing draw) {

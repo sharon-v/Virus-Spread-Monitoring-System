@@ -1,5 +1,10 @@
 package virus;
 
+/**
+ * 
+ * @author Yarden Hovav, Sharon Vazana
+ *
+ */
 public enum VirusEnum {
 	BRITISH("British Variant"),
 	CHINESE("Chinese Variant"),
@@ -22,5 +27,4 @@ public enum VirusEnum {
 	}
 	
 	private String m_type;
-
 }

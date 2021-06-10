@@ -11,10 +11,7 @@ import population.Healthy;
 import population.Person;
 import population.Sick;
 import simulation.Clock;
-import virus.BritishVariant;
-import virus.ChineseVariant;
 import virus.IVirus;
-import virus.SouthAfricanVariant;
 import virus.VirusFactory;
 import virus.VirusManager;
 

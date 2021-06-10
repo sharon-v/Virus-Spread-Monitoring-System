@@ -4,10 +4,7 @@ import java.io.BufferedReader;
 import java.io.FileReader;
 import java.util.Random;
 
-import country.City;
-import country.Kibbutz;
 import country.Map;
-import country.Moshav;
 import country.Settlement;
 import country.SettlementFactory;
 import location.Location;

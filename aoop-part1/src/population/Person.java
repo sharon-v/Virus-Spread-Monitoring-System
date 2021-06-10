@@ -1,14 +1,8 @@
 package population;
 
-import java.util.ArrayList;
-import java.util.Random;
-
 import country.Settlement;
 import location.Point;
-import virus.BritishVariant;
-import virus.ChineseVariant;
 import virus.IVirus;
-import virus.SouthAfricanVariant;
 
 /**
  * 
