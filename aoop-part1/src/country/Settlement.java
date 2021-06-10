@@ -15,6 +15,7 @@ import virus.BritishVariant;
 import virus.ChineseVariant;
 import virus.IVirus;
 import virus.SouthAfricanVariant;
+import virus.VirusFactory;
 import virus.VirusManager;
 
 /**
@@ -325,16 +326,17 @@ public abstract class Settlement implements Runnable{
 		int amountToInfect = (int) (m_healthyPeople.length * num);
 		int randomIndex;
 		Random ran = new Random();
+		VirusFactory vs = new VirusFactory();
 		IVirus virus;
 
 		for(int i = 0; i < amountToInfect; ++i) {
 			randomIndex = ran.nextInt(m_healthyPeople.length);
 			if (randomIndex % 3 == 0)
-				virus = new ChineseVariant();
+				virus = vs.createVirus("Chinese Variant");
 			else if (randomIndex % 3 == 1)
-				virus = new BritishVariant();
+				virus = vs.createVirus("British Variant");
 			else
-				virus = new SouthAfricanVariant();
+				virus = vs.createVirus("South African Variant");
 			try {
 				m_healthyPeople[randomIndex].contagion(virus);
 			} catch (Exception e) {

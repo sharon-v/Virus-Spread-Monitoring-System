@@ -126,6 +126,8 @@ public class Map implements Iterable<Settlement>{
 		}
 	}
 
+
+
 	/**
 	 * 
 	 * @param arr - middle point of the connections settlement array 

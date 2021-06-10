@@ -62,33 +62,10 @@ public class SouthAfricanVariant implements IVirus {
 		return Math.max(0, p - 0.01 * p * Math.pow(t - 15, 2)) >= randomNumber;
 	}
 
-	/**
-	 * 
-	 * @return ArrayList containing the possible variants from this Variant
-	 */
-//	public static ArrayList<String> getPossibleVariants() {
-//		return new ArrayList<String>(m_possibleVariants);
-//	}
-
-//	@Override
-//	public ArrayList<String> getVars() {
-//		return getPossibleVariants();
-//	}
-
-	/**
-	 * sets the variant ArrayList
-	 * 
-	 * @param newVariant - new variant to add
-	 */
-//	public static void setPossibleVariants(ArrayList<String> newVariants) {
-//		m_possibleVariants = new ArrayList<String>(newVariants);
-//	}
-
 	// attributes
-	private static final double deathProbTo18 = 0.05;// death probability up to 18
-	private static final double deathProb18Above = 0.08;// death probability above 18
-	private static final double contagionProbTo18 = 0.6;// contagion probability up to 18
-	private static final double contagionProb18Above = 0.5;// contagion probability above 18
-//	private static ArrayList<String> m_possibleVariants = new ArrayList<String>(); // Array list that contains the variants that the current variant can mutated to
+	private final double deathProbTo18 = 0.05;// death probability up to 18
+	private final double deathProb18Above = 0.08;// death probability above 18
+	private final double contagionProbTo18 = 0.6;// contagion probability up to 18
+	private final double contagionProb18Above = 0.5;// contagion probability above 18
 
 }

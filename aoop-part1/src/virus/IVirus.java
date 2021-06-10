@@ -35,10 +35,4 @@ public interface IVirus {
 	 */
 	public boolean tryToKill(Sick s);
 
-	/**
-	 * 
-	 * @return ArrayList of possible variants
-	 */
-//	public ArrayList<String> getVars();
-
 }
