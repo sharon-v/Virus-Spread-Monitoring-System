@@ -1,14 +1,11 @@
 package ui;
 
 import java.awt.Dimension;
-import java.awt.event.ActionEvent;
-import java.awt.event.ActionListener;
 import java.awt.event.WindowAdapter;
 import java.awt.event.WindowEvent;
 import java.util.ArrayList;
 
 import javax.swing.BoxLayout;
-import javax.swing.JButton;
 import javax.swing.JDialog;
 import javax.swing.JFrame;
 import javax.swing.JPanel;
@@ -19,6 +16,7 @@ import javax.swing.table.AbstractTableModel;
 import virus.BritishVariant;
 import virus.ChineseVariant;
 import virus.SouthAfricanVariant;
+import virus.VirusManager;
 
 /**
  * 
@@ -34,6 +32,7 @@ public class Mutations extends JDialog {
 		super((JFrame) null, "Edit Mutations", true);
 		MyCheckModel model = new MyCheckModel();
 		JTable table = new JTable(model);
+		VirusManager vm = VirusManager.SingeltonVirusManager(table);
 		JPanel panel = new JPanel();
 		panel.setLayout(new BoxLayout(panel, BoxLayout.PAGE_AXIS));
 
