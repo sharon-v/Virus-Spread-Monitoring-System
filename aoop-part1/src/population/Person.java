@@ -74,25 +74,6 @@ public abstract class Person {
 		return newSick;
 	}
 	
-	/**
-	 * 
-	 * @param variants - Array list that contains the variant that the person can get infect with 
-	 * @return - IViruse object
-	 */
-	public IVirus contagionVariants(ArrayList<String> variants) {
-		IVirus virus;
-		Random ran = new Random();
-		int rand = ran.nextInt(variants.size());
-		if (variants.get(rand).equals("British Variant"))
-			virus = new BritishVariant();
-		else if (variants.get(rand).equals("Chinese Variant"))
-			virus = new ChineseVariant();
-		else
-			virus = new SouthAfricanVariant();
-		return virus;
-	}
-
-	
 	@Override
 	public String toString() {
 		return "age: " + m_age + "  \tsettlement: " + m_settlement.getSettlementName() + "\tlocation: " + m_location;

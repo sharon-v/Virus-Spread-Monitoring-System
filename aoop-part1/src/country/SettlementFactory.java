@@ -1,10 +1,5 @@
-package io;
+package country;
 
-import country.City;
-import country.Kibbutz;
-import country.Map;
-import country.Moshav;
-import country.Settlement;
 import location.Location;
 
 public class SettlementFactory {

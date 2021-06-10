@@ -6,22 +6,31 @@ import java.util.Vector;
 import javax.swing.JTable;
 
 public class VirusManager {
-	//static ???????????????
-	public static VirusManager SingeltonVirusManager(JTable table) {
+	
+	public static VirusManager SingeltonVirusManager() {
 		if (m_singeltonVirusManager == null)
-			m_singeltonVirusManager = new VirusManager(table);
+			m_singeltonVirusManager = new VirusManager();
 		return m_singeltonVirusManager;
 	}
-	private VirusManager(JTable table) {
+	
+	private VirusManager() {
+		m_table = null;
+	}
+	
+	/**
+	 * 
+	 * @param table - contains info of the possible variants for contagion
+	 */
+	public void setTable(JTable table) {
 		m_table = table;
 	}
+	
 	/**
 	 * 
 	 * @param currentVirus - virus from which we want to infect from
-	 * @param table        - contains info of the possible variants for contagion
 	 * @return IVirus to contagion, else null
 	 */
-	public static IVirus createVirus(IVirus currentVirus) {
+	public IVirus createVirus(IVirus currentVirus) {
 		VirusEnum[] viruses = VirusEnum.values();
 		int currentIndex = -1;
 
@@ -50,7 +59,7 @@ public class VirusManager {
 		return vf.createVirus(possibleViruses.get(varIndex));// return random virus
 	}
 
-	private static JTable m_table;// ?????? is allowed
+	private JTable m_table;// ?????? is allowed
 	private static VirusManager m_singeltonVirusManager;
 }
 

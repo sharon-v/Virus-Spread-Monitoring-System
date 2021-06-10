@@ -27,33 +27,12 @@ public class Mutations extends JDialog {
 		super((JFrame) null, "Edit Mutations", true);
 		MyCheckModel model = new MyCheckModel();
 		JTable table = new JTable(model);
-		VirusManager vm = VirusManager.SingeltonVirusManager(table);
+		VirusManager vm = VirusManager.SingeltonVirusManager();
+		vm.setTable(table);
 		JPanel panel = new JPanel();
 		panel.setLayout(new BoxLayout(panel, BoxLayout.PAGE_AXIS));
 
-		/**
-		 * saves the marked CheckBoxes to it's corresponding Variant
-		 */
-//		this.addWindowListener(new WindowAdapter() {
-//			@Override
-//			public void windowClosing(WindowEvent e) {
-//				for (int i = 0; i < table.getRowCount(); ++i) {
-//					ArrayList<String> variants = new ArrayList<>();
-//					for (int j = 0; j < table.getColumnCount(); ++j) {
-//						if (table.getValueAt(i, j).equals(true))
-//							variants.add(table.getColumnName(j));
-//					}
-//					String name = table.getColumnName(i);
-//					if (name.equals("British Variant"))
-//						BritishVariant.setPossibleVariants(variants);
-//					else if (name.equals("Chinese Variant"))
-//						ChineseVariant.setPossibleVariants(variants);
-//					else
-//						SouthAfricanVariant.setPossibleVariants(variants);
-//
-//				}
-//			}
-//		});
+		
 
 		panel.add(table);
 

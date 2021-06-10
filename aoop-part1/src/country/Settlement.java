@@ -376,11 +376,12 @@ public abstract class Settlement implements Runnable{
 	private void randomContagion(Person sickPerson) {
 		IVirus virus = null;
 		Random ran = new Random();
+		VirusManager vm = VirusManager.SingeltonVirusManager();
 		for (int i = 0; i < 3; ++i) {
 			if (m_healthyPeople.length == 0)
 				return;
 			int randomIndex = ran.nextInt(m_healthyPeople.length);
-			virus = VirusManager.createVirus(sickPerson.getVirusFromPerson());
+			virus = vm.createVirus(sickPerson.getVirusFromPerson());
 			if (virus == null)
 				return;
 			if (virus.tryToContagion(sickPerson, m_healthyPeople[randomIndex])) {

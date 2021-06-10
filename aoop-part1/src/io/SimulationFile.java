@@ -9,6 +9,7 @@ import country.Kibbutz;
 import country.Map;
 import country.Moshav;
 import country.Settlement;
+import country.SettlementFactory;
 import location.Location;
 import location.Point;
 import location.Size;
