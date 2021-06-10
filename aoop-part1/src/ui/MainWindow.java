@@ -3,21 +3,14 @@ package ui;
 import java.awt.BorderLayout;
 import java.awt.Color;
 import java.awt.ComponentOrientation;
-import java.awt.Dimension;
 import java.awt.FlowLayout;
 import java.awt.Font;
-import java.awt.Graphics;
-import java.awt.Graphics2D;
 import java.awt.GridLayout;
-import java.awt.RenderingHints;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
-import java.awt.event.MouseAdapter;
-import java.awt.event.MouseEvent;
 import java.io.File;
 import java.io.IOException;
 import java.util.Hashtable;
-import java.util.Iterator;
 import java.util.concurrent.CyclicBarrier;
 
 import javax.swing.Box;
@@ -48,9 +41,6 @@ import javax.swing.text.StyleContext;
 import javax.swing.text.StyledDocument;
 
 import country.Map;
-import country.Settlement;
-import location.Location;
-import location.Point;
 import simulation.Clock;
 
 /**
@@ -156,8 +146,8 @@ public class MainWindow extends JFrame {
 				JMenuItem load = new JMenuItem("Load");
 				JMenuItem stats = new JMenuItem("Statistics");
 				JMenuItem edit = new JMenuItem("Edit Mutations");
-				JMenuItem log = new JMenuItem("Log File");
-				JMenuItem undo = new JMenuItem("Undo Path");
+				JMenuItem log = new JMenuItem("Save Log File");
+				JMenuItem undo = new JMenuItem("Undo Log File Path");
 				JMenuItem exit = new JMenuItem("Exit");
 				// add to file
 				this.add(load);

@@ -1,5 +1,7 @@
 package ui;
 
+import java.util.Stack;
+
 public class CareTaker {
 
 	/**
@@ -8,22 +10,41 @@ public class CareTaker {
 	 */
 	public CareTaker(Originator origin) {
 		m_origin = origin;
+		m_history = new History();
 	}
 
-	/**
-	 * save the previous path
-	 */
+	// ===============================================
+	// private class History
+	private class History {
+		private Stack<Memento> m_undo = new Stack<>();
+
+		/**
+		 * save the current path in stack
+		 */
+		public void save() {
+			m_undo.push(m_origin.save());
+		}
+
+		/**
+		 * restores the previous path
+		 */
+		public void undo() {
+			m_origin.undo(m_undo.pop());
+		}
+	}// end private class History
+		// ===============================================
+
 	public void save() {
-		m_memento = m_origin.save();
+		m_history.save();
 	}
 
 	/**
-	 * restore the previous path
+	 * restores the previous path
 	 */
 	public void undo() {
-		m_origin.undo(m_memento);
+		m_history.undo();
 	}
 
 	private Originator m_origin;
-	private Memento m_memento;
+	private History m_history;
 }

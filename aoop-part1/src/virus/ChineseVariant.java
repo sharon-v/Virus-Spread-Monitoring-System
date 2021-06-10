@@ -1,6 +1,5 @@
 package virus;
 
-import java.util.ArrayList;
 import java.util.Random;
 
 import population.Person;
@@ -72,23 +71,23 @@ public class ChineseVariant implements IVirus {
 	 * 
 	 * @return ArrayList containing the possible variants from this Variant
 	 */
-	public static ArrayList<String> getPossibleVariants() {
-		return new ArrayList<String>(m_possibleVariants);
-	}
+//	public static ArrayList<String> getPossibleVariants() {
+//		return new ArrayList<String>(m_possibleVariants);
+//	}
 
-	@Override
-	public ArrayList<String> getVars() {
-		return getPossibleVariants();
-	}
+//	@Override
+//	public ArrayList<String> getVars() {
+//		return getPossibleVariants();
+//	}
 
 	/**
 	 * sets the variant ArrayList
 	 * 
 	 * @param newVariant - new variant to add
 	 */
-	public static void setPossibleVariants(ArrayList<String> newVariants) {
-		m_possibleVariants = new ArrayList<String>(newVariants);
-	}
+//	public static void setPossibleVariants(ArrayList<String> newVariants) {
+//		m_possibleVariants = new ArrayList<String>(newVariants);
+//	}
 
 
 	// attributes
@@ -98,6 +97,6 @@ public class ChineseVariant implements IVirus {
 	private static final double contagionProbTo18 = 0.2;// contagion probability up to 18
 	private static final double contagionProb18To55 = 0.5;// contagion probability 18 to 55
 	private static final double contagionProb55Above = 0.7;// contagion probability above 55
-	private static ArrayList<String> m_possibleVariants = new ArrayList<String>(); // Array list that contains the variants that the current variant can mutated to
+//	private static ArrayList<String> m_possibleVariants = new ArrayList<String>(); // Array list that contains the variants that the current variant can mutated to
 
 }

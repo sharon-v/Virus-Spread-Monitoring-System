@@ -1,7 +1,5 @@
 package virus;
 
-import java.util.ArrayList;
-
 import population.Person;
 import population.Sick;
 
@@ -41,6 +39,6 @@ public interface IVirus {
 	 * 
 	 * @return ArrayList of possible variants
 	 */
-	public ArrayList<String> getVars();
+//	public ArrayList<String> getVars();
 
 }

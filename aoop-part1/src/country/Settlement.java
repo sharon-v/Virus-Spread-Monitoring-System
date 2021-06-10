@@ -15,6 +15,7 @@ import virus.BritishVariant;
 import virus.ChineseVariant;
 import virus.IVirus;
 import virus.SouthAfricanVariant;
+import virus.VirusManager;
 
 /**
  * 
@@ -282,7 +283,7 @@ public abstract class Settlement implements Runnable{
 	 */
 	private synchronized Person[] randomTransfer(Settlement randomSettlement) { 
 		// try transfer 3% from settlement
-		
+
 		int size = getNumOfPeople();
 		Person[] temp = new Person[size];
 		for (int i = 0; i < m_healthyPeople.length; ++i) {
@@ -375,20 +376,17 @@ public abstract class Settlement implements Runnable{
 	private void randomContagion(Person sickPerson) {
 		IVirus virus = null;
 		Random ran = new Random();
-		// sync //
 		for (int i = 0; i < 3; ++i) {
 			if (m_healthyPeople.length == 0)
 				return;
 			int randomIndex = ran.nextInt(m_healthyPeople.length);
-			virus = sickPerson.getVirusFromPerson();
-			if (virus.getVars().size() != 0) {
-				virus = sickPerson.contagionVariants(virus.getVars());
-				if (virus.tryToContagion(sickPerson, m_healthyPeople[randomIndex])) {
-					m_healthyPeople[randomIndex].contagion(virus);
-				}
+			virus = VirusManager.createVirus(sickPerson.getVirusFromPerson());
+			if (virus == null)
+				return;
+			if (virus.tryToContagion(sickPerson, m_healthyPeople[randomIndex])) {
+				m_healthyPeople[randomIndex].contagion(virus);
 			}
 		}
-		// sync //
 	}
 
 	/**
@@ -533,7 +531,7 @@ public abstract class Settlement implements Runnable{
 	public Location getLocation() {
 		return new Location(m_location);
 	}
-	
+
 	/**
 	 * 
 	 * @return the connection of the settlement

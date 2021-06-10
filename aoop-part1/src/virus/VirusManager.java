@@ -50,7 +50,7 @@ public class VirusManager {
 		return vf.createVirus(possibleViruses.get(varIndex));// return random virus
 	}
 
-	private JTable m_table;
+	private static JTable m_table;// ?????? is allowed
 	private static VirusManager m_singeltonVirusManager;
 }
 

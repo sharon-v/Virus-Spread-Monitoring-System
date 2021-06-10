@@ -1,9 +1,6 @@
 package ui;
 
 import java.awt.Dimension;
-import java.awt.event.WindowAdapter;
-import java.awt.event.WindowEvent;
-import java.util.ArrayList;
 
 import javax.swing.BoxLayout;
 import javax.swing.JDialog;
@@ -13,9 +10,7 @@ import javax.swing.JTable;
 import javax.swing.ListSelectionModel;
 import javax.swing.table.AbstractTableModel;
 
-import virus.BritishVariant;
-import virus.ChineseVariant;
-import virus.SouthAfricanVariant;
+import virus.VirusEnum;
 import virus.VirusManager;
 
 /**
@@ -39,26 +34,26 @@ public class Mutations extends JDialog {
 		/**
 		 * saves the marked CheckBoxes to it's corresponding Variant
 		 */
-		this.addWindowListener(new WindowAdapter() {
-			@Override
-			public void windowClosing(WindowEvent e) {
-				for (int i = 0; i < table.getRowCount(); ++i) {
-					ArrayList<String> variants = new ArrayList<>();
-					for (int j = 0; j < table.getColumnCount(); ++j) {
-						if (table.getValueAt(i, j).equals(true))
-							variants.add(table.getColumnName(j));
-					}
-					String name = table.getColumnName(i);
-					if (name.equals("British Variant"))
-						BritishVariant.setPossibleVariants(variants);
-					else if (name.equals("Chinese Variant"))
-						ChineseVariant.setPossibleVariants(variants);
-					else
-						SouthAfricanVariant.setPossibleVariants(variants);
-
-				}
-			}
-		});
+//		this.addWindowListener(new WindowAdapter() {
+//			@Override
+//			public void windowClosing(WindowEvent e) {
+//				for (int i = 0; i < table.getRowCount(); ++i) {
+//					ArrayList<String> variants = new ArrayList<>();
+//					for (int j = 0; j < table.getColumnCount(); ++j) {
+//						if (table.getValueAt(i, j).equals(true))
+//							variants.add(table.getColumnName(j));
+//					}
+//					String name = table.getColumnName(i);
+//					if (name.equals("British Variant"))
+//						BritishVariant.setPossibleVariants(variants);
+//					else if (name.equals("Chinese Variant"))
+//						ChineseVariant.setPossibleVariants(variants);
+//					else
+//						SouthAfricanVariant.setPossibleVariants(variants);
+//
+//				}
+//			}
+//		});
 
 		panel.add(table);
 
@@ -88,13 +83,18 @@ public class Mutations extends JDialog {
 	 *
 	 */
 	private class MyCheckModel extends AbstractTableModel {
-		private final Boolean[][] data;
-		private final String[] colNames = { "British Variant", "Chinese Variant", "South African Variant" };
 
 		/**
 		 * constructor
 		 */
 		public MyCheckModel() {
+
+			String temp = "";
+			for (VirusEnum v : VirusEnum.values()) {
+				temp += v.getType() + ";";
+			}
+			colNames = temp.split(";");
+
 			// make data array of check boxes
 			data = new Boolean[getRowCount()][getColumnCount()];
 			for (int i = 0; i < getRowCount(); ++i) {
@@ -148,5 +148,7 @@ public class Mutations extends JDialog {
 			fireTableCellUpdated(row, col);
 		}
 
+		private final Boolean[][] data;
+		private String[] colNames = new String[0];
 	}
 }
