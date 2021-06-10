@@ -533,6 +533,14 @@ public abstract class Settlement implements Runnable{
 	public Location getLocation() {
 		return new Location(m_location);
 	}
+	
+	/**
+	 * 
+	 * @return the connection of the settlement
+	 */
+	public Settlement[] getConnection() {
+		return m_connectedSettlements;
+	}
 
 	/**
 	 * 

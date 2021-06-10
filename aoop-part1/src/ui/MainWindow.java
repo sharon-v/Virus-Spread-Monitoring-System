@@ -17,6 +17,7 @@ import java.awt.event.MouseEvent;
 import java.io.File;
 import java.io.IOException;
 import java.util.Hashtable;
+import java.util.Iterator;
 import java.util.concurrent.CyclicBarrier;
 
 import javax.swing.Box;
@@ -47,6 +48,7 @@ import javax.swing.text.StyleContext;
 import javax.swing.text.StyledDocument;
 
 import country.Map;
+import country.Settlement;
 import location.Location;
 import location.Point;
 import simulation.Clock;
@@ -57,7 +59,7 @@ import simulation.Clock;
  *
  */
 public class MainWindow extends JFrame {
-	
+
 	/**
 	 * constructor
 	 * 
@@ -72,7 +74,7 @@ public class MainWindow extends JFrame {
 		stat = new Statistics(map);
 
 		// add MapDrawing instance
-		drawMap = new MapDrawing();
+		drawMap = new MapDrawing(map, stat);
 
 		// add JSlider instance
 		slider = new JSlider(JSlider.HORIZONTAL, FPS_MIN, FPS_MAX, FPS_INIT);
@@ -99,7 +101,7 @@ public class MainWindow extends JFrame {
 		this.setVisible(true);
 
 	}
-	
+
 
 	//===============================================
 	//private class menu
@@ -123,6 +125,8 @@ public class MainWindow extends JFrame {
 			m_file = new MFile();
 			m_simulation = new Simulation();
 			m_help = new Help();
+			m_originator = new Originator();
+			m_careTaker = new CareTaker(m_originator);
 
 			// add menu options to bar
 			this.add(m_file);
@@ -132,7 +136,7 @@ public class MainWindow extends JFrame {
 			this.add(ticks);
 
 		}
-		
+
 		public void updateTicksLable() {
 			ticks.setText("Ticks: " + Clock.now() +  "         " );
 		}
@@ -153,12 +157,14 @@ public class MainWindow extends JFrame {
 				JMenuItem stats = new JMenuItem("Statistics");
 				JMenuItem edit = new JMenuItem("Edit Mutations");
 				JMenuItem log = new JMenuItem("Log File");
+				JMenuItem undo = new JMenuItem("Undo Path");
 				JMenuItem exit = new JMenuItem("Exit");
 				// add to file
 				this.add(load);
 				this.add(stats);
 				this.add(edit);
 				this.add(log);
+				this.add(undo);
 				this.add(exit);
 
 				/**
@@ -193,11 +199,11 @@ public class MainWindow extends JFrame {
 									@Override
 									public void run(){
 										SwingUtilities.invokeLater(new Runnable() {
-										    public void run() {
-										    	drawMap.repaint();
+											public void run() {
+												drawMap.repaint();
 												drawMap.updateStatWindow();
-										    }
-										  });
+											}
+										});
 										System.out.println("ticks : " + Clock.now());
 										updateTicksLable();
 										Clock.nextTick();
@@ -257,33 +263,40 @@ public class MainWindow extends JFrame {
 							return;
 						}
 						// Create a file chooser
-						if (!map.getLogFlag()) {
-							final JFileChooser fc = new JFileChooser();
-							// In response to a button click:
-							int returnVal = fc.showOpenDialog(log);
-							fc.setDialogTitle("Select File to Open");
-							if (returnVal == JFileChooser.APPROVE_OPTION) {
-								String path = fc.getSelectedFile().getAbsolutePath() + ".log";
-								// create the empty file
-								File file = new File(path);
-								try {
-									file.createNewFile();
-								} catch (IOException e1) {
-									e1.printStackTrace();
-								} catch (SecurityException e2) {
-									e2.printStackTrace();
-								}
-								map.setLogPath(path);
-								map.setLogFlag(true);
-							}
-						}
-						else
-							JOptionPane.showMessageDialog(log, "Log File Already Exists", "Inane warning",
-									JOptionPane.WARNING_MESSAGE);
+						final JFileChooser fc = new JFileChooser();
+						// In response to a button click:
+						int returnVal = fc.showOpenDialog(log);
+						fc.setDialogTitle("Select File to Open");
+						if (returnVal == JFileChooser.APPROVE_OPTION) {
+							String path = fc.getSelectedFile().getAbsolutePath() + ".log";
+							//save to previous path
+							m_careTaker.save();
+							m_originator.setOriginator(path);
 
+							// create the empty file
+							File file = new File(path);
+							try {
+								file.createNewFile();
+							} catch (IOException e1) {
+								e1.printStackTrace();
+							} catch (SecurityException e2) {
+								e2.printStackTrace();
+							}
+							map.setLogPath(path);
+							map.setLogFlag(true);
+						}
 					}
+
 				});
 
+				undo.addActionListener(new ActionListener() {
+
+					@Override
+					public void actionPerformed(ActionEvent e) {
+						m_careTaker.undo();
+						map.setLogPath(m_originator.getpath());
+					}
+				});
 
 				/**
 				 * exit menu option, closes the program
@@ -516,131 +529,16 @@ public class MainWindow extends JFrame {
 		}
 
 		// fields
-		
+
 		private final MFile m_file;// file menu
 		private final Simulation m_simulation;// simulation menu
 		private final Help m_help;// help menu
 		private JLabel ticks;
 		private Mutations mutation;// mutation info
+		private CareTaker m_careTaker;
+		private Originator m_originator;
 
 	}//end private class menu
-	//===============================================
-
-
-	//===============================================
-	//private class MapDrawing
-
-	private class MapDrawing extends JPanel{
-		/**
-		 * constructor
-		 * 
-		 * @param myMap - MapDrawing Object
-		 * @param stat  - Statistics Object
-		 */
-		public MapDrawing() {
-						
-			/**
-			 * actions for MapDrawing
-			 */
-			this.addMouseListener(new MouseAdapter() {
-				public void mouseClicked(MouseEvent e) {
-					int x = e.getX();
-					int y = e.getY();
-					Location[] settlLocations = map.settlementsLocation();
-					// run over the settlements and printing them by color
-					for (int i = 0; i < settlLocations.length; ++i) {
-						int startX = (int) (settlLocations[i].getPoint().getX() * scaleX());
-						int startY = (int) (settlLocations[i].getPoint().getY() * scaleY());
-						int endX = (int) (settlLocations[i].getSize().getWidth() * scaleX()) + startX;
-						int endY = (int) (settlLocations[i].getSize().getHeith() * scaleY()) + startY;
-						if(x >= startX && x <= endX && y >= startY && y <= endY) {
-							stat.markLine(i);// mark the corresponding line in Statistics window
-							stat.showDialog();// open Statistics window
-						}
-					}
-				}
-			});
-
-		}
-
-		/**
-		 * update statistics window
-		 */
-		public void updateStatWindow() {
-			stat.updateTableModel();
-		}
-
-		
-		@Override
-		public void paintComponent(Graphics g) {
-			super.paintComponent(g);
-			Graphics2D gr = (Graphics2D) g; //for better looking
-			gr.setRenderingHint(RenderingHints.KEY_ANTIALIASING, RenderingHints.VALUE_ANTIALIAS_ON);
-
-			Point[] theConnections = map.middelPoints();
-			for(int i = 0; i<theConnections.length - 1 ; i+=2) {
-				g.drawLine((int) (theConnections[i].getX() * scaleX()), (int) (theConnections[i].getY() * scaleY()),
-						(int) (theConnections[i + 1].getX() * scaleX()),
-						(int) (theConnections[i + 1].getY() * scaleY()));
-			}
-
-			Color[] settlColors = map.settlementsColors();
-			Location[] settlLocations = map.settlementsLocation();
-			Point[] settlementsMiddlePoints = map.settlementPoints();
-			String[] settleNames = map.settlementsNames();
-			for(int i=0; i< settlColors.length ; ++i) {
-				g.setColor(settlColors[i]);
-				g.fillRect((int) (settlLocations[i].getPoint().getX() * scaleX()),
-						(int) (settlLocations[i].getPoint().getY() * scaleY()),
-						(int) (settlLocations[i].getSize().getWidth() * scaleX()),
-						(int) (settlLocations[i].getSize().getHeith() * scaleY()));
-				g.setColor(Color.BLACK);
-				g.drawString(settleNames[i], (int) ((settlLocations[i].getPoint().getX() + 5) * scaleX()),
-						(int) ((settlementsMiddlePoints[i].getY() + 5) * scaleY()));
-			}		
-
-		}
-		
-		/**
-		 * 
-		 * @return the X scale of map
-		 */
-		public double scaleX() {
-			double xx = getMaxXPointAtMap() + 1;
-			return (getWidth() / xx);
-		}
-		
-		/**
-		 * 
-		 * @return the Y scale of map
-		 */
-		public double scaleY() {
-			double yy = getMaxYPointAtMap() + 1;
-			return (getHeight() / yy);
-		}
-
-		/**
-		 * 
-		 * @return the maximum x coordinate
-		 */
-		public int getMaxXPointAtMap() {
-			return map.getMaxXPointAtMap();
-		}
-		
-		/**
-		 * 
-		 * @return the maximum y coordinate
-		 */
-		public int getMaxYPointAtMap() {
-			return map.getMaxYPointAtMap();
-		}
-
-		@Override
-		public Dimension getPreferredSize() {
-			return new Dimension(400, 400);
-		}
-		
-	}//end private class MapDrawing
 	//===============================================
 
 

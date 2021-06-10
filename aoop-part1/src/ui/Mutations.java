@@ -96,7 +96,7 @@ public class Mutations extends JDialog {
 		 * constructor
 		 */
 		public MyCheckModel() {
-			// make data array of checkboxes
+			// make data array of check boxes
 			data = new Boolean[getRowCount()][getColumnCount()];
 			for (int i = 0; i < getRowCount(); ++i) {
 				for (int j = 0; j < getColumnCount(); ++j) {

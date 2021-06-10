@@ -16,7 +16,7 @@ import location.Point;
  * @author Yarden Hovav, Sharon Vazana
  *
  */
-public class Map implements Iterable{
+public class Map implements Iterable<Settlement>{
 	/**
 	 * constructor
 	 */
@@ -37,7 +37,7 @@ public class Map implements Iterable{
 	}
 	
 	@Override
-	public Iterator iterator() {
+	public Iterator<Settlement> iterator() {
 		return new MapIterator();
 	}
 
@@ -319,10 +319,9 @@ public class Map implements Iterable{
 	 * @param newPath - the path for the log file
 	 */
 	public void setLogPath(String newPath) {
-		if(m_path == null) {
 			m_path = newPath ;
 			setLogFlag(true);
-		}
+		
 	}
 
 	/**
@@ -396,7 +395,7 @@ public class Map implements Iterable{
 	
 	//===============================================
 	//private class menu
-	private class MapIterator implements Iterator {
+	private class MapIterator implements Iterator<Settlement> {
 		
 		/**
 		 * Constructor
@@ -412,7 +411,7 @@ public class Map implements Iterable{
 		}
 
 		@Override
-		public Object next() {
+		public Settlement next() {
 			if(!hasNext())
 				throw new NoSuchElementException();
 			++nextI;
@@ -421,7 +420,6 @@ public class Map implements Iterable{
 		
 		private int nextI ;
 		private int size;
-		
 		
 	}// end MapIterator class
 	//===============================================
